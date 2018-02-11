@@ -22,8 +22,8 @@
   },
   "lint-staged": {
     "*.tsx": [
-      "prettier-eslint --write",
-      "tslint",
+      "prettier --single-quote --trailing-comma all --write",
+      "tslint --fix",
       "git add"
     ]
   },

@@ -1,7 +1,8 @@
 {
     "extends": ["tslint-react", "tslint-config-prettier"],
     "rules": {
-        "align": [
+      "quotes": ["error", "single"],
+      "align": [
             true,
             "parameters",
             "arguments",

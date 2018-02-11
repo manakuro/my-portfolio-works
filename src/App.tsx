@@ -4,8 +4,16 @@ import './App.css';
 const logo = require('./logo.svg');
 
 // test
-const test = ['test','test1','test2','test3','test4','test5','test6','test7',];
-
+const test = [
+  'test',
+  'test1',
+  'test2',
+  'test3',
+  'test4',
+  'test5',
+  'test6',
+  'test7',
+];
 
 class App extends React.Component {
   render() {
