@@ -14,18 +14,27 @@
     "build": "npm-run-all build-css build-js",
     "start-js": "react-scripts-ts start",
     "build-js": "react-scripts-ts build",
-    "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
-    "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
+    "build-css":
+      "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
+    "watch-css":
+      "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject",
     "precommit": "lint-staged"
   },
   "lint-staged": {
+    "*.js": [
+      "prettier --single-quote --trailing-comma all --write",
+      "eslint --fix",
+      "git add"
+    ],
     "*.tsx": [
       "prettier --single-quote --trailing-comma all --write",
       "tslint --fix",
       "git add"
-    ]
+    ],
+    "*.graphql": ["prettier --write", "git add"],
+    "*.json": ["prettier --write", "git add"]
   },
   "devDependencies": {
     "@types/jest": "^22.1.2",
@@ -37,8 +46,6 @@
     "husky": "^0.14.3",
     "lint-staged": "^6.1.0",
     "prettier": "^1.10.2",
-    "prettier-eslint": "^8.8.1",
-    "prettier-eslint-cli": "^4.7.0",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
     "tslint-config-prettier": "^1.7.0",
