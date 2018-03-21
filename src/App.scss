@@ -1,28 +1,107 @@
-.App {
-  text-align: center;
+$headerHeight: 70px;
+
+.header {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: $headerHeight;
+  background: rgba(255, 255, 255, 0.9);
+
+  .logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+
+    > a {
+      font-size: 2rem;
+      font-weight: 700;
+      font-family: 'Source Serif Pro', serif;
+      color: #2F2F2F;
+    }
+  }
+
+  .nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /deep/ .swiper-slide {
+      width: auto;
+    }
+
+    .nav-container {
+      width: 50%;
+      overflow: hidden;
+
+      a {
+        font-family: 'Roboto';
+        font-size: .9rem;
+        color: #2F2F2F;
+        opacity: .8;
+
+        transition: .25s;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+
+
+    // angle icon
+    .icon {
+      cursor: pointer;
+      padding: 0 10px;
+    }
+  }
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
+.works {
+  $marginTop: $headerHeight + 30px;
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
+  margin-top: $marginTop;
 
-.App-title {
-  font-size: 1.5em;
-}
+  .works-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 15px;
+  }
 
-.App-intro {
-  font-size: large;
-}
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  .card {
+    border: 1px solid rgba(0,0,0,.1);
+    cursor: pointer;
+
+    .card-desc {
+      display: flex;
+      flex-direction: column;
+      height: 160px;
+      padding: 12px;
+    }
+
+    .card-desc-heading {
+      margin-bottom: 10px;
+      color: #2F2F2F;
+      line-height: 1.5;
+      font-size: 1rem;
+    }
+
+    .card-desc-sub-heading {
+      color: rgba(0, 0, 0, 0.54);
+      font-size: .9rem;
+      line-height: 1.5;
+    }
+  }
+
+  .tech-list {
+    margin-top: auto;
+    font-size: 1.2rem;
+    display: flex;
+
+    .tech-list-item {
+      margin-right: 10px;
+    }
+  }
 }

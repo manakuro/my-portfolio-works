@@ -1,24 +1,67 @@
-.App {
-  text-align: center; }
+.header {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 70px;
+  background: rgba(255, 255, 255, 0.9); }
+  .header .logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px; }
+    .header .logo > a {
+      font-size: 2rem;
+      font-weight: 700;
+      font-family: 'Source Serif Pro', serif;
+      color: #2F2F2F; }
+  .header .nav {
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+    .header .nav /deep/ .swiper-slide {
+      width: auto; }
+    .header .nav .nav-container {
+      width: 50%;
+      overflow: hidden; }
+      .header .nav .nav-container a {
+        font-family: 'Roboto';
+        font-size: .9rem;
+        color: #2F2F2F;
+        opacity: .8;
+        transition: .25s; }
+        .header .nav .nav-container a:hover {
+          opacity: 1; }
+    .header .nav .icon {
+      cursor: pointer;
+      padding: 0 10px; }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px; }
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white; }
-
-.App-title {
-  font-size: 1.5em; }
-
-.App-intro {
-  font-size: large; }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg); }
-  to {
-    transform: rotate(360deg); } }
+.works {
+  margin-top: 100px; }
+  .works .works-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 15px; }
+  .works .card {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    cursor: pointer; }
+    .works .card .card-desc {
+      display: flex;
+      flex-direction: column;
+      height: 160px;
+      padding: 12px; }
+    .works .card .card-desc-heading {
+      margin-bottom: 10px;
+      color: #2F2F2F;
+      line-height: 1.5;
+      font-size: 1rem; }
+    .works .card .card-desc-sub-heading {
+      color: rgba(0, 0, 0, 0.54);
+      font-size: .9rem;
+      line-height: 1.5; }
+  .works .tech-list {
+    margin-top: auto;
+    font-size: 1.2rem;
+    display: flex; }
+    .works .tech-list .tech-list-item {
+      margin-right: 10px; }
