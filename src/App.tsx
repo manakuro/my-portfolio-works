@@ -1,5 +1,7 @@
 import * as React from 'react';
 import * as Swiper from 'react-id-swiper';
+// import Anime from 'react-anime';
+import ReactShow from 'react-show';
 
 // static
 import './App.css';
@@ -9,15 +11,62 @@ const sampleImg = require('./static/images/sample.jpeg');
 
 interface IAppProps {}
 
-interface IAppState {}
+interface IAppState {
+  offsetWidth: number;
+  offsetHeight: number;
+  isAnime: boolean;
+  isShowOverlay: boolean;
+  pageX: number;
+  pageY: number;
+}
 
 class App extends React.Component<IAppProps, IAppState> {
   private swiper: any;
+  private canvas: any;
 
   constructor(props: IAppProps) {
     super(props);
     this.goNext = this.goNext.bind(this);
     this.goPrev = this.goPrev.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+
+    this.state = {
+      offsetWidth: 0,
+      offsetHeight: 0,
+      isAnime: false,
+      isShowOverlay: false,
+      pageX: 0,
+      pageY: 0,
+    };
+  }
+
+  async handleClick(e: any) {
+    const { pageX, pageY } = e.nativeEvent;
+    await this.setState({
+      isShowOverlay: !this.state.isShowOverlay,
+      pageX,
+      pageY,
+    });
+    this.circle();
+  }
+
+  componentDidMount(): void {
+    this.initOverlay();
+  }
+
+  initOverlay(): void {
+    this.setState({
+      offsetWidth: window.innerWidth,
+      offsetHeight: window.innerHeight,
+    });
+  }
+
+  circle(): void {
+    const ctx: CanvasRenderingContext2D = this.canvas.getContext('2d');
+    ctx.beginPath();
+    ctx.arc(this.state.pageX, this.state.pageY, 50, 0, 2 * Math.PI, false);
+    ctx.fillStyle = 'black';
+    ctx.fill();
   }
 
   render(): JSX.Element {
@@ -49,6 +98,31 @@ class App extends React.Component<IAppProps, IAppState> {
 
     return (
       <div className="App">
+        <ReactShow
+          show={this.state.isShowOverlay}
+          styleHide={{
+            opacity: 0,
+            display: 'none',
+          }}
+          styleShow={{
+            opacity: 1,
+            display: 'block',
+          }}
+        >
+          <canvas
+            className="canvas"
+            ref={canvas => (this.canvas = canvas)}
+            width={this.state.offsetWidth}
+            height={this.state.offsetHeight}
+          />
+        </ReactShow>
+
+        {/*<Anime*/}
+        {/*easing="easeOutQuart"*/}
+        {/*duration={2000}*/}
+        {/*scale={[40]}>*/}
+        {/*</Anime>*/}
+
         <header className="header">
           <div className="logo">
             <a href="#">Manato</a>
@@ -76,7 +150,11 @@ class App extends React.Component<IAppProps, IAppState> {
           <div className="works">
             <ul className="works-list">
               {Array.apply(null, Array(7)).map((x: any, i: number) => (
-                <li className="works-list-item" key={i}>
+                <li
+                  className="works-list-item"
+                  key={i}
+                  onClick={this.handleClick}
+                >
                   <div className="card">
                     <img src={sampleImg} />
 

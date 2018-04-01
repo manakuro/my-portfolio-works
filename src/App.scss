@@ -105,3 +105,34 @@ $headerHeight: 70px;
     }
   }
 }
+
+.canvas {
+  position: fixed;
+  z-index: 2001;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.overlay {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  z-index: 2001;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+}
+
+.anime {
+  border-radius: 50%;
+  background: #2ff2ff;
+  width: 100px;
+  height: 100px;
+  position: fixed;
+  left: 0;
+  opacity: 1;
+}
