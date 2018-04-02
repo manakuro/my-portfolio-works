@@ -66,14 +66,6 @@
     .works .tech-list .tech-list-item {
       margin-right: 10px; }
 
-.canvas {
-  position: fixed;
-  z-index: 2001;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0; }
-
 .overlay {
   width: 100vw;
   height: 100vh;
@@ -82,14 +74,24 @@
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
-  opacity: 0; }
+  bottom: 0; }
 
-.anime {
+.circle {
   border-radius: 50%;
-  background: #2ff2ff;
+  background: #fff;
   width: 100px;
   height: 100px;
-  position: fixed;
-  left: 0;
-  opacity: 1; }
+  position: absolute;
+  left: -1000px;
+  top: 0;
+  z-index: 2001;
+  opacity: 0; }
+
+.scale-enter-active, .scale-exit-active {
+  opacity: 1;
+  transform: scale(40);
+  transition: transform 2.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0s; }
+
+.scale-enter-done {
+  opacity: 1;
+  transform: scale(40); }

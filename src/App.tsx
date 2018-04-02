@@ -1,7 +1,9 @@
 import * as React from 'react';
 import * as Swiper from 'react-id-swiper';
 // import Anime from 'react-anime';
-import ReactShow from 'react-show';
+// import ReactShow from 'react-show';
+import * as classNames from 'classnames';
+import { CSSTransition } from 'react-transition-group';
 
 // static
 import './App.css';
@@ -18,6 +20,7 @@ interface IAppState {
   isShowOverlay: boolean;
   pageX: number;
   pageY: number;
+  circleStyle: object;
 }
 
 class App extends React.Component<IAppProps, IAppState> {
@@ -37,6 +40,7 @@ class App extends React.Component<IAppProps, IAppState> {
       isShowOverlay: false,
       pageX: 0,
       pageY: 0,
+      circleStyle: {},
     };
   }
 
@@ -46,8 +50,12 @@ class App extends React.Component<IAppProps, IAppState> {
       isShowOverlay: !this.state.isShowOverlay,
       pageX,
       pageY,
+      circleStyle: {
+        top: `${pageY - 50}px`,
+        left: `${pageX - 50}px`,
+      },
     });
-    this.circle();
+    console.log('this.state', this.state);
   }
 
   componentDidMount(): void {
@@ -96,32 +104,31 @@ class App extends React.Component<IAppProps, IAppState> {
       </a>
     ));
 
+    const circleClass: string = classNames('circle', {
+      active: this.state.isShowOverlay,
+    });
+
     return (
       <div className="App">
-        <ReactShow
-          show={this.state.isShowOverlay}
-          styleHide={{
-            opacity: 0,
-            display: 'none',
-          }}
-          styleShow={{
-            opacity: 1,
-            display: 'block',
-          }}
+        {/*<ReactShow*/}
+        {/*show={this.state.isShowOverlay}*/}
+        {/*styleHide={{*/}
+        {/*opacity: 0,*/}
+        {/*display: 'none',*/}
+        {/*}}*/}
+        {/*styleShow={{*/}
+        {/*opacity: 1,*/}
+        {/*display: 'block',*/}
+        {/*}}*/}
+        {/*>*/}
+        {/*</ReactShow>*/}
+        <CSSTransition
+          in={this.state.isShowOverlay}
+          classNames="scale"
+          timeout={2000}
         >
-          <canvas
-            className="canvas"
-            ref={canvas => (this.canvas = canvas)}
-            width={this.state.offsetWidth}
-            height={this.state.offsetHeight}
-          />
-        </ReactShow>
-
-        {/*<Anime*/}
-        {/*easing="easeOutQuart"*/}
-        {/*duration={2000}*/}
-        {/*scale={[40]}>*/}
-        {/*</Anime>*/}
+          <div className={circleClass} style={this.state.circleStyle} />
+        </CSSTransition>
 
         <header className="header">
           <div className="logo">
