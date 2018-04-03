@@ -96,6 +96,12 @@ img {
 /* -----------------------
  Layout
 ----------------------- */
+.hidden {
+  overflow: hidden; }
+
+/* -----------------------
+ Layout
+----------------------- */
 .container {
   max-width: 1080px;
   margin: 0 auto; }

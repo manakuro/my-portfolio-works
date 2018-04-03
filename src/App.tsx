@@ -1,6 +1,5 @@
 import * as React from 'react';
 import * as Swiper from 'react-id-swiper';
-// import Anime from 'react-anime';
 // import ReactShow from 'react-show';
 import * as classNames from 'classnames';
 import { CSSTransition } from 'react-transition-group';
@@ -21,17 +20,18 @@ interface IAppState {
   pageX: number;
   pageY: number;
   circleStyle: object;
+  isShowWorksContent: boolean;
 }
 
 class App extends React.Component<IAppProps, IAppState> {
   private swiper: any;
-  private canvas: any;
 
   constructor(props: IAppProps) {
     super(props);
     this.goNext = this.goNext.bind(this);
     this.goPrev = this.goPrev.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.showWorksContent = this.showWorksContent.bind(this);
 
     this.state = {
       offsetWidth: 0,
@@ -41,6 +41,7 @@ class App extends React.Component<IAppProps, IAppState> {
       pageX: 0,
       pageY: 0,
       circleStyle: {},
+      isShowWorksContent: false,
     };
   }
 
@@ -69,12 +70,15 @@ class App extends React.Component<IAppProps, IAppState> {
     });
   }
 
-  circle(): void {
-    const ctx: CanvasRenderingContext2D = this.canvas.getContext('2d');
-    ctx.beginPath();
-    ctx.arc(this.state.pageX, this.state.pageY, 50, 0, 2 * Math.PI, false);
-    ctx.fillStyle = 'black';
-    ctx.fill();
+  showWorksContent(): void {
+    this.setState({ isShowWorksContent: !this.state.isShowWorksContent });
+    this.overFlowHiddenHtml();
+  }
+
+  overFlowHiddenHtml(): void {
+    const { documentElement, body } = document;
+    documentElement.className = 'hidden';
+    body.className = 'hidden';
   }
 
   render(): JSX.Element {
@@ -110,22 +114,21 @@ class App extends React.Component<IAppProps, IAppState> {
 
     return (
       <div className="App">
-        {/*<ReactShow*/}
-        {/*show={this.state.isShowOverlay}*/}
-        {/*styleHide={{*/}
-        {/*opacity: 0,*/}
-        {/*display: 'none',*/}
-        {/*}}*/}
-        {/*styleShow={{*/}
-        {/*opacity: 1,*/}
-        {/*display: 'block',*/}
-        {/*}}*/}
-        {/*>*/}
-        {/*</ReactShow>*/}
+        <CSSTransition
+          in={this.state.isShowWorksContent}
+          classNames="slide-works"
+          timeout={1000}
+        >
+          <div className="works-content-overlay">
+            <h2 className="works-content-heading">EC Website</h2>
+          </div>
+        </CSSTransition>
+
         <CSSTransition
           in={this.state.isShowOverlay}
           classNames="scale"
-          timeout={2000}
+          timeout={1000}
+          onEnter={() => this.showWorksContent()}
         >
           <div className={circleClass} style={this.state.circleStyle} />
         </CSSTransition>
