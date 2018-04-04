@@ -99,11 +99,11 @@
   z-index: 3001;
   transform: translateX(100%);
   background: #fff;
-  padding: 0 30px;
+  padding: 0 30px 30px 30px;
   overflow-y: scroll; }
   .works-content-overlay .works-content-heading {
-    padding-top: 100px;
-    padding-bottom: 100px;
+    padding-top: 80px;
+    padding-bottom: 80px;
     font-size: 4rem;
     line-height: 1.5; }
 
@@ -127,3 +127,12 @@
 .scale-enter-done {
   opacity: 1;
   transform: scale(40); }
+
+/* ------------------------------
+  Overwrite github-markdown-css
+ --------------------------------*/
+.markdown-body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #333; }
+  .markdown-body ul, .markdown-body li {
+    list-style: initial; }

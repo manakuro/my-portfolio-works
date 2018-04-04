@@ -8,6 +8,7 @@ import 'sanitize.css';
 import './index.css';
 import 'font-awesome/css/font-awesome.min.css';
 import 'react-id-swiper/src/styles/css/swiper.css';
+import 'github-markdown-css/github-markdown.css';
 
 ReactDOM.render(<App />, document.getElementById('root') as HTMLElement);
 registerServiceWorker();

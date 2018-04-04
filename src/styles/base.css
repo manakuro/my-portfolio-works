@@ -4,7 +4,8 @@
 
 html, body {
   overflow-x: hidden;
-  font-family: 'Roboto'; }
+  font-family: 'Roboto';
+  color: #333333; }
 
 a {
   text-decoration: none; }

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import * as Swiper from 'react-id-swiper';
-// import ReactShow from 'react-show';
 import * as classNames from 'classnames';
 import { CSSTransition } from 'react-transition-group';
+const ReactMarkdown = require('react-markdown');
 
 // static
 import './App.css';
@@ -21,7 +21,57 @@ interface IAppState {
   pageY: number;
   circleStyle: object;
   isShowWorksContent: boolean;
+  worksContent: string | null;
 }
+
+const WORKS_CONTENT = `
+## EC Website
+
+This is a copy website of NIKE.com, which is developed by Vue.js, 
+Ruby on Rails and GraphQL.
+
+Changes are automatically rendered as you type.
+
+- Implements [GitHub Flavored Markdown](https://github.github.com/gfm/)
+- Renders actual, "native" React DOM elements
+- Allows you to escape or skip HTML (try toggling the checkboxes above)
+- If you escape or skip the HTML, no \`dangerouslySetInnerHTML\` is used! Yay!
+
+## HTML block below
+
+<blockquote>
+  This blockquote will change based on the HTML settings above.
+</blockquote>
+
+## How about some code?
+\`\`\`js
+var React = require('react');
+var Markdown = require('react-markdown');
+
+React.render(
+  <Markdown source="# Your markdown here" />,
+  document.getElementById('content')
+);
+\`\`\`
+
+Pretty neat, eh?
+
+## Tables?
+
+| Feature | Support |
+| ------ | ----------- |
+| tables | ✔ |
+| alignment | ✔ |
+| wewt | ✔ |
+
+## More info?
+
+Read usage information and more on [GitHub](//github.com/rexxars/react-markdown)
+
+---------------
+
+A component by [VaffelNinja](http://vaffel.ninja) / Espen Hovlandsdal
+`;
 
 class App extends React.Component<IAppProps, IAppState> {
   private swiper: any;
@@ -42,6 +92,7 @@ class App extends React.Component<IAppProps, IAppState> {
       pageY: 0,
       circleStyle: {},
       isShowWorksContent: false,
+      worksContent: null,
     };
   }
 
@@ -71,7 +122,10 @@ class App extends React.Component<IAppProps, IAppState> {
   }
 
   showWorksContent(): void {
-    this.setState({ isShowWorksContent: !this.state.isShowWorksContent });
+    this.setState({
+      isShowWorksContent: !this.state.isShowWorksContent,
+      worksContent: WORKS_CONTENT,
+    });
     this.overFlowHiddenHtml();
   }
 
@@ -121,6 +175,10 @@ class App extends React.Component<IAppProps, IAppState> {
         >
           <div className="works-content-overlay">
             <h2 className="works-content-heading">EC Website</h2>
+            <ReactMarkdown
+              className="markdown-body"
+              source={this.state.worksContent}
+            />
           </div>
         </CSSTransition>
 
