@@ -1,8 +1,30 @@
 /* -----------------------
- Fade in
+ Inspired by Animate.css
+ @see https://github.com/daneden/animate.css
 ----------------------- */
-.fade-enter-active {
-  transition: opacity .25s; }
+.animated {
+  animation-duration: .5s;
+  animation-fill-mode: both; }
 
-.fade-enter, .fade-leave-to {
-  opacity: 0; }
+.animated.infinite {
+  animation-iteration-count: infinite; }
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -30px, 0); }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0); } }
+
+.fadeInDown {
+  animation-name: fadeInDown; }
+
+@keyframes fadeOut {
+  from {
+    opacity: 1; }
+  to {
+    opacity: 0; } }
+
+.fadeOut {
+  animation-name: fadeOut; }

@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as Swiper from 'react-id-swiper';
 import * as classNames from 'classnames';
 import { CSSTransition } from 'react-transition-group';
+import { Animated } from 'react-animated-css';
 const ReactMarkdown = require('react-markdown');
 
 // static
@@ -21,6 +22,7 @@ interface IAppState {
   pageY: number;
   circleStyle: object;
   isShowWorksContent: boolean;
+  isWorksContentAnimation: boolean;
   worksContent: string | null;
 }
 
@@ -80,8 +82,10 @@ class App extends React.Component<IAppProps, IAppState> {
     super(props);
     this.goNext = this.goNext.bind(this);
     this.goPrev = this.goPrev.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    this.showOverlay = this.showOverlay.bind(this);
     this.showWorksContent = this.showWorksContent.bind(this);
+    this.hideOverlay = this.hideOverlay.bind(this);
+    this.onExitedOverlay = this.onExitedOverlay.bind(this);
 
     this.state = {
       offsetWidth: 0,
@@ -92,14 +96,15 @@ class App extends React.Component<IAppProps, IAppState> {
       pageY: 0,
       circleStyle: {},
       isShowWorksContent: false,
+      isWorksContentAnimation: false,
       worksContent: null,
     };
   }
 
-  async handleClick(e: any) {
+  async showOverlay(e: any) {
     const { pageX, pageY } = e.nativeEvent;
     await this.setState({
-      isShowOverlay: !this.state.isShowOverlay,
+      isShowOverlay: true,
       pageX,
       pageY,
       circleStyle: {
@@ -107,7 +112,26 @@ class App extends React.Component<IAppProps, IAppState> {
         left: `${pageX - 50}px`,
       },
     });
-    console.log('this.state', this.state);
+  }
+
+  hideOverlay(): void {
+    this.setState({
+      isShowWorksContent: false,
+    });
+    this.removeClassHtml();
+
+    this.setState({
+      isShowOverlay: false,
+    });
+  }
+
+  onExitedOverlay(): void {
+    this.setState({
+      circleStyle: {
+        top: '0px',
+        left: '-1000px',
+      },
+    });
   }
 
   componentDidMount(): void {
@@ -123,16 +147,28 @@ class App extends React.Component<IAppProps, IAppState> {
 
   showWorksContent(): void {
     this.setState({
-      isShowWorksContent: !this.state.isShowWorksContent,
+      isShowWorksContent: true,
       worksContent: WORKS_CONTENT,
     });
-    this.overFlowHiddenHtml();
+    this.addClassHtml('hidden');
   }
 
-  overFlowHiddenHtml(): void {
+  onEnteredShowWorksContent(): void {
+    this.setState({
+      isWorksContentAnimation: true,
+    });
+  }
+
+  addClassHtml(className: string): void {
     const { documentElement, body } = document;
-    documentElement.className = 'hidden';
-    body.className = 'hidden';
+    documentElement.className = className;
+    body.className = className;
+  }
+
+  removeClassHtml() {
+    const { documentElement, body } = document;
+    documentElement.className = '';
+    body.className = '';
   }
 
   render(): JSX.Element {
@@ -154,6 +190,7 @@ class App extends React.Component<IAppProps, IAppState> {
       'JEST',
       'PWAs',
       'SSR',
+      'Elm',
     ];
 
     const rows: JSX.Element[] = lans.map((l, index) => (
@@ -172,13 +209,27 @@ class App extends React.Component<IAppProps, IAppState> {
           in={this.state.isShowWorksContent}
           classNames="slide-works"
           timeout={1000}
+          onEntered={() => this.onEnteredShowWorksContent()}
         >
           <div className="works-content-overlay">
-            <h2 className="works-content-heading">EC Website</h2>
-            <ReactMarkdown
-              className="markdown-body"
-              source={this.state.worksContent}
-            />
+            <Animated
+              animationIn="fadeInDown"
+              animationOut="fadeOut"
+              isVisible={this.state.isWorksContentAnimation}
+            >
+              <h2 className="works-content-heading">EC Website</h2>
+            </Animated>
+            <Animated
+              animationIn="fadeInDown"
+              animationOut="fadeOut"
+              animationInDelay={300}
+              isVisible={this.state.isWorksContentAnimation}
+            >
+              <ReactMarkdown
+                className="markdown-body"
+                source={this.state.worksContent}
+              />
+            </Animated>
           </div>
         </CSSTransition>
 
@@ -187,8 +238,19 @@ class App extends React.Component<IAppProps, IAppState> {
           classNames="scale"
           timeout={1000}
           onEnter={() => this.showWorksContent()}
+          onExit={() => this.onExitedOverlay()}
         >
           <div className={circleClass} style={this.state.circleStyle} />
+        </CSSTransition>
+
+        <CSSTransition
+          in={this.state.isShowWorksContent}
+          classNames="slide-button"
+          timeout={1000}
+        >
+          <div className="works-back-button">
+            <i className="fa fa-angle-left icon" onClick={this.hideOverlay} />
+          </div>
         </CSSTransition>
 
         <header className="header">
@@ -217,11 +279,11 @@ class App extends React.Component<IAppProps, IAppState> {
         <main className="main container">
           <div className="works">
             <ul className="works-list">
-              {Array.apply(null, Array(7)).map((x: any, i: number) => (
+              {Array.apply(null, Array(12)).map((x: any, i: number) => (
                 <li
                   className="works-list-item"
                   key={i}
-                  onClick={this.handleClick}
+                  onClick={this.showOverlay}
                 >
                   <div className="card">
                     <img src={sampleImg} />
