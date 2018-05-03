@@ -55,7 +55,7 @@ button {
   background: none;
   user-select: none;
   outline: none;
-  tap-highlight-color: transparent; }
+  tap-highlight-color: rgba(0, 0, 0, 0); }
 
 .browserupgrade {
   margin: 0.2em 0;

@@ -1,26 +1,23 @@
 import * as React from 'react';
 
-const sampleImg = require('./static/images/sample.jpeg');
+import sampleImg from './static/images/sample.jpeg';
 
 interface IWorksProps {
-  showOverlay: Function;
+  showOverlay: (e: any) => void;
 }
 
 export default class Works extends React.Component<IWorksProps, {}> {
   constructor(props: IWorksProps) {
     super(props);
+    this.onClick = this.onClick.bind(this);
   }
 
-  render(): JSX.Element {
+  public render(): JSX.Element {
     return (
       <div className="works">
         <ul className="works-list">
           {Array.apply(null, Array(12)).map((x: null, i: number) => (
-            <li
-              className="works-list-item"
-              key={i}
-              onClick={e => this.props.showOverlay(e)}
-            >
+            <li className="works-list-item" key={i} onClick={this.onClick}>
               <div className="card">
                 <img src={sampleImg} />
 
@@ -53,5 +50,9 @@ export default class Works extends React.Component<IWorksProps, {}> {
         </ul>
       </div>
     );
+  }
+
+  private onClick(e: any) {
+    this.props.showOverlay(e);
   }
 }

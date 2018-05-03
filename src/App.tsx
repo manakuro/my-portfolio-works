@@ -1,17 +1,21 @@
 import * as React from 'react';
-import * as classNames from 'classnames';
-import { CSSTransition } from 'react-transition-group';
 import { Animated } from 'react-animated-css';
-const ReactMarkdown = require('react-markdown');
+// import Anime from 'react-anime';
+import { CSSTransition } from 'react-transition-group';
 
-/* tslint:disable no-any */
+import * as classNames from 'classnames';
+
+/* tslint:disable */
+/* tslint:disable no-var-requires */
+/* tslint:disable no-empty-interface */
 
 // static
 import './App.css';
 import Header from './Header';
 import Works from './Works';
-import Anime from 'react-anime';
-const sampleImg = require('./static/images/sample.jpeg');
+
+import sampleImg from './static/images/sample.jpeg';
+const ReactMarkdown = require('react-markdown');
 
 interface IAppProps {}
 
@@ -260,27 +264,27 @@ class App extends React.Component<IAppProps, IAppState> {
         <main className="main container">
           <Works showOverlay={this.showOverlay} />
 
-          <Anime
-            easing="easeOutElastic"
-            duration={1000}
-            direction="alternate"
-            loop={true}
-            delay={(el, index: number) => index * 240}
-            translateX="13rem"
-            scale={[0.75, 0.9]}
-            value=""
-            translateY={0}
-            rotate={0}
-            opacity={1}
-            color="#000"
-            backgroundColor="#000"
-            points=""
-            strokeDashoffset={0}
-          >
-            <div className="blue" />
-            <div className="green" />
-            <div className="red" />
-          </Anime>
+          {/*<Anime*/}
+          {/*easing="easeOutElastic"*/}
+          {/*duration={1000}*/}
+          {/*direction="alternate"*/}
+          {/*loop={true}*/}
+          {/*delay={(el, index: number) => index * 240}*/}
+          {/*translateX="13rem"*/}
+          {/*scale={[0.75, 0.9]}*/}
+          {/*value=""*/}
+          {/*translateY={0}*/}
+          {/*rotate={0}*/}
+          {/*opacity={1}*/}
+          {/*color="#000"*/}
+          {/*backgroundColor="#000"*/}
+          {/*points=""*/}
+          {/*strokeDashoffset={0}*/}
+          {/*>*/}
+          {/*<div className="blue" />*/}
+          {/*<div className="green" />*/}
+          {/*<div className="red" />*/}
+          {/*</Anime>*/}
         </main>
       </div>
     );
