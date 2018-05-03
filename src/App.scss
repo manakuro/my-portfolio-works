@@ -233,6 +233,59 @@ $headerHeight: 70px;
 
 
 /* ------------------------------
+  Works content left
+ --------------------------------*/
+.works-content-left-wrapper {
+  position: relative;
+  z-index: 3001;
+  opacity: 0;
+}
+
+.works-content-left {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 3001;
+  background: transparent;
+  padding: 0 50px;
+}
+
+.works-content-left-inner {
+  width: 80%;
+}
+
+/* ------------------------------
+  Uncover
+ --------------------------------*/
+.uncover {
+  overflow: hidden;
+  background-image: none !important;
+  position: relative;
+
+  .uncover-slices {
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+
+    .uncover-slice {
+      flex: 1;
+      color: #fff;
+      background: currentColor;
+    }
+  }
+}
+
+
+/* ------------------------------
   Overwrite github-markdown-css
  --------------------------------*/
 .markdown-body {

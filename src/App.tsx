@@ -1,15 +1,17 @@
 import * as React from 'react';
-import * as Swiper from 'react-id-swiper';
 import * as classNames from 'classnames';
 import { CSSTransition } from 'react-transition-group';
 import { Animated } from 'react-animated-css';
 const ReactMarkdown = require('react-markdown');
 
+/* tslint:disable no-any */
+
 // static
 import './App.css';
+import Header from './Header';
+import Works from './Works';
+import Anime from 'react-anime';
 const sampleImg = require('./static/images/sample.jpeg');
-
-/* tslint:disable no-any */
 
 interface IAppProps {}
 
@@ -75,13 +77,21 @@ Read usage information and more on [GitHub](//github.com/rexxars/react-markdown)
 A component by [VaffelNinja](http://vaffel.ninja) / Espen Hovlandsdal
 `;
 
-class App extends React.Component<IAppProps, IAppState> {
-  private swiper: any;
+function addClassHtml(className: string): void {
+  const { documentElement, body } = document;
+  documentElement.className = className;
+  body.className = className;
+}
 
+function removeClassHtml(): void {
+  const { documentElement, body } = document;
+  documentElement.className = '';
+  body.className = '';
+}
+
+class App extends React.Component<IAppProps, IAppState> {
   constructor(props: IAppProps) {
     super(props);
-    this.goNext = this.goNext.bind(this);
-    this.goPrev = this.goPrev.bind(this);
     this.showOverlay = this.showOverlay.bind(this);
     this.showWorksContent = this.showWorksContent.bind(this);
     this.hideOverlay = this.hideOverlay.bind(this);
@@ -118,10 +128,11 @@ class App extends React.Component<IAppProps, IAppState> {
     this.setState({
       isShowWorksContent: false,
     });
-    this.removeClassHtml();
+    removeClassHtml();
 
     this.setState({
       isShowOverlay: false,
+      isWorksContentAnimation: false,
     });
   }
 
@@ -150,7 +161,7 @@ class App extends React.Component<IAppProps, IAppState> {
       isShowWorksContent: true,
       worksContent: WORKS_CONTENT,
     });
-    this.addClassHtml('hidden');
+    addClassHtml('hidden');
   }
 
   onEnteredShowWorksContent(): void {
@@ -159,46 +170,7 @@ class App extends React.Component<IAppProps, IAppState> {
     });
   }
 
-  addClassHtml(className: string): void {
-    const { documentElement, body } = document;
-    documentElement.className = className;
-    body.className = className;
-  }
-
-  removeClassHtml() {
-    const { documentElement, body } = document;
-    documentElement.className = '';
-    body.className = '';
-  }
-
   render(): JSX.Element {
-    const params = {
-      slidesPerView: 'auto',
-      spaceBetween: 10,
-      freeMode: true,
-      loop: true,
-    };
-
-    const lans: string[] = [
-      'Ruby on Rails',
-      'React.js',
-      'Angular',
-      'Vue.js',
-      'Fuel PHP',
-      'TypeScript',
-      'GraphQL',
-      'JEST',
-      'PWAs',
-      'SSR',
-      'Elm',
-    ];
-
-    const rows: JSX.Element[] = lans.map((l, index) => (
-      <a href="#" key={index}>
-        {l}
-      </a>
-    ));
-
     const circleClass: string = classNames('circle', {
       active: this.state.isShowOverlay,
     });
@@ -232,6 +204,37 @@ class App extends React.Component<IAppProps, IAppState> {
             </Animated>
           </div>
         </CSSTransition>
+        <Animated
+          className="works-content-left-wrapper"
+          animationIn="fadeIn"
+          animationOut="fadeOut"
+          animateOnMount={false}
+          isVisible={this.state.isWorksContentAnimation}
+        >
+          <div className="works-content-left">
+            <div className="works-content-left-inner">
+              <Animated
+                animationIn="fadeInDown"
+                animationOut="fadeOut"
+                animationInDelay={300}
+                isVisible={this.state.isWorksContentAnimation}
+              >
+                <div className="uncover">
+                  <a href="https://google.com" target="blank">
+                    <img src={sampleImg} />
+                  </a>
+
+                  <div className="uncover-slices">
+                    <div className="uncover-slice" />
+                    <div className="uncover-slice" />
+                    <div className="uncover-slice" />
+                    <div className="uncover-slice" />
+                  </div>
+                </div>
+              </Animated>
+            </div>
+          </div>
+        </Animated>
 
         <CSSTransition
           in={this.state.isShowOverlay}
@@ -253,80 +256,34 @@ class App extends React.Component<IAppProps, IAppState> {
           </div>
         </CSSTransition>
 
-        <header className="header">
-          <div className="logo">
-            <a href="#">Manato</a>
-          </div>
-          <nav className="nav">
-            <div>
-              <i className="fa fa-angle-left icon" onClick={this.goPrev} />
-            </div>
-            <div className="nav-container">
-              <Swiper
-                {...params}
-                ref={(node: any) => {
-                  if (node) this.swiper = node.swiper;
-                }}
-              >
-                {rows}
-              </Swiper>
-            </div>
-            <div>
-              <i className="fa fa-angle-right icon" onClick={this.goNext} />
-            </div>
-          </nav>
-        </header>
+        <Header />
         <main className="main container">
-          <div className="works">
-            <ul className="works-list">
-              {Array.apply(null, Array(12)).map((x: any, i: number) => (
-                <li
-                  className="works-list-item"
-                  key={i}
-                  onClick={this.showOverlay}
-                >
-                  <div className="card">
-                    <img src={sampleImg} />
+          <Works showOverlay={this.showOverlay} />
 
-                    <div className="card-desc">
-                      <h3 className="card-desc-heading">EC Website</h3>
-                      <p className="card-desc-sub-heading">
-                        I’ve been a CMT for ten years now, and I have, literally
-                        and figuratively, held the pulse of a steaming
-                        cross-section of San Franciscans
-                      </p>
-
-                      <ul className="tech-list">
-                        <li className="tech-list-item">
-                          <span className="icon-vuejs">
-                            <span className="path1" />
-                            <span className="path2" />
-                          </span>
-                        </li>
-                        <li className="tech-list-item">
-                          <span className="icon-vuejs">
-                            <span className="path1" />
-                            <span className="path2" />
-                          </span>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <Anime
+            easing="easeOutElastic"
+            duration={1000}
+            direction="alternate"
+            loop={true}
+            delay={(el, index: number) => index * 240}
+            translateX="13rem"
+            scale={[0.75, 0.9]}
+            value=""
+            translateY={0}
+            rotate={0}
+            opacity={1}
+            color="#000"
+            backgroundColor="#000"
+            points=""
+            strokeDashoffset={0}
+          >
+            <div className="blue" />
+            <div className="green" />
+            <div className="red" />
+          </Anime>
         </main>
       </div>
     );
-  }
-
-  private goNext(): void {
-    this.swiper.slideNext();
-  }
-
-  private goPrev(): void {
-    this.swiper.slidePrev();
   }
 }
 
