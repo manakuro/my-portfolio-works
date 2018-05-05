@@ -3,7 +3,7 @@ import * as React from 'react';
 import sampleImg from './static/images/sample.jpeg';
 
 interface IWorksProps {
-  showOverlay: (e: any) => void;
+  showOverlay: (e: Element) => void;
 }
 
 export default class Works extends React.Component<IWorksProps, {}> {
