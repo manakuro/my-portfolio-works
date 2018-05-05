@@ -1,4 +1,5 @@
 $headerHeight: 70px;
+$bgOverlay: rgb(244, 247, 246);
 
 .header {
   position: fixed;
@@ -256,7 +257,7 @@ $headerHeight: 70px;
 }
 
 .works-content-left-inner {
-  width: 80%;
+  width: 90%;
 }
 
 /* ------------------------------
@@ -278,7 +279,7 @@ $headerHeight: 70px;
 
     .uncover-slice {
       flex: 1;
-      color: #fff;
+      color: $bgOverlay;
       background: currentColor;
     }
   }

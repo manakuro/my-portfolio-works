@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Animated } from 'react-animated-css';
-// import Anime from 'react-anime';
+import Anime, { AnimeProps } from 'react-anime';
 import { CSSTransition } from 'react-transition-group';
 
 import * as classNames from 'classnames';
@@ -149,16 +149,7 @@ class App extends React.Component<IAppProps, IAppState> {
     });
   }
 
-  componentDidMount(): void {
-    this.initOverlay();
-  }
-
-  initOverlay(): void {
-    this.setState({
-      offsetWidth: window.innerWidth,
-      offsetHeight: window.innerHeight,
-    });
-  }
+  componentDidMount(): void {}
 
   showWorksContent(): void {
     this.setState({
@@ -178,6 +169,23 @@ class App extends React.Component<IAppProps, IAppState> {
     const circleClass: string = classNames('circle', {
       active: this.state.isShowOverlay,
     });
+
+    const animeProps: AnimeProps = {
+      children: [],
+      easing: 'easeInOutCirc',
+      duration: 1000,
+      delay: (_, i: number, t: number) => Math.abs(t / 2 - i) * 80,
+      translateX: '-100%',
+      scale: 1,
+      value: '',
+      translateY: 0,
+      rotate: 0,
+      opacity: 1,
+      color: '',
+      backgroundColor: '',
+      points: '',
+      strokeDashoffset: 0,
+    };
 
     return (
       <div className="App">
@@ -229,10 +237,16 @@ class App extends React.Component<IAppProps, IAppState> {
                   </a>
 
                   <div className="uncover-slices">
-                    <div className="uncover-slice" />
-                    <div className="uncover-slice" />
-                    <div className="uncover-slice" />
-                    <div className="uncover-slice" />
+                    {this.state.isWorksContentAnimation && (
+                      <Anime {...animeProps}>
+                        <div className="uncover-slice" />
+                        <div className="uncover-slice" />
+                        <div className="uncover-slice" />
+                        <div className="uncover-slice" />
+                        <div className="uncover-slice" />
+                        <div className="uncover-slice" />
+                      </Anime>
+                    )}
                   </div>
                 </div>
               </Animated>
@@ -263,28 +277,6 @@ class App extends React.Component<IAppProps, IAppState> {
         <Header />
         <main className="main container">
           <Works showOverlay={this.showOverlay} />
-
-          {/*<Anime*/}
-          {/*easing="easeOutElastic"*/}
-          {/*duration={1000}*/}
-          {/*direction="alternate"*/}
-          {/*loop={true}*/}
-          {/*delay={(el, index: number) => index * 240}*/}
-          {/*translateX="13rem"*/}
-          {/*scale={[0.75, 0.9]}*/}
-          {/*value=""*/}
-          {/*translateY={0}*/}
-          {/*rotate={0}*/}
-          {/*opacity={1}*/}
-          {/*color="#000"*/}
-          {/*backgroundColor="#000"*/}
-          {/*points=""*/}
-          {/*strokeDashoffset={0}*/}
-          {/*>*/}
-          {/*<div className="blue" />*/}
-          {/*<div className="green" />*/}
-          {/*<div className="red" />*/}
-          {/*</Anime>*/}
         </main>
       </div>
     );
