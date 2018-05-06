@@ -3,19 +3,19 @@ import { Animated } from 'react-animated-css';
 import Anime, { AnimeProps } from 'react-anime';
 import { CSSTransition } from 'react-transition-group';
 
-import * as classNames from 'classnames';
+import * as ReactMarkdown from 'react-markdown';
 
 /* tslint:disable */
-/* tslint:disable no-var-requires */
-/* tslint:disable no-empty-interface */
 
-// static
-import './App.css';
+// components
 import Header from './Header';
 import Works from './Works';
 
+// others
+import './App.css';
 import sampleImg from './static/images/sample.jpeg';
-const ReactMarkdown = require('react-markdown');
+import addClassHtml from './utils/addClassHtml';
+import removeClassHtml from './utils/removeClassHtml';
 
 interface IAppProps {}
 
@@ -29,7 +29,8 @@ interface IAppState {
   circleStyle: object;
   isShowWorksContent: boolean;
   isWorksContentAnimation: boolean;
-  worksContent: string | null;
+  worksContent: string;
+  img: string;
 }
 
 const WORKS_CONTENT = `
@@ -79,19 +80,54 @@ Read usage information and more on [GitHub](//github.com/rexxars/react-markdown)
 ---------------
 
 A component by [VaffelNinja](http://vaffel.ninja) / Espen Hovlandsdal
+
+## EC Website
+
+This is a copy website of NIKE.com, which is developed by Vue.js, 
+Ruby on Rails and GraphQL.
+
+Changes are automatically rendered as you type.
+
+- Implements [GitHub Flavored Markdown](https://github.github.com/gfm/)
+- Renders actual, "native" React DOM elements
+- Allows you to escape or skip HTML (try toggling the checkboxes above)
+- If you escape or skip the HTML, no \`dangerouslySetInnerHTML\` is used! Yay!
+
+## HTML block below
+
+<blockquote>
+  This blockquote will change based on the HTML settings above.
+</blockquote>
+
+## How about some code?
+\`\`\`js
+var React = require('react');
+var Markdown = require('react-markdown');
+
+React.render(
+  <Markdown source="# Your markdown here" />,
+  document.getElementById('content')
+);
+\`\`\`
+
+Pretty neat, eh?
+
+## Tables?
+
+| Feature | Support |
+| ------ | ----------- |
+| tables | ✔ |
+| alignment | ✔ |
+| wewt | ✔ |
+
+## More info?
+
+Read usage information and more on [GitHub](//github.com/rexxars/react-markdown)
+
+---------------
+
+A component by [VaffelNinja](http://vaffel.ninja) / Espen Hovlandsdal
 `;
-
-function addClassHtml(className: string): void {
-  const { documentElement, body } = document;
-  documentElement.className = className;
-  body.className = className;
-}
-
-function removeClassHtml(): void {
-  const { documentElement, body } = document;
-  documentElement.className = '';
-  body.className = '';
-}
 
 class App extends React.Component<IAppProps, IAppState> {
   constructor(props: IAppProps) {
@@ -111,12 +147,14 @@ class App extends React.Component<IAppProps, IAppState> {
       circleStyle: {},
       isShowWorksContent: false,
       isWorksContentAnimation: false,
-      worksContent: null,
+      worksContent: '',
+      img: sampleImg,
     };
   }
 
-  async showOverlay(e: any) {
-    const { pageX, pageY } = e.nativeEvent;
+  async showOverlay(e: React.SyntheticEvent<EventTarget>) {
+    const nativeEvent: any = e.nativeEvent;
+    const { pageX, pageY } = nativeEvent;
     await this.setState({
       isShowOverlay: true,
       pageX,
@@ -165,11 +203,7 @@ class App extends React.Component<IAppProps, IAppState> {
     });
   }
 
-  render(): JSX.Element {
-    const circleClass: string = classNames('circle', {
-      active: this.state.isShowOverlay,
-    });
-
+  public render(): JSX.Element {
     const animeProps: AnimeProps = {
       children: [],
       easing: 'easeInOutCirc',
@@ -233,11 +267,11 @@ class App extends React.Component<IAppProps, IAppState> {
               >
                 <div className="uncover">
                   <a href="https://google.com" target="blank">
-                    <img src={sampleImg} />
+                    <img src={this.state.img} />
                   </a>
 
                   <div className="uncover-slices">
-                    {this.state.isWorksContentAnimation && (
+                    {false && (
                       <Anime {...animeProps}>
                         <div className="uncover-slice" />
                         <div className="uncover-slice" />
@@ -261,7 +295,7 @@ class App extends React.Component<IAppProps, IAppState> {
           onEnter={() => this.showWorksContent()}
           onExit={() => this.onExitedOverlay()}
         >
-          <div className={circleClass} style={this.state.circleStyle} />
+          <div className="circle" style={this.state.circleStyle} />
         </CSSTransition>
 
         <CSSTransition
