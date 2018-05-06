@@ -8,15 +8,15 @@ import * as ReactMarkdown from 'react-markdown';
 /* tslint:disable */
 
 // components
-import Header from './components/Header';
-import Works from './components/Works';
+import Header from './Header';
+import Works from './Works';
 
 // others
-import './App.css';
-import sampleImg from './static/images/sample.jpeg';
-import addClassHtml from './utils/addClassHtml';
-import removeClassHtml from './utils/removeClassHtml';
-import { IHomeState as IAppProps } from './reducers/home';
+import '../App.css';
+import sampleImg from '../static/images/sample.jpeg';
+import addClassHtml from '../utils/addClassHtml';
+import removeClassHtml from '../utils/removeClassHtml';
+import { IHomeState as IAppProps } from '../reducers/home';
 
 interface IAppState {
   offsetWidth: number;

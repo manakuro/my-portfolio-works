@@ -1,8 +1,8 @@
 import * as React from 'react';
 
-import sampleImg from './static/images/sample.jpeg';
+import { IHomeState, IWork } from '../reducers/home';
 
-interface IWorksProps {
+interface IWorksProps extends IHomeState {
   showOverlay: (e: React.SyntheticEvent<EventTarget>) => void;
 }
 
@@ -16,18 +16,14 @@ export default class Works extends React.Component<IWorksProps, {}> {
     return (
       <div className="works">
         <ul className="works-list">
-          {Array.apply(null, Array(12)).map((x: null, i: number) => (
+          {this.props.works.map((work: IWork, i: number) => (
             <li className="works-list-item" key={i} onClick={this.onClick}>
               <div className="card">
-                <img src={sampleImg} />
+                <img src={work.img} />
 
                 <div className="card-desc">
-                  <h3 className="card-desc-heading">EC Website</h3>
-                  <p className="card-desc-sub-heading">
-                    I’ve been a CMT for ten years now, and I have, literally and
-                    figuratively, held the pulse of a steaming cross-section of
-                    San Franciscans
-                  </p>
+                  <h3 className="card-desc-heading">{work.title}</h3>
+                  <p className="card-desc-sub-heading">{work.description}</p>
 
                   <ul className="tech-list">
                     <li className="tech-list-item">
