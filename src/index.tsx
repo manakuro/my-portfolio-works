@@ -1,7 +1,7 @@
 /* tslint:disable */
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import Home from './containers/Home';
+import Home from './components/Home/Home';
 import { Provider } from 'react-redux';
 
 import configureStore from './store/configure';

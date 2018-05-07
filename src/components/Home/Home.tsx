@@ -1,134 +1,33 @@
 import * as React from 'react';
 import { Animated } from 'react-animated-css';
 import Anime, { AnimeProps } from 'react-anime';
-import { CSSTransition } from 'react-transition-group';
-
 import * as ReactMarkdown from 'react-markdown';
+import { connect } from 'react-redux';
+import { CSSTransition } from 'react-transition-group';
 
 /* tslint:disable */
 
 // components
-import Header from './components/Header';
-import Works from './components/Works';
+import TheHeader from '@/components/TheHeader/TheHeader';
+import HomeWorks from './HomeWorks';
 
 // others
-import './App.css';
-import sampleImg from './static/images/sample.jpeg';
-import addClassHtml from './utils/addClassHtml';
-import removeClassHtml from './utils/removeClassHtml';
-import { IHomeState as IAppProps } from './reducers/home';
+import './Home.css';
+import addClassHtml from '@/utils/addClassHtml';
+import removeClassHtml from '@/utils/removeClassHtml';
+import { IHomeState as IAppProps } from '@/reducers/home';
+import { IReducers } from '@/reducers/reducers';
 
-interface IAppState {
-  offsetWidth: number;
-  offsetHeight: number;
-  isAnime: boolean;
+export interface IAppState {
   isShowOverlay: boolean;
   pageX: number;
   pageY: number;
   circleStyle: object;
   isShowWorksContent: boolean;
   isWorksContentAnimation: boolean;
-  worksContent: string;
-  img: string;
 }
 
-const WORKS_CONTENT = `
-## EC Website
-
-This is a copy website of NIKE.com, which is developed by Vue.js, 
-Ruby on Rails and GraphQL.
-
-Changes are automatically rendered as you type.
-
-- Implements [GitHub Flavored Markdown](https://github.github.com/gfm/)
-- Renders actual, "native" React DOM elements
-- Allows you to escape or skip HTML (try toggling the checkboxes above)
-- If you escape or skip the HTML, no \`dangerouslySetInnerHTML\` is used! Yay!
-
-## HTML block below
-
-<blockquote>
-  This blockquote will change based on the HTML settings above.
-</blockquote>
-
-## How about some code?
-\`\`\`js
-var React = require('react');
-var Markdown = require('react-markdown');
-
-React.render(
-  <Markdown source="# Your markdown here" />,
-  document.getElementById('content')
-);
-\`\`\`
-
-Pretty neat, eh?
-
-## Tables?
-
-| Feature | Support |
-| ------ | ----------- |
-| tables | ✔ |
-| alignment | ✔ |
-| wewt | ✔ |
-
-## More info?
-
-Read usage information and more on [GitHub](//github.com/rexxars/react-markdown)
-
----------------
-
-A component by [VaffelNinja](http://vaffel.ninja) / Espen Hovlandsdal
-
-## EC Website
-
-This is a copy website of NIKE.com, which is developed by Vue.js, 
-Ruby on Rails and GraphQL.
-
-Changes are automatically rendered as you type.
-
-- Implements [GitHub Flavored Markdown](https://github.github.com/gfm/)
-- Renders actual, "native" React DOM elements
-- Allows you to escape or skip HTML (try toggling the checkboxes above)
-- If you escape or skip the HTML, no \`dangerouslySetInnerHTML\` is used! Yay!
-
-## HTML block below
-
-<blockquote>
-  This blockquote will change based on the HTML settings above.
-</blockquote>
-
-## How about some code?
-\`\`\`js
-var React = require('react');
-var Markdown = require('react-markdown');
-
-React.render(
-  <Markdown source="# Your markdown here" />,
-  document.getElementById('content')
-);
-\`\`\`
-
-Pretty neat, eh?
-
-## Tables?
-
-| Feature | Support |
-| ------ | ----------- |
-| tables | ✔ |
-| alignment | ✔ |
-| wewt | ✔ |
-
-## More info?
-
-Read usage information and more on [GitHub](//github.com/rexxars/react-markdown)
-
----------------
-
-A component by [VaffelNinja](http://vaffel.ninja) / Espen Hovlandsdal
-`;
-
-class App extends React.Component<IAppProps, IAppState> {
+export class Home extends React.Component<IAppProps, IAppState> {
   constructor(props: IAppProps) {
     super(props);
     this.showOverlay = this.showOverlay.bind(this);
@@ -137,17 +36,12 @@ class App extends React.Component<IAppProps, IAppState> {
     this.onExitedOverlay = this.onExitedOverlay.bind(this);
 
     this.state = {
-      offsetWidth: 0,
-      offsetHeight: 0,
-      isAnime: false,
       isShowOverlay: false,
       pageX: 0,
       pageY: 0,
       circleStyle: {},
       isShowWorksContent: false,
       isWorksContentAnimation: false,
-      worksContent: '',
-      img: sampleImg,
     };
   }
 
@@ -191,7 +85,6 @@ class App extends React.Component<IAppProps, IAppState> {
   showWorksContent(): void {
     this.setState({
       isShowWorksContent: true,
-      worksContent: WORKS_CONTENT,
     });
     addClassHtml('hidden');
   }
@@ -221,7 +114,7 @@ class App extends React.Component<IAppProps, IAppState> {
     };
 
     return (
-      <div className="App">
+      <div className="home">
         <CSSTransition
           in={this.state.isShowWorksContent}
           classNames="slide-works"
@@ -244,7 +137,7 @@ class App extends React.Component<IAppProps, IAppState> {
             >
               <ReactMarkdown
                 className="markdown-body"
-                source={this.state.worksContent}
+                source={this.props.workContent}
               />
             </Animated>
           </div>
@@ -266,7 +159,7 @@ class App extends React.Component<IAppProps, IAppState> {
               >
                 <div className="uncover">
                   <a href="https://google.com" target="blank">
-                    <img src={this.state.img} />
+                    <img src={this.props.workContentImg} />
                   </a>
 
                   <div className="uncover-slices">
@@ -307,13 +200,21 @@ class App extends React.Component<IAppProps, IAppState> {
           </div>
         </CSSTransition>
 
-        <Header />
+        <TheHeader />
         <main className="main container">
-          <Works showOverlay={this.showOverlay} {...this.props} />
+          <HomeWorks showOverlay={this.showOverlay} {...this.props} />
         </main>
       </div>
     );
   }
 }
 
-export default App;
+export function mapStateToProps(state: IReducers) {
+  return state.home;
+}
+
+export function mapDispatchToProps(dispatch: any) {
+  return {};
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

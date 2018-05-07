@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { IHomeState, IWork } from '../reducers/home';
+import { IHomeState, IWork } from '@/reducers/home';
 
 interface IWorksProps extends IHomeState {
   showOverlay: (e: React.SyntheticEvent<EventTarget>) => void;
