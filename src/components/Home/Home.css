@@ -43,29 +43,6 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 15px; }
-  .works .card {
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    cursor: pointer; }
-    .works .card .card-desc {
-      display: flex;
-      flex-direction: column;
-      height: 160px;
-      padding: 12px; }
-    .works .card .card-desc-heading {
-      margin-bottom: 10px;
-      color: #2F2F2F;
-      line-height: 1.5;
-      font-size: 1rem; }
-    .works .card .card-desc-sub-heading {
-      color: rgba(0, 0, 0, 0.54);
-      font-size: .9rem;
-      line-height: 1.5; }
-  .works .tech-list {
-    margin-top: auto;
-    font-size: 1.2rem;
-    display: flex; }
-    .works .tech-list .tech-list-item {
-      margin-right: 10px; }
 
 .overlay {
   width: 100vw;

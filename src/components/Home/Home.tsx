@@ -2,21 +2,21 @@ import * as React from 'react';
 import { Animated } from 'react-animated-css';
 import Anime, { AnimeProps } from 'react-anime';
 import * as ReactMarkdown from 'react-markdown';
-import { connect } from 'react-redux';
+import { connect, Dispatch } from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
 
 /* tslint:disable */
 
 // components
-import TheHeader from '@/components/TheHeader/TheHeader';
-import HomeWorks from './HomeWorks';
+import Header from '@/components/Header/Header';
 
 // others
 import './Home.css';
 import addClassHtml from '@/utils/addClassHtml';
 import removeClassHtml from '@/utils/removeClassHtml';
-import { IHomeState as IAppProps } from '@/reducers/home';
+import { IHomeState as IAppProps, IWork } from '@/reducers/home';
 import { IReducers } from '@/reducers/reducers';
+import Work from '@/components/Work/Work';
 
 export interface IAppState {
   isShowOverlay: boolean;
@@ -200,9 +200,19 @@ export class Home extends React.Component<IAppProps, IAppState> {
           </div>
         </CSSTransition>
 
-        <TheHeader />
+        <Header />
         <main className="main container">
-          <HomeWorks showOverlay={this.showOverlay} {...this.props} />
+          <div className="works">
+            <div className="works-list">
+              {this.props.works.map((work: IWork) => (
+                <Work
+                  key={work.id}
+                  work={work}
+                  showOverlay={this.showOverlay}
+                />
+              ))}
+            </div>
+          </div>
         </main>
       </div>
     );
@@ -213,7 +223,7 @@ export function mapStateToProps(state: IReducers) {
   return state.home;
 }
 
-export function mapDispatchToProps(dispatch: any) {
+export function mapDispatchToProps(dispatch: Dispatch<any>) {
   return {};
 }
 

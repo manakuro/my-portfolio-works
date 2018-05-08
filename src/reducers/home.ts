@@ -96,6 +96,7 @@ Read usage information and more on [GitHub](//github.com/rexxars/react-markdown)
 A component by [VaffelNinja](http://vaffel.ninja) / Espen Hovlandsdal
 `;
 
+/* interfaces */
 export interface IWork {
   id: number;
   title: string;
@@ -107,7 +108,31 @@ export interface IHomeState {
   works: IWork[];
   workContent: string;
   workContentImg: string;
+  isShowOverlay: boolean;
 }
+
+export interface ITypes {
+  TOGGLE_OVERLAY: string;
+}
+
+export interface IActions {
+  toggleOverlay(isShowOverlay: boolean): {type: string, isShowOverlay: boolean}
+}
+
+/* actions types */
+export const types: ITypes = {
+  TOGGLE_OVERLAY: 'TOGGLE_OVERLAY',
+};
+
+/* actions */
+export const actions: IActions = {
+  toggleOverlay(isShowOverlay: boolean) {
+    return {
+      type: types.TOGGLE_OVERLAY,
+      isShowOverlay,
+    }
+  }
+};
 
 const initialState: IHomeState = {
   works: Array.apply(null, new Array(21)).map((_: null, i: number) => ({
@@ -122,8 +147,16 @@ const initialState: IHomeState = {
   })),
   workContent: WORK_CONTENT,
   workContentImg: sampleImg,
+  isShowOverlay: false,
 };
 
 export default function home(state: IHomeState = initialState, action: any) {
-  return state;
+  switch (action.type) {
+    case action.TOGGLE_OVERLAY:
+      const { isShowOverlay } = action;
+      return { ...state, isShowOverlay };
+
+    default:
+      return state;
+  }
 }

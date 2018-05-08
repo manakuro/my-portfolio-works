@@ -1,9 +1,9 @@
 import * as React from 'react';
 import * as Swiper from 'react-id-swiper';
 
-import './TheHeader.css';
+import './Header.css';
 
-export default class TheHeader extends React.Component {
+export default class Header extends React.Component {
   private swiper: any;
 
   constructor(props: {}) {
