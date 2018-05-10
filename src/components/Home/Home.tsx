@@ -14,85 +14,60 @@ import Header from '@/components/Header/Header';
 import './Home.css';
 import addClassHtml from '@/utils/addClassHtml';
 import removeClassHtml from '@/utils/removeClassHtml';
-import { IHomeState as IAppProps, IWork } from '@/reducers/home';
+import { actions, IHomeState as IAppProps, IWork } from '@/reducers/home';
 import { IReducers } from '@/reducers/reducers';
 import Work from '@/components/Work/Work';
 
-export interface IAppState {
-  isShowOverlay: boolean;
-  pageX: number;
-  pageY: number;
-  circleStyle: object;
-  isShowWorksContent: boolean;
-  isWorksContentAnimation: boolean;
+interface IHomeAppProps extends IAppProps {
+  toggleOverlay: (isShowOverlay: boolean) => any;
+  toggleWorksContent: (isShowWorksContent: boolean) => any;
+  toggleWorksContentAnimation: (isShowWorksContentAnimation: boolean) => any;
+  updateCircle: (circleStyle: any) => any;
 }
 
-export class Home extends React.Component<IAppProps, IAppState> {
-  constructor(props: IAppProps) {
+export class Home extends React.Component<IHomeAppProps, {}> {
+  constructor(props: IHomeAppProps) {
     super(props);
     this.showOverlay = this.showOverlay.bind(this);
-    this.showWorksContent = this.showWorksContent.bind(this);
     this.hideOverlay = this.hideOverlay.bind(this);
     this.onExitedOverlay = this.onExitedOverlay.bind(this);
-
-    this.state = {
-      isShowOverlay: false,
-      pageX: 0,
-      pageY: 0,
-      circleStyle: {},
-      isShowWorksContent: false,
-      isWorksContentAnimation: false,
-    };
+    this.showWorksContent = this.showWorksContent.bind(this);
   }
 
-  async showOverlay(e: React.SyntheticEvent<EventTarget>) {
+  showOverlay(e: React.SyntheticEvent<EventTarget>): void {
     const nativeEvent: any = e.nativeEvent;
     const { pageX, pageY } = nativeEvent;
-    await this.setState({
-      isShowOverlay: true,
-      pageX,
-      pageY,
-      circleStyle: {
-        top: `${pageY - 50}px`,
-        left: `${pageX - 50}px`,
-      },
-    });
+    const circleStyle = {
+      top: `${pageY - 50}px`,
+      left: `${pageX - 50}px`,
+    };
+
+    this.props.toggleOverlay(true);
+    this.props.updateCircle(circleStyle);
   }
 
   hideOverlay(): void {
-    this.setState({
-      isShowWorksContent: false,
-    });
+    this.props.toggleWorksContent(false);
     removeClassHtml();
 
-    this.setState({
-      isShowOverlay: false,
-      isWorksContentAnimation: false,
-    });
+    this.props.toggleOverlay(false);
+    this.props.toggleWorksContentAnimation(false);
   }
 
   onExitedOverlay(): void {
-    this.setState({
-      circleStyle: {
-        top: '0px',
-        left: '-1000px',
-      },
+    this.props.updateCircle({
+      top: '0px',
+      left: '-1000px',
     });
   }
 
-  componentDidMount(): void {}
-
   showWorksContent(): void {
-    this.setState({
-      isShowWorksContent: true,
-    });
+    this.props.toggleWorksContent(true);
     addClassHtml('hidden');
   }
 
   onEnteredShowWorksContent(): void {
-    this.setState({
-      isWorksContentAnimation: true,
-    });
+    this.props.toggleWorksContentAnimation(true);
   }
 
   public render(): JSX.Element {
@@ -116,7 +91,7 @@ export class Home extends React.Component<IAppProps, IAppState> {
     return (
       <div className="home">
         <CSSTransition
-          in={this.state.isShowWorksContent}
+          in={this.props.isShowWorksContent}
           classNames="slide-works"
           timeout={1000}
           onEntered={() => this.onEnteredShowWorksContent()}
@@ -125,7 +100,7 @@ export class Home extends React.Component<IAppProps, IAppState> {
             <Animated
               animationIn="fadeInDown"
               animationOut="fadeOut"
-              isVisible={this.state.isWorksContentAnimation}
+              isVisible={this.props.isShowWorksContentAnimation}
             >
               <h2 className="works-content-heading">EC Website</h2>
             </Animated>
@@ -133,7 +108,7 @@ export class Home extends React.Component<IAppProps, IAppState> {
               animationIn="fadeInDown"
               animationOut="fadeOut"
               animationInDelay={300}
-              isVisible={this.state.isWorksContentAnimation}
+              isVisible={this.props.isShowWorksContentAnimation}
             >
               <ReactMarkdown
                 className="markdown-body"
@@ -147,7 +122,7 @@ export class Home extends React.Component<IAppProps, IAppState> {
           animationIn="fadeIn"
           animationOut="fadeOut"
           animateOnMount={false}
-          isVisible={this.state.isWorksContentAnimation}
+          isVisible={this.props.isShowWorksContentAnimation}
         >
           <div className="works-content-left">
             <div className="works-content-left-inner">
@@ -155,7 +130,7 @@ export class Home extends React.Component<IAppProps, IAppState> {
                 animationIn="fadeInDown"
                 animationOut="fadeOut"
                 animationInDelay={300}
-                isVisible={this.state.isWorksContentAnimation}
+                isVisible={this.props.isShowWorksContentAnimation}
               >
                 <div className="uncover">
                   <a href="https://google.com" target="blank">
@@ -181,17 +156,17 @@ export class Home extends React.Component<IAppProps, IAppState> {
         </Animated>
 
         <CSSTransition
-          in={this.state.isShowOverlay}
+          in={this.props.isShowOverlay}
           classNames="scale"
           timeout={1000}
           onEnter={() => this.showWorksContent()}
           onExit={() => this.onExitedOverlay()}
         >
-          <div className="circle" style={this.state.circleStyle} />
+          <div className="circle" style={this.props.circleStyle} />
         </CSSTransition>
 
         <CSSTransition
-          in={this.state.isShowWorksContent}
+          in={this.props.isShowWorksContent}
           classNames="slide-button"
           timeout={1000}
         >
@@ -224,7 +199,18 @@ export function mapStateToProps(state: IReducers) {
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<any>) {
-  return {};
+  return {
+    toggleOverlay: (isShowOverlay: boolean) =>
+      dispatch(actions.toggleOverlay(isShowOverlay)),
+    toggleWorksContent: (isShowWorksContent: boolean) =>
+      dispatch(actions.toggleWorksContent(isShowWorksContent)),
+    toggleWorksContentAnimation: (isShowWorksContentAnimation: boolean) =>
+      dispatch(
+        actions.toggleWorksContentAnimation(isShowWorksContentAnimation),
+      ),
+    updateCircle: (circleStyle: any) =>
+      dispatch(actions.updateCircle(circleStyle)),
+  };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

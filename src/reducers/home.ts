@@ -109,19 +109,31 @@ export interface IHomeState {
   workContent: string;
   workContentImg: string;
   isShowOverlay: boolean;
+  isShowWorksContent: boolean;
+  isShowWorksContentAnimation: boolean;
+  circleStyle: any;
 }
 
 export interface ITypes {
   TOGGLE_OVERLAY: string;
+  TOGGLE_WORKS_CONTENT: string;
+  TOGGLE_WORKS_CONTENT_ANIMATION: string;
+  UPDATE_CIRCLE: string;
 }
 
 export interface IActions {
   toggleOverlay(isShowOverlay: boolean): {type: string, isShowOverlay: boolean}
+  toggleWorksContent(isShowWorksContent: boolean): {type: string, isShowWorksContent: boolean}
+  toggleWorksContentAnimation(isShowWorksContentAnimation: boolean): {type: string, isShowWorksContentAnimation: boolean}
+  updateCircle(circleStyle: any): {type: string, circleStyle: any}
 }
 
 /* actions types */
 export const types: ITypes = {
   TOGGLE_OVERLAY: 'TOGGLE_OVERLAY',
+  TOGGLE_WORKS_CONTENT: 'TOGGLE_WORKS_CONTENT',
+  TOGGLE_WORKS_CONTENT_ANIMATION: 'TOGGLE_WORKS_CONTENT_ANIMATION',
+  UPDATE_CIRCLE: 'UPDATE_CIRCLE',
 };
 
 /* actions */
@@ -131,9 +143,32 @@ export const actions: IActions = {
       type: types.TOGGLE_OVERLAY,
       isShowOverlay,
     }
-  }
+  },
+
+  toggleWorksContent(isShowWorksContent: boolean) {
+    return {
+      type: types.TOGGLE_WORKS_CONTENT,
+      isShowWorksContent,
+    }
+  },
+
+  toggleWorksContentAnimation(isShowWorksContentAnimation: boolean) {
+    return {
+      type: types.TOGGLE_WORKS_CONTENT_ANIMATION,
+      isShowWorksContentAnimation,
+    }
+  },
+
+  updateCircle(circleStyle: any) {
+    return {
+      type: types.UPDATE_CIRCLE,
+      circleStyle
+    }
+  },
 };
 
+
+/* reducer */
 const initialState: IHomeState = {
   works: Array.apply(null, new Array(21)).map((_: null, i: number) => ({
     id: i + 1,
@@ -148,13 +183,28 @@ const initialState: IHomeState = {
   workContent: WORK_CONTENT,
   workContentImg: sampleImg,
   isShowOverlay: false,
+  isShowWorksContent: false,
+  isShowWorksContentAnimation: false,
+  circleStyle: {},
 };
 
-export default function home(state: IHomeState = initialState, action: any) {
+export default function home(state: IHomeState = initialState, action: any ) {
   switch (action.type) {
-    case action.TOGGLE_OVERLAY:
+    case types.TOGGLE_OVERLAY:
       const { isShowOverlay } = action;
       return { ...state, isShowOverlay };
+
+    case types.TOGGLE_WORKS_CONTENT:
+      const { isShowWorksContent } = action;
+      return { ...state, isShowWorksContent };
+
+    case types.TOGGLE_WORKS_CONTENT_ANIMATION:
+      const { isShowWorksContentAnimation } = action;
+      return { ...state, isShowWorksContentAnimation };
+
+    case types.UPDATE_CIRCLE:
+      const { circleStyle } = action;
+      return { ...state, circleStyle };
 
     default:
       return state;

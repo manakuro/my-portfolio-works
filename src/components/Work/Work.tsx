@@ -4,7 +4,7 @@ import { IWork } from '@/reducers/home';
 
 interface IWorkProps {
   work: IWork;
-  showOverlay: (e: React.SyntheticEvent<EventTarget>) => {};
+  showOverlay: (e: React.SyntheticEvent<EventTarget>) => any;
 }
 
 import './Work.css';
