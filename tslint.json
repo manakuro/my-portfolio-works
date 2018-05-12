@@ -1,10 +1,15 @@
 {
   "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
   "linterOptions": {
-    "exclude": ["config/**/*.js", "node_modules/**/*.ts"]
+    "exclude": [
+      "config/**/*.js",
+      "node_modules/**/*.ts",
+      "src/registerServiceWorker.ts"
+    ]
   },
   "rules": {
     "object-literal-sort-keys": false,
-    "no-console": false
+    "no-console": false,
+    "curly": [true, "as-needed"]
   }
 }

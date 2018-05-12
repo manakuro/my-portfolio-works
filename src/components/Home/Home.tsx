@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Animated } from 'react-animated-css';
 import Anime, { AnimeProps } from 'react-anime';
-import * as ReactMarkdown from 'react-markdown';
+// import * as ReactMarkdown from 'react-markdown';
 import { connect, Dispatch } from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
 
@@ -18,6 +18,7 @@ import { IHomeState, IWork } from '@/reducers/home/index';
 import actions from '@/reducers/home/actions';
 import { IReducers } from '@/reducers/reducers';
 import Work from '@/components/Work/Work';
+import WorkContent from '@/components/WorkContent/WorkContent';
 
 interface IHomeProps extends IHomeStateFromProps, IHomeDispatchFromProps {}
 
@@ -70,7 +71,7 @@ export class Home extends React.Component<IHomeProps, {}> {
     const animeProps: AnimeProps = {
       children: [],
       easing: 'easeInOutCirc',
-      duration: 1000,
+      duration: 500,
       delay: (_, i: number, t: number) => Math.abs(t / 2 - i) * 80,
       translateX: '-100%',
       scale: 1,
@@ -82,6 +83,21 @@ export class Home extends React.Component<IHomeProps, {}> {
       backgroundColor: '',
       points: '',
       strokeDashoffset: 0,
+    };
+
+    const renderWorkContentImgAnimation = (): JSX.Element | string => {
+      return this.props.workContentImg !== '' ? (
+        <Anime {...animeProps}>
+          <div className="uncover-slice" />
+          <div className="uncover-slice" />
+          <div className="uncover-slice" />
+          <div className="uncover-slice" />
+          <div className="uncover-slice" />
+          <div className="uncover-slice" />
+        </Anime>
+      ) : (
+        ''
+      );
     };
 
     return (
@@ -106,9 +122,13 @@ export class Home extends React.Component<IHomeProps, {}> {
               animationInDelay={300}
               isVisible={this.props.isShowWorksContentAnimation}
             >
-              <ReactMarkdown
-                className="markdown-body"
-                source={this.props.workContent}
+              {/*<ReactMarkdown*/}
+              {/*className="markdown-body"*/}
+              {/*source={this.props.workContent}*/}
+              {/*/>*/}
+              <WorkContent
+                content={''}
+                updateWorkContentImg={this.props.updateWorkContentImg}
               />
             </Animated>
           </div>
@@ -134,16 +154,7 @@ export class Home extends React.Component<IHomeProps, {}> {
                   </a>
 
                   <div className="uncover-slices">
-                    {false && (
-                      <Anime {...animeProps}>
-                        <div className="uncover-slice" />
-                        <div className="uncover-slice" />
-                        <div className="uncover-slice" />
-                        <div className="uncover-slice" />
-                        <div className="uncover-slice" />
-                        <div className="uncover-slice" />
-                      </Anime>
-                    )}
+                    {renderWorkContentImgAnimation()}
                   </div>
                 </div>
               </Animated>
@@ -194,7 +205,8 @@ export interface IHomeDispatchFromProps {
   toggleOverlay: (isShowOverlay: boolean) => any;
   toggleWorksContent: (isShowWorksContent: boolean) => any;
   toggleWorksContentAnimation: (isShowWorksContentAnimation: boolean) => any;
-  updateCircle: (circleStyle: any) => any;
+  updateCircle: (circleStyle: React.CSSProperties) => any;
+  updateWorkContentImg: (workContentIMg: string) => any;
 }
 
 export interface IHomeStateFromProps extends IHomeState {}
@@ -213,8 +225,10 @@ export function mapDispatchToProps(dispatch: Dispatch<() => any>) {
       dispatch(
         actions.toggleWorksContentAnimation(isShowWorksContentAnimation),
       ),
-    updateCircle: (circleStyle: any) =>
+    updateCircle: (circleStyle: React.CSSProperties) =>
       dispatch(actions.updateCircle(circleStyle)),
+    updateWorkContentImg: (workContentImg: string) =>
+      dispatch(actions.updateWorkContentImg(workContentImg)),
   };
 }
 

@@ -112,7 +112,7 @@ export interface IHomeState {
   isShowOverlay: boolean;
   isShowWorksContent: boolean;
   isShowWorksContentAnimation: boolean;
-  circleStyle: any;
+  circleStyle: React.CSSProperties;
 }
 
 /* reducer */
@@ -128,7 +128,7 @@ const initialState: IHomeState = {
     img: sampleImg
   })),
   workContent: WORK_CONTENT,
-  workContentImg: sampleImg,
+  workContentImg: '',
   isShowOverlay: false,
   isShowWorksContent: false,
   isShowWorksContentAnimation: false,
@@ -152,6 +152,10 @@ export default function home(state: IHomeState = initialState, action: any ) {
     case types.UPDATE_CIRCLE:
       const { circleStyle } = action;
       return { ...state, circleStyle };
+
+    case types.UPDATE_WORK_CONTENT_IMG:
+      const { workContentImg } = action;
+      return { ...state, workContentImg };
 
     default:
       return state;

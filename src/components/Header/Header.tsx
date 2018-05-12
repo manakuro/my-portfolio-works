@@ -53,9 +53,7 @@ export default class Header extends React.Component {
             <Swiper
               {...params}
               ref={(node: any) => {
-                if (node) {
-                  this.swiper = node.swiper;
-                }
+                if (node) this.swiper = node.swiper;
               }}
             >
               {rows}
