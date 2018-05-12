@@ -14,19 +14,15 @@ import Header from '@/components/Header/Header';
 import './Home.css';
 import addClassHtml from '@/utils/addClassHtml';
 import removeClassHtml from '@/utils/removeClassHtml';
-import { actions, IHomeState as IAppProps, IWork } from '@/reducers/home';
+import { IHomeState, IWork } from '@/reducers/home/index';
+import actions from '@/reducers/home/actions';
 import { IReducers } from '@/reducers/reducers';
 import Work from '@/components/Work/Work';
 
-interface IHomeAppProps extends IAppProps {
-  toggleOverlay: (isShowOverlay: boolean) => any;
-  toggleWorksContent: (isShowWorksContent: boolean) => any;
-  toggleWorksContentAnimation: (isShowWorksContentAnimation: boolean) => any;
-  updateCircle: (circleStyle: any) => any;
-}
+interface IHomeProps extends IHomeStateFromProps, IHomeDispatchFromProps {}
 
-export class Home extends React.Component<IHomeAppProps, {}> {
-  constructor(props: IHomeAppProps) {
+export class Home extends React.Component<IHomeProps, {}> {
+  constructor(props: IHomeProps) {
     super(props);
     this.showOverlay = this.showOverlay.bind(this);
     this.hideOverlay = this.hideOverlay.bind(this);
@@ -194,11 +190,20 @@ export class Home extends React.Component<IHomeAppProps, {}> {
   }
 }
 
+export interface IHomeDispatchFromProps {
+  toggleOverlay: (isShowOverlay: boolean) => any;
+  toggleWorksContent: (isShowWorksContent: boolean) => any;
+  toggleWorksContentAnimation: (isShowWorksContentAnimation: boolean) => any;
+  updateCircle: (circleStyle: any) => any;
+}
+
+export interface IHomeStateFromProps extends IHomeState {}
+
 export function mapStateToProps(state: IReducers) {
   return state.home;
 }
 
-export function mapDispatchToProps(dispatch: Dispatch<any>) {
+export function mapDispatchToProps(dispatch: Dispatch<() => any>) {
   return {
     toggleOverlay: (isShowOverlay: boolean) =>
       dispatch(actions.toggleOverlay(isShowOverlay)),
@@ -213,4 +218,7 @@ export function mapDispatchToProps(dispatch: Dispatch<any>) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect<IHomeStateFromProps, IHomeDispatchFromProps, void>(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Home);

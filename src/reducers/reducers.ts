@@ -1,4 +1,4 @@
-import home, { IHomeState } from './home'
+import home, { IHomeState } from '@/reducers/home/index'
 
 export interface IReducers {
   home: IHomeState

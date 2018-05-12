@@ -1,3 +1,4 @@
+import types from '@/reducers/home/action-types';
 import sampleImg from '@/static/images/sample.jpeg';
 
 const WORK_CONTENT = `
@@ -113,60 +114,6 @@ export interface IHomeState {
   isShowWorksContentAnimation: boolean;
   circleStyle: any;
 }
-
-export interface ITypes {
-  TOGGLE_OVERLAY: string;
-  TOGGLE_WORKS_CONTENT: string;
-  TOGGLE_WORKS_CONTENT_ANIMATION: string;
-  UPDATE_CIRCLE: string;
-}
-
-export interface IActions {
-  toggleOverlay(isShowOverlay: boolean): {type: string, isShowOverlay: boolean}
-  toggleWorksContent(isShowWorksContent: boolean): {type: string, isShowWorksContent: boolean}
-  toggleWorksContentAnimation(isShowWorksContentAnimation: boolean): {type: string, isShowWorksContentAnimation: boolean}
-  updateCircle(circleStyle: any): {type: string, circleStyle: any}
-}
-
-/* actions types */
-export const types: ITypes = {
-  TOGGLE_OVERLAY: 'TOGGLE_OVERLAY',
-  TOGGLE_WORKS_CONTENT: 'TOGGLE_WORKS_CONTENT',
-  TOGGLE_WORKS_CONTENT_ANIMATION: 'TOGGLE_WORKS_CONTENT_ANIMATION',
-  UPDATE_CIRCLE: 'UPDATE_CIRCLE',
-};
-
-/* actions */
-export const actions: IActions = {
-  toggleOverlay(isShowOverlay: boolean) {
-    return {
-      type: types.TOGGLE_OVERLAY,
-      isShowOverlay,
-    }
-  },
-
-  toggleWorksContent(isShowWorksContent: boolean) {
-    return {
-      type: types.TOGGLE_WORKS_CONTENT,
-      isShowWorksContent,
-    }
-  },
-
-  toggleWorksContentAnimation(isShowWorksContentAnimation: boolean) {
-    return {
-      type: types.TOGGLE_WORKS_CONTENT_ANIMATION,
-      isShowWorksContentAnimation,
-    }
-  },
-
-  updateCircle(circleStyle: any) {
-    return {
-      type: types.UPDATE_CIRCLE,
-      circleStyle
-    }
-  },
-};
-
 
 /* reducer */
 const initialState: IHomeState = {

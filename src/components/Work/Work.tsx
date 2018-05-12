@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { IWork } from '@/reducers/home';
+import { IWork } from '@/reducers/home/index';
 
 interface IWorkProps {
   work: IWork;
