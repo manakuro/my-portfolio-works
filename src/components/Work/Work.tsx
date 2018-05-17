@@ -12,7 +12,6 @@ import './Work.css';
 export default class Work extends React.PureComponent<IWorkProps, {}> {
   constructor(props: IWorkProps) {
     super(props);
-    this.handleClick = this.handleClick.bind(this);
   }
 
   public render(): JSX.Element {
@@ -47,7 +46,7 @@ export default class Work extends React.PureComponent<IWorkProps, {}> {
     );
   }
 
-  private handleClick(e: React.SyntheticEvent<EventTarget>): void {
+  private handleClick = (e: React.SyntheticEvent<EventTarget>): void => {
     this.props.showOverlay(e);
-  }
+  };
 }

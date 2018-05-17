@@ -1,6 +1,6 @@
 import { Store } from 'react-redux';
 import { applyMiddleware, combineReducers, createStore } from 'redux';
-import reducer  from '../reducers/reducers';
+import rootReducer  from '../reducers/reducers';
 
 import createBrowserHistory from 'history/createBrowserHistory';
 import { routerMiddleware, routerReducer } from 'react-router-redux';
@@ -14,7 +14,7 @@ const middleware = routerMiddleware(history);
 export default function configureStore(): Store<any> {
   return createStore(
     combineReducers({
-      ...reducer,
+      ...rootReducer,
       router: routerReducer,
     }),
     applyMiddleware(middleware)

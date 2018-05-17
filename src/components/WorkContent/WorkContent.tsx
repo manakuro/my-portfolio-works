@@ -4,6 +4,7 @@ import * as React from 'react';
 import './WorkContent.css';
 
 import sampleImg from '@/static/images/sample.jpeg';
+import sampleImg2 from '@/static/images/sample2.jpeg';
 
 interface IWorkProps {
   content: string;
@@ -13,7 +14,6 @@ interface IWorkProps {
 export default class WorkContent extends React.PureComponent<IWorkProps, {}> {
   constructor(props: IWorkProps) {
     super(props);
-    this.handleIntersection = this.handleIntersection.bind(this);
   }
 
   public render(): JSX.Element {
@@ -159,19 +159,20 @@ export default class WorkContent extends React.PureComponent<IWorkProps, {}> {
           <a href="//github.com/rexxars/react-markdown">GitHub</a>
         </p>
         <hr />
-        <p>
-          A component by <a href="http://vaffel.ninja">VaffelNinja</a> / Espen
-          Hovlandsdal
-        </p>
+        <IntersectionObserver onChange={this.handleIntersection}>
+          <p data-src={sampleImg2}>
+            A component by <a href="http://vaffel.ninja">VaffelNinja</a> / Espen
+            Hovlandsdal
+          </p>
+        </IntersectionObserver>
       </div>
     );
   }
 
-  private handleIntersection(entry: IntersectionObserverEntry) {
-    console.log('hey handleIntersection!', entry);
+  private handleIntersection = (entry: IntersectionObserverEntry): void => {
     if (entry.isIntersecting) {
       const src = entry.target.getAttribute('data-src');
       if (src) this.props.updateWorkContentImg(src);
     }
-  }
+  };
 }

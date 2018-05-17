@@ -8,8 +8,6 @@ export default class Header extends React.Component {
 
   constructor(props: {}) {
     super(props);
-    this.goNext = this.goNext.bind(this);
-    this.goPrev = this.goPrev.bind(this);
   }
 
   public render(): JSX.Element {
@@ -67,11 +65,11 @@ export default class Header extends React.Component {
     );
   }
 
-  private goNext(): void {
+  private goNext = (): void => {
     this.swiper.slideNext();
-  }
+  };
 
-  private goPrev(): void {
+  private goPrev = (): void => {
     this.swiper.slidePrev();
-  }
+  };
 }

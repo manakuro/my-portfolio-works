@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Animated } from 'react-animated-css';
 import Anime, { AnimeProps } from 'react-anime';
-// import * as ReactMarkdown from 'react-markdown';
 import { connect, Dispatch } from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
 
@@ -23,15 +22,13 @@ import WorkContent from '@/components/WorkContent/WorkContent';
 interface IHomeProps extends IHomeStateFromProps, IHomeDispatchFromProps {}
 
 export class Home extends React.Component<IHomeProps, {}> {
+  public anime: any;
+
   constructor(props: IHomeProps) {
     super(props);
-    this.showOverlay = this.showOverlay.bind(this);
-    this.hideOverlay = this.hideOverlay.bind(this);
-    this.onExitedOverlay = this.onExitedOverlay.bind(this);
-    this.showWorksContent = this.showWorksContent.bind(this);
   }
 
-  showOverlay(e: React.SyntheticEvent<EventTarget>): void {
+  showOverlay = (e: React.SyntheticEvent<EventTarget>): void => {
     const nativeEvent: any = e.nativeEvent;
     const { pageX, pageY } = nativeEvent;
     const circleStyle = {
@@ -41,33 +38,33 @@ export class Home extends React.Component<IHomeProps, {}> {
 
     this.props.toggleOverlay(true);
     this.props.updateCircle(circleStyle);
-  }
+  };
 
-  hideOverlay(): void {
+  hideOverlay = (): void => {
     this.props.toggleWorksContent(false);
     removeClassHtml();
 
     this.props.toggleOverlay(false);
     this.props.toggleWorksContentAnimation(false);
-  }
+  };
 
-  onExitedOverlay(): void {
+  onExitedOverlay = (): void => {
     this.props.updateCircle({
       top: '0px',
       left: '-1000px',
     });
-  }
+  };
 
-  showWorksContent(): void {
+  showWorksContent = (): void => {
     this.props.toggleWorksContent(true);
     addClassHtml('hidden');
-  }
+  };
 
   onEnteredShowWorksContent(): void {
     this.props.toggleWorksContentAnimation(true);
   }
 
-  public render(): JSX.Element {
+  renderWorkContentImgAnimation = (): JSX.Element | null => {
     const animeProps: AnimeProps = {
       children: [],
       easing: 'easeInOutCirc',
@@ -85,21 +82,19 @@ export class Home extends React.Component<IHomeProps, {}> {
       strokeDashoffset: 0,
     };
 
-    const renderWorkContentImgAnimation = (): JSX.Element | string => {
-      return this.props.workContentImg !== '' ? (
-        <Anime {...animeProps}>
-          <div className="uncover-slice" />
-          <div className="uncover-slice" />
-          <div className="uncover-slice" />
-          <div className="uncover-slice" />
-          <div className="uncover-slice" />
-          <div className="uncover-slice" />
-        </Anime>
-      ) : (
-        ''
-      );
-    };
+    return this.props.workContentImg !== '' ? (
+      <Anime {...animeProps} key={`anime-${this.props.workContentImg}`}>
+        <div className="uncover-slice" />
+        <div className="uncover-slice" />
+        <div className="uncover-slice" />
+        <div className="uncover-slice" />
+        <div className="uncover-slice" />
+        <div className="uncover-slice" />
+      </Anime>
+    ) : null;
+  };
 
+  public render(): JSX.Element {
     return (
       <div className="home">
         <CSSTransition
@@ -122,10 +117,6 @@ export class Home extends React.Component<IHomeProps, {}> {
               animationInDelay={300}
               isVisible={this.props.isShowWorksContentAnimation}
             >
-              {/*<ReactMarkdown*/}
-              {/*className="markdown-body"*/}
-              {/*source={this.props.workContent}*/}
-              {/*/>*/}
               <WorkContent
                 content={''}
                 updateWorkContentImg={this.props.updateWorkContentImg}
@@ -154,7 +145,7 @@ export class Home extends React.Component<IHomeProps, {}> {
                   </a>
 
                   <div className="uncover-slices">
-                    {renderWorkContentImgAnimation()}
+                    {this.renderWorkContentImgAnimation()}
                   </div>
                 </div>
               </Animated>

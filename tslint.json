@@ -10,6 +10,7 @@
   "rules": {
     "object-literal-sort-keys": false,
     "no-console": false,
-    "curly": [true, "as-needed"]
+    "curly": [true, "as-needed"],
+    "ordered-imports": false
   }
 }
