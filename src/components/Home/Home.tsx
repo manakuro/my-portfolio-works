@@ -82,7 +82,7 @@ export class Home extends React.Component<IHomeProps, {}> {
       strokeDashoffset: 0,
     };
 
-    return this.props.workContentImg !== '' ? (
+    return this.props.workContentImg !== '' && this.props.isShowWorksContent ? (
       <Anime {...animeProps} key={`anime-${this.props.workContentImg}`}>
         <div className="uncover-slice" />
         <div className="uncover-slice" />
@@ -197,7 +197,7 @@ export interface IHomeDispatchFromProps {
   toggleWorksContent: (isShowWorksContent: boolean) => any;
   toggleWorksContentAnimation: (isShowWorksContentAnimation: boolean) => any;
   updateCircle: (circleStyle: React.CSSProperties) => any;
-  updateWorkContentImg: (workContentIMg: string) => any;
+  updateWorkContentImg: (workContentImg: string) => any;
 }
 
 export interface IHomeStateFromProps extends IHomeState {}

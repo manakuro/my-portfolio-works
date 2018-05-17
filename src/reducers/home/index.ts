@@ -1,5 +1,6 @@
 import types from '@/reducers/home/action-types';
 import sampleImg from '@/static/images/sample.jpeg';
+import sampleImg3 from '@/static/images/sample3.gif';
 
 const WORK_CONTENT = `
 ## EC Website
@@ -128,7 +129,7 @@ const initialState: IHomeState = {
     img: sampleImg
   })),
   workContent: WORK_CONTENT,
-  workContentImg: '',
+  workContentImg: sampleImg3,
   isShowOverlay: false,
   isShowWorksContent: false,
   isShowWorksContentAnimation: false,

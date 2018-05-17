@@ -5,6 +5,7 @@ import './WorkContent.css';
 
 import sampleImg from '@/static/images/sample.jpeg';
 import sampleImg2 from '@/static/images/sample2.jpeg';
+import sampleImg3 from '@/static/images/sample3.gif';
 
 interface IWorkProps {
   content: string;
@@ -19,7 +20,9 @@ export default class WorkContent extends React.PureComponent<IWorkProps, {}> {
   public render(): JSX.Element {
     return (
       <div className="markdown-body">
-        <h2>EC Website</h2>
+        <IntersectionObserver onChange={this.handleIntersection}>
+          <h2 data-src={sampleImg3}>EC Website</h2>
+        </IntersectionObserver>
         <p>
           This is a copy website of NIKE.com, which is developed by Vue.js, Ruby
           on Rails and GraphQL.
