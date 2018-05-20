@@ -4,7 +4,7 @@ import sampleImg from '@/static/images/sample.jpeg';
 /* interfaces */
 export interface IWork {
   id: number
-  title: string;
+  title: string
   description: string;
   img: string;
   component: string;
