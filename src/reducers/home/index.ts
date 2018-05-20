@@ -3,7 +3,7 @@ import sampleImg from '@/static/images/sample.jpeg';
 
 /* interfaces */
 export interface IWork {
-  id: number;
+  id: number
   title: string;
   description: string;
   img: string;
