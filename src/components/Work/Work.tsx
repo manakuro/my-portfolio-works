@@ -1,18 +1,18 @@
-import * as React from 'react';
+import * as React from 'react'
 
-import { IWork } from '@/reducers/home/index';
+import { IWork } from '@/reducers/home/index'
 
 interface IWorkProps {
-  work: IWork;
-  showOverlay: (e: React.SyntheticEvent<EventTarget>) => any;
-  updateTargetWork: (payload: IWork) => any;
+  work: IWork
+  showOverlay: (e: React.SyntheticEvent<EventTarget>) => any
+  updateTargetWork: (payload: IWork) => any
 }
 
-import './Work.css';
+import './Work.css'
 
-export default class Work extends React.PureComponent<IWorkProps, {}> {
+export default class Work extends React.PureComponent<IWorkProps> {
   constructor(props: IWorkProps) {
-    super(props);
+    super(props)
   }
 
   public render(): JSX.Element {
@@ -44,11 +44,11 @@ export default class Work extends React.PureComponent<IWorkProps, {}> {
           </div>
         </div>
       </div>
-    );
+    )
   }
 
   private handleClick = (e: React.SyntheticEvent<EventTarget>): void => {
-    this.props.updateTargetWork(this.props.work);
-    this.props.showOverlay(e);
-  };
+    this.props.updateTargetWork(this.props.work)
+    this.props.showOverlay(e)
+  }
 }

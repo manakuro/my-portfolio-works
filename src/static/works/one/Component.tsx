@@ -1,23 +1,22 @@
-import IntersectionObserver from '@researchgate/react-intersection-observer';
-import * as React from 'react';
+import IntersectionObserver from '@researchgate/react-intersection-observer'
+import * as React from 'react'
+import pure from 'recompose/pure'
 
-import sampleImg from './images/sample.jpeg';
-import sampleImg2 from './images/sample2.jpeg';
-import sampleImg3 from './images/sample3.gif';
+import sampleImg from './images/sample.jpeg'
+import sampleImg2 from './images/sample2.jpeg'
+import sampleImg3 from './images/sample3.gif'
 
 interface WorkOneProps {
-  handleIntersection: (entry: IntersectionObserverEntry) => any;
+  handleIntersection: (entry: IntersectionObserverEntry) => any
 }
 
-export default class WorkContent extends React.PureComponent<WorkOneProps, {}> {
-  constructor(props: WorkOneProps) {
-    super(props);
-  }
+const WorkOne: React.ComponentType<WorkOneProps> = pure(
+  (props): JSX.Element => {
+    const { handleIntersection } = props
 
-  public render(): JSX.Element {
     return (
       <div className="markdown-body">
-        <IntersectionObserver onChange={this.props.handleIntersection}>
+        <IntersectionObserver onChange={handleIntersection}>
           <h2 data-src={sampleImg3}>EC Website</h2>
         </IntersectionObserver>
         <p>
@@ -44,15 +43,15 @@ export default class WorkContent extends React.PureComponent<WorkOneProps, {}> {
         </ul>
         <h2>HTML block below</h2>
         <div>
-          &lt;blockquote&gt; This blockquote will change based on the HTML
-          settings above. &lt;/blockquote&gt;
+          &ltblockquote&gt This blockquote will change based on the HTML
+          settings above. &lt/blockquote&gt
         </div>
         <h2>How about some code?</h2>
         <pre>
           <code className="language-js">
-            var React = require('react'); var Markdown =
-            require('react-markdown'); React.render( &lt;Markdown source="# Your
-            markdown here" /&gt;, document.getElementById('content') );
+            var React = require('react') var Markdown =
+            require('react-markdown') React.render( &ltMarkdown source="# Your
+            markdown here" /&gt, document.getElementById('content') )
           </code>
         </pre>
         <p>Pretty neat, eh?</p>
@@ -80,7 +79,7 @@ export default class WorkContent extends React.PureComponent<WorkOneProps, {}> {
           </tbody>
         </table>
 
-        <IntersectionObserver onChange={this.props.handleIntersection}>
+        <IntersectionObserver onChange={handleIntersection}>
           <h2 data-src={sampleImg}>More info?</h2>
         </IntersectionObserver>
 
@@ -118,15 +117,15 @@ export default class WorkContent extends React.PureComponent<WorkOneProps, {}> {
         </ul>
         <h2>HTML block below</h2>
         <div>
-          &lt;blockquote&gt; This blockquote will change based on the HTML
-          settings above. &lt;/blockquote&gt;
+          &ltblockquote&gt This blockquote will change based on the HTML
+          settings above. &lt/blockquote&gt
         </div>
         <h2>How about some code?</h2>
         <pre>
           <code className="language-js">
-            var React = require('react'); var Markdown =
-            require('react-markdown'); React.render( &lt;Markdown source="# Your
-            markdown here" /&gt;, document.getElementById('content') );
+            var React = require('react') var Markdown =
+            require('react-markdown') React.render( &ltMarkdown source="# Your
+            markdown here" /&gt, document.getElementById('content') )
           </code>
         </pre>
         <p>Pretty neat, eh?</p>
@@ -159,13 +158,15 @@ export default class WorkContent extends React.PureComponent<WorkOneProps, {}> {
           <a href="//github.com/rexxars/react-markdown">GitHub</a>
         </p>
         <hr />
-        <IntersectionObserver onChange={this.props.handleIntersection}>
+        <IntersectionObserver onChange={handleIntersection}>
           <p data-src={sampleImg2}>
             A component by <a href="http://vaffel.ninja">VaffelNinja</a> / Espen
             Hovlandsdal
           </p>
         </IntersectionObserver>
       </div>
-    );
-  }
-}
+    )
+  },
+)
+
+export default WorkOne

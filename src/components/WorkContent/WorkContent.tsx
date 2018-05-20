@@ -1,35 +1,35 @@
-import * as React from 'react';
-import WorkContentLoader from '@/workContentLoader';
+import * as React from 'react'
+import WorkContentLoader from '@/workContentLoader'
 
-import './WorkContent.css';
-import { IWork } from '@/reducers/home';
+import './WorkContent.css'
+import { IWork } from '@/reducers/home'
 
 interface WorkProps {
-  updateWorkContentImg: (workContentImg: string) => void;
-  targetWork: IWork | null;
+  updateWorkContentImg: (workContentImg: string) => void
+  targetWork: IWork | null
 }
 
 export default class WorkContent extends React.PureComponent<WorkProps, {}> {
   constructor(props: WorkProps) {
-    super(props);
+    super(props)
   }
 
   public render(): JSX.Element | null {
-    if (!this.props.targetWork) return null;
+    if (!this.props.targetWork) return null
 
-    const Component = WorkContentLoader[this.props.targetWork.component];
+    const Component = WorkContentLoader[this.props.targetWork.component]
 
     return (
       <div className="markdown-body">
         <Component handleIntersection={this.handleIntersection} />
       </div>
-    );
+    )
   }
 
   private handleIntersection = (entry: IntersectionObserverEntry): void => {
     if (entry.isIntersecting) {
-      const src = entry.target.getAttribute('data-src');
-      if (src) this.props.updateWorkContentImg(src);
+      const src = entry.target.getAttribute('data-src')
+      if (src) this.props.updateWorkContentImg(src)
     }
-  };
+  }
 }
