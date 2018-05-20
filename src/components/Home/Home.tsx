@@ -118,8 +118,8 @@ export class Home extends React.Component<IHomeProps, {}> {
               isVisible={this.props.isShowWorksContentAnimation}
             >
               <WorkContent
-                content={''}
                 updateWorkContentImg={this.props.updateWorkContentImg}
+                targetWork={this.props.targetWork}
               />
             </Animated>
           </div>
@@ -181,6 +181,7 @@ export class Home extends React.Component<IHomeProps, {}> {
                 <Work
                   key={work.id}
                   work={work}
+                  updateTargetWork={this.props.updateTargetWork}
                   showOverlay={this.showOverlay}
                 />
               ))}
@@ -198,6 +199,7 @@ export interface IHomeDispatchFromProps {
   toggleWorksContentAnimation: (isShowWorksContentAnimation: boolean) => any;
   updateCircle: (circleStyle: React.CSSProperties) => any;
   updateWorkContentImg: (workContentImg: string) => any;
+  updateTargetWork: (payload: IWork) => any;
 }
 
 export interface IHomeStateFromProps extends IHomeState {}
@@ -220,6 +222,8 @@ export function mapDispatchToProps(dispatch: Dispatch<() => any>) {
       dispatch(actions.updateCircle(circleStyle)),
     updateWorkContentImg: (workContentImg: string) =>
       dispatch(actions.updateWorkContentImg(workContentImg)),
+    updateTargetWork: (targetWork: IWork) =>
+      dispatch(actions.updateTargetWork(targetWork)),
   };
 }
 

@@ -104,6 +104,7 @@ export interface IWork {
   title: string;
   description: string;
   img: string;
+  component: string;
 }
 
 export interface IHomeState {
@@ -114,6 +115,7 @@ export interface IHomeState {
   isShowWorksContent: boolean;
   isShowWorksContentAnimation: boolean;
   circleStyle: React.CSSProperties;
+  targetWork: IWork | null;
 }
 
 /* reducer */
@@ -126,7 +128,8 @@ const initialState: IHomeState = {
         figuratively, held the pulse of a steaming cross-section of
         San Franciscans
       `,
-    img: sampleImg
+    img: sampleImg,
+    component: 'WorkOne',
   })),
   workContent: WORK_CONTENT,
   workContentImg: sampleImg3,
@@ -134,6 +137,7 @@ const initialState: IHomeState = {
   isShowWorksContent: false,
   isShowWorksContentAnimation: false,
   circleStyle: {},
+  targetWork: null,
 };
 
 export default function home(state: IHomeState = initialState, action: any ) {
@@ -157,6 +161,10 @@ export default function home(state: IHomeState = initialState, action: any ) {
     case types.UPDATE_WORK_CONTENT_IMG:
       const { workContentImg } = action;
       return { ...state, workContentImg };
+
+    case types.UPDATE_TARGET_WORK:
+      const { payload } = action;
+      return { ...state, targetWork: payload };
 
     default:
       return state;

@@ -4,6 +4,7 @@ export interface ITypes {
   TOGGLE_WORKS_CONTENT_ANIMATION: string;
   UPDATE_CIRCLE: string;
   UPDATE_WORK_CONTENT_IMG: string;
+  UPDATE_TARGET_WORK: string;
 }
 
 const types: ITypes = {
@@ -12,6 +13,7 @@ const types: ITypes = {
   TOGGLE_WORKS_CONTENT_ANIMATION: 'TOGGLE_WORKS_CONTENT_ANIMATION',
   UPDATE_CIRCLE: 'UPDATE_CIRCLE',
   UPDATE_WORK_CONTENT_IMG: 'UPDATE_WORK_CONTENT_IMG',
+  UPDATE_TARGET_WORK: 'UPDATE_TARGET_WORK',
 };
 
 export default types;

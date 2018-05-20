@@ -5,6 +5,7 @@ import { IWork } from '@/reducers/home/index';
 interface IWorkProps {
   work: IWork;
   showOverlay: (e: React.SyntheticEvent<EventTarget>) => any;
+  updateTargetWork: (payload: IWork) => any;
 }
 
 import './Work.css';
@@ -47,6 +48,7 @@ export default class Work extends React.PureComponent<IWorkProps, {}> {
   }
 
   private handleClick = (e: React.SyntheticEvent<EventTarget>): void => {
+    this.props.updateTargetWork(this.props.work);
     this.props.showOverlay(e);
   };
 }

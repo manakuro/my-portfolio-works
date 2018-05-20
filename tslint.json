@@ -11,6 +11,9 @@
     "object-literal-sort-keys": false,
     "no-console": false,
     "curly": [true, "as-needed"],
-    "ordered-imports": false
+    "indent": [true, "spaces", 2],
+    "interface-name": false,
+    "ordered-imports": false,
+    "no-consecutive-blank-lines": false
   }
 }
