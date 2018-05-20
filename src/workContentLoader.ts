@@ -12,7 +12,7 @@ interface ComponentProps {
 }
 
 const components: { [key: string]: Loadable<ComponentProps> } = {
-  WorkOne: loadable(() => import('@/components/WorkOne'))
+  WorkOne: loadable(() => import('@/static/works/one/Component'))
 };
 
 

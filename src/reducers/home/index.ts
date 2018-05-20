@@ -1,102 +1,5 @@
 import types from '@/reducers/home/action-types';
 import sampleImg from '@/static/images/sample.jpeg';
-import sampleImg3 from '@/static/images/sample3.gif';
-
-const WORK_CONTENT = `
-## EC Website
-
-This is a copy website of NIKE.com, which is developed by Vue.js, 
-Ruby on Rails and GraphQL.
-
-Changes are automatically rendered as you type.
-
-- Implements [GitHub Flavored Markdown](https://github.github.com/gfm/)
-- Renders actual, "native" React DOM elements
-- Allows you to escape or skip HTML (try toggling the checkboxes above)
-- If you escape or skip the HTML, no \`dangerouslySetInnerHTML\` is used! Yay!
-
-## HTML block below
-
-<blockquote>
-  This blockquote will change based on the HTML settings above.
-</blockquote>
-
-## How about some code?
-\`\`\`js
-var React = require('react');
-var Markdown = require('react-markdown');
-
-React.render(
-  <Markdown source="# Your markdown here" />,
-  document.getElementById('content')
-);
-\`\`\`
-
-Pretty neat, eh?
-
-## Tables?
-
-| Feature | Support |
-| ------ | ----------- |
-| tables | ✔ |
-| alignment | ✔ |
-| wewt | ✔ |
-
-## More info?
-
-Read usage information and more on [GitHub](//github.com/rexxars/react-markdown)
-
----------------
-
-A component by [VaffelNinja](http://vaffel.ninja) / Espen Hovlandsdal
-
-## EC Website
-
-This is a copy website of NIKE.com, which is developed by Vue.js, 
-Ruby on Rails and GraphQL.
-
-Changes are automatically rendered as you type.
-
-- Implements [GitHub Flavored Markdown](https://github.github.com/gfm/)
-- Renders actual, "native" React DOM elements
-- Allows you to escape or skip HTML (try toggling the checkboxes above)
-- If you escape or skip the HTML, no \`dangerouslySetInnerHTML\` is used! Yay!
-
-## HTML block below
-
-<blockquote>
-  This blockquote will change based on the HTML settings above.
-</blockquote>
-
-## How about some code?
-\`\`\`js
-var React = require('react');
-var Markdown = require('react-markdown');
-
-React.render(
-  <Markdown source="# Your markdown here" />,
-  document.getElementById('content')
-);
-\`\`\`
-
-Pretty neat, eh?
-
-## Tables?
-
-| Feature | Support |
-| ------ | ----------- |
-| tables | ✔ |
-| alignment | ✔ |
-| wewt | ✔ |
-
-## More info?
-
-Read usage information and more on [GitHub](//github.com/rexxars/react-markdown)
-
----------------
-
-A component by [VaffelNinja](http://vaffel.ninja) / Espen Hovlandsdal
-`;
 
 /* interfaces */
 export interface IWork {
@@ -109,7 +12,6 @@ export interface IWork {
 
 export interface IHomeState {
   works: IWork[];
-  workContent: string;
   workContentImg: string;
   isShowOverlay: boolean;
   isShowWorksContent: boolean;
@@ -131,8 +33,7 @@ const initialState: IHomeState = {
     img: sampleImg,
     component: 'WorkOne',
   })),
-  workContent: WORK_CONTENT,
-  workContentImg: sampleImg3,
+  workContentImg: '',
   isShowOverlay: false,
   isShowWorksContent: false,
   isShowWorksContentAnimation: false,

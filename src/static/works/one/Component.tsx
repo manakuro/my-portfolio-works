@@ -1,9 +1,9 @@
 import IntersectionObserver from '@researchgate/react-intersection-observer';
 import * as React from 'react';
 
-import sampleImg from '@/static/images/sample.jpeg';
-import sampleImg2 from '@/static/images/sample2.jpeg';
-import sampleImg3 from '@/static/images/sample3.gif';
+import sampleImg from './images/sample.jpeg';
+import sampleImg2 from './images/sample2.jpeg';
+import sampleImg3 from './images/sample3.gif';
 
 interface WorkOneProps {
   handleIntersection: (entry: IntersectionObserverEntry) => any;
