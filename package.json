@@ -24,7 +24,8 @@
     "react-transition-group": "^2.3.1",
     "recompose": "^0.27.0",
     "redux": "^4.0.0",
-    "sanitize.css": "^5.0.0"
+    "sanitize.css": "^5.0.0",
+    "typesafe-actions": "^2.0.3"
   },
   "scripts": {
     "start": "npm-run-all -p watch-css start-js",

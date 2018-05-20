@@ -1,5 +1,6 @@
-import types from '@/reducers/home/action-types'
 import sampleImg from '@/static/images/sample.jpeg'
+import { getType } from 'typesafe-actions'
+import actions, { Action } from './actions'
 
 /* interfaces */
 export interface IWork {
@@ -41,31 +42,25 @@ const initialState: IHomeState = {
   targetWork: null,
 }
 
-export default function home(state: IHomeState = initialState, action: any) {
+export default function home(state: IHomeState = initialState, action: Action) {
   switch (action.type) {
-    case types.TOGGLE_OVERLAY:
-      const { isShowOverlay } = action
-      return { ...state, isShowOverlay }
+    case getType(actions.toggleOverlay):
+      return { ...state, ...action.payload }
 
-    case types.TOGGLE_WORKS_CONTENT:
-      const { isShowWorksContent } = action
-      return { ...state, isShowWorksContent }
+    case getType(actions.toggleWorksContent):
+      return { ...state, ...action.payload }
 
-    case types.TOGGLE_WORKS_CONTENT_ANIMATION:
-      const { isShowWorksContentAnimation } = action
-      return { ...state, isShowWorksContentAnimation }
+    case getType(actions.toggleWorksContentAnimation):
+      return { ...state, ...action.payload }
 
-    case types.UPDATE_CIRCLE:
-      const { circleStyle } = action
-      return { ...state, circleStyle }
+    case getType(actions.updateCircle):
+      return { ...state, ...action.payload }
 
-    case types.UPDATE_WORK_CONTENT_IMG:
-      const { workContentImg } = action
-      return { ...state, workContentImg }
+    case getType(actions.updateWorkContentImg):
+      return { ...state, ...action.payload }
 
-    case types.UPDATE_TARGET_WORK:
-      const { payload } = action
-      return { ...state, targetWork: payload }
+    case getType(actions.updateTargetWork):
+      return { ...state, ...action.payload }
 
     default:
       return state

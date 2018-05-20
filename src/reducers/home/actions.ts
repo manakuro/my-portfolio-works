@@ -1,58 +1,35 @@
-import types from '@/reducers/home/action-types';
-import { IWork } from '@/reducers/home/index';
+import { IWork } from '@/reducers/home/index'
+import { createAction, ActionType } from 'typesafe-actions'
 
-export interface IActions {
-  toggleOverlay(isShowOverlay: boolean): {type: string, isShowOverlay: boolean}
-  toggleWorksContent(isShowWorksContent: boolean): {type: string, isShowWorksContent: boolean}
-  toggleWorksContentAnimation(isShowWorksContentAnimation: boolean): {type: string, isShowWorksContentAnimation: boolean}
-  updateCircle(circleStyle: React.CSSProperties): {type: string, circleStyle: React.CSSProperties}
-  updateWorkContentImg(workContentImg: string): { type: string, workContentImg: string }
-  updateTargetWork(payload: IWork): { type: string, payload: IWork }
+const actions = {
+  toggleOverlay: createAction('TOGGLE_OVERLAY', reslove => {
+    return (isShowOverlay: boolean) => reslove({ isShowOverlay })
+  }),
+
+  toggleWorksContent: createAction('TOGGLE_WORKS_CONTENT', resolve => {
+    return (isShowWorksContent: boolean) => resolve({ isShowWorksContent })
+  }),
+
+  toggleWorksContentAnimation: createAction(
+    'TOGGLE_WORKS_CONTENT_ANIMATION',
+    resolve => {
+      return (isShowWorksContentAnimation: boolean) =>
+        resolve({ isShowWorksContentAnimation })
+    },
+  ),
+
+  updateCircle: createAction('UPDATE_CIRCLE', resolve => {
+    return (circleStyle: React.CSSProperties) => resolve({ circleStyle })
+  }),
+
+  updateWorkContentImg: createAction('UPDATE_WORK_CONTENT_IMG', resolve => {
+    return (workContentImg: string) => resolve({ workContentImg })
+  }),
+
+  updateTargetWork: createAction('UPDATE_TARGET_WORK', resolve => {
+    return (targetWork: IWork) => resolve({ targetWork })
+  }),
 }
+export type Action = ActionType<typeof actions>
 
-const actions: IActions = {
-  toggleOverlay(isShowOverlay: boolean) {
-    return {
-      type: types.TOGGLE_OVERLAY,
-      isShowOverlay,
-    }
-  },
-
-  toggleWorksContent(isShowWorksContent: boolean) {
-    return {
-      type: types.TOGGLE_WORKS_CONTENT,
-      isShowWorksContent,
-    }
-  },
-
-  toggleWorksContentAnimation(isShowWorksContentAnimation: boolean) {
-    return {
-      type: types.TOGGLE_WORKS_CONTENT_ANIMATION,
-      isShowWorksContentAnimation,
-    }
-  },
-
-  updateCircle(circleStyle: React.CSSProperties) {
-    return {
-      type: types.UPDATE_CIRCLE,
-      circleStyle
-    }
-  },
-
-  updateWorkContentImg(workContentImg: string) {
-    return {
-      type: types.UPDATE_WORK_CONTENT_IMG,
-      workContentImg
-    }
-  },
-
-  updateTargetWork(payload: IWork) {
-    return {
-      type: types.UPDATE_TARGET_WORK,
-      payload
-    }
-  }
-};
-
-
-export default actions;
+export default actions
