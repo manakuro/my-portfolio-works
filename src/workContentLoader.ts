@@ -1,10 +1,10 @@
 import loadable from 'loadable-components'
-import * as React from 'react';
+import * as React from 'react'
 
 interface Loadable<T> extends React.ComponentClass<T> {
-  Component: React.ComponentClass;
-  loadingPromise: Promise<any>;
-  load(): Promise<any>;
+  Component: React.ComponentClass
+  loadingPromise: Promise<any>
+  load(): Promise<any>
 }
 
 interface ComponentProps {
@@ -12,8 +12,7 @@ interface ComponentProps {
 }
 
 const components: { [key: string]: Loadable<ComponentProps> } = {
-  WorkOne: loadable(() => import('@/static/works/one/Component'))
-};
+  WorkOne: loadable(() => import('@/static/works/one/Component')),
+}
 
-
-export default components;
+export default components

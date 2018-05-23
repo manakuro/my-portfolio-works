@@ -1,67 +1,71 @@
-import * as React from 'react';
-import { Animated } from 'react-animated-css';
-import Anime, { AnimeProps } from 'react-anime';
-import { connect, Dispatch } from 'react-redux';
-import { CSSTransition } from 'react-transition-group';
+import * as React from 'react'
+import { Animated } from 'react-animated-css'
+import Anime, { AnimeProps } from 'react-anime'
+import { connect, Dispatch } from 'react-redux'
+import { CSSTransition } from 'react-transition-group'
 
 /* tslint:disable */
 
 // components
-import Header from '@/components/Header/Header';
+import Header from '@/components/Header/Header'
 
 // others
-import './Home.css';
-import addClassHtml from '@/utils/addClassHtml';
-import removeClassHtml from '@/utils/removeClassHtml';
-import { IHomeState, IWork } from '@/reducers/home/index';
-import actions from '@/reducers/home/actions';
-import { IReducers } from '@/reducers/reducers';
-import Work from '@/components/Work/Work';
-import WorkContent from '@/components/WorkContent/WorkContent';
+import './Home.css'
+import addClassHtml from '@/utils/addClassHtml'
+import removeClassHtml from '@/utils/removeClassHtml'
+import { IHomeState, IWork } from '@/reducers/home/index'
+import actions from '@/reducers/home/actions'
+import { RootState } from '@/reducers/reducers'
+import Work from '@/components/Work/Work'
+import WorkContent from '@/components/WorkContent/WorkContent'
 
-interface IHomeProps extends IHomeStateFromProps, IHomeDispatchFromProps {}
+interface HomeProps extends HomeStateFromProps, HomeDispatchFromProps {}
 
-export class Home extends React.Component<IHomeProps, {}> {
-  public anime: any;
+export class Home extends React.Component<HomeProps, {}> {
+  public anime: any
 
-  constructor(props: IHomeProps) {
-    super(props);
+  constructor(props: HomeProps) {
+    super(props)
+  }
+
+  componentDidMount(): void {
+    this.props.fetchWorks()
   }
 
   showOverlay = (e: React.SyntheticEvent<EventTarget>): void => {
-    const nativeEvent: any = e.nativeEvent;
-    const { pageX, pageY } = nativeEvent;
+    const nativeEvent: any = e.nativeEvent
+    const { pageX, pageY } = nativeEvent
     const circleStyle = {
       top: `${pageY - 50}px`,
       left: `${pageX - 50}px`,
-    };
+    }
 
-    this.props.toggleOverlay(true);
-    this.props.updateCircle(circleStyle);
-  };
+    this.props.toggleOverlay(true)
+    this.props.updateCircle(circleStyle)
+  }
 
   hideOverlay = (): void => {
-    this.props.toggleWorksContent(false);
-    removeClassHtml();
+    this.props.toggleWorksContent(false)
+    removeClassHtml()
 
-    this.props.toggleOverlay(false);
-    this.props.toggleWorksContentAnimation(false);
-  };
+    this.props.toggleOverlay(false)
+    this.props.toggleWorksContentAnimation(false)
+  }
 
   onExitedOverlay = (): void => {
     this.props.updateCircle({
       top: '0px',
       left: '-1000px',
-    });
-  };
+    })
+  }
 
   showWorksContent = (): void => {
-    this.props.toggleWorksContent(true);
-    addClassHtml('hidden');
-  };
+    this.props.toggleWorksContent(true)
+    addClassHtml('hidden')
+  }
 
   onEnteredShowWorksContent(): void {
-    this.props.toggleWorksContentAnimation(true);
+    this.props.toggleWorksContentAnimation(true)
   }
 
   renderWorkContentImgAnimation = (): JSX.Element | null => {
@@ -80,7 +84,7 @@ export class Home extends React.Component<IHomeProps, {}> {
       backgroundColor: '',
       points: '',
       strokeDashoffset: 0,
-    };
+    }
 
     return this.props.workContentImg !== '' && this.props.isShowWorksContent ? (
       <Anime {...animeProps} key={`anime-${this.props.workContentImg}`}>
@@ -91,8 +95,8 @@ export class Home extends React.Component<IHomeProps, {}> {
         <div className="uncover-slice" />
         <div className="uncover-slice" />
       </Anime>
-    ) : null;
-  };
+    ) : null
+  }
 
   public render(): JSX.Element {
     return (
@@ -189,23 +193,24 @@ export class Home extends React.Component<IHomeProps, {}> {
           </div>
         </main>
       </div>
-    );
+    )
   }
 }
 
-export interface IHomeDispatchFromProps {
-  toggleOverlay: (isShowOverlay: boolean) => any;
-  toggleWorksContent: (isShowWorksContent: boolean) => any;
-  toggleWorksContentAnimation: (isShowWorksContentAnimation: boolean) => any;
-  updateCircle: (circleStyle: React.CSSProperties) => any;
-  updateWorkContentImg: (workContentImg: string) => any;
-  updateTargetWork: (payload: IWork) => any;
+export interface HomeDispatchFromProps {
+  toggleOverlay: (isShowOverlay: boolean) => any
+  toggleWorksContent: (isShowWorksContent: boolean) => any
+  toggleWorksContentAnimation: (isShowWorksContentAnimation: boolean) => any
+  updateCircle: (circleStyle: React.CSSProperties) => any
+  updateWorkContentImg: (workContentImg: string) => any
+  updateTargetWork: (payload: IWork) => any
+  fetchWorks: () => any
 }
 
-export interface IHomeStateFromProps extends IHomeState {}
+export interface HomeStateFromProps extends IHomeState {}
 
-export function mapStateToProps(state: IReducers) {
-  return state.home;
+export function mapStateToProps(state: RootState) {
+  return state.home
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<() => any>) {
@@ -224,10 +229,12 @@ export function mapDispatchToProps(dispatch: Dispatch<() => any>) {
       dispatch(actions.updateWorkContentImg(workContentImg)),
     updateTargetWork: (targetWork: IWork) =>
       dispatch(actions.updateTargetWork(targetWork)),
-  };
+
+    fetchWorks: () => dispatch(actions.fetchWorks.request()),
+  }
 }
 
-export default connect<IHomeStateFromProps, IHomeDispatchFromProps, void>(
+export default connect<HomeStateFromProps, HomeDispatchFromProps, void>(
   mapStateToProps,
   mapDispatchToProps,
-)(Home);
+)(Home)

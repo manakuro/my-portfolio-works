@@ -1,13 +1,13 @@
-import * as React from 'react';
-import * as Swiper from 'react-id-swiper';
+import * as React from 'react'
+import * as Swiper from 'react-id-swiper'
 
-import './Header.css';
+import './Header.css'
 
 export default class Header extends React.Component {
-  private swiper: any;
+  private swiper: any
 
   constructor(props: {}) {
-    super(props);
+    super(props)
   }
 
   public render(): JSX.Element {
@@ -16,7 +16,7 @@ export default class Header extends React.Component {
       loop: true,
       slidesPerView: 'auto',
       spaceBetween: 10,
-    };
+    }
 
     const languages: string[] = [
       'Ruby on Rails',
@@ -30,13 +30,13 @@ export default class Header extends React.Component {
       'PWAs',
       'SSR',
       'Elm',
-    ];
+    ]
 
     const rows: JSX.Element[] = languages.map((l, index) => (
       <a href="#" key={index}>
         {l}
       </a>
-    ));
+    ))
 
     return (
       <header className="header">
@@ -51,7 +51,7 @@ export default class Header extends React.Component {
             <Swiper
               {...params}
               ref={(node: any) => {
-                if (node) this.swiper = node.swiper;
+                if (node) this.swiper = node.swiper
               }}
             >
               {rows}
@@ -62,14 +62,14 @@ export default class Header extends React.Component {
           </div>
         </nav>
       </header>
-    );
+    )
   }
 
   private goNext = (): void => {
-    this.swiper.slideNext();
-  };
+    this.swiper.slideNext()
+  }
 
   private goPrev = (): void => {
-    this.swiper.slidePrev();
-  };
+    this.swiper.slidePrev()
+  }
 }

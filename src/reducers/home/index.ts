@@ -62,6 +62,10 @@ export default function home(state: IHomeState = initialState, action: Action) {
     case getType(actions.updateTargetWork):
       return { ...state, ...action.payload }
 
+    case getType(actions.fetchWorks.success):
+      console.log('payload', action.payload)
+      return { ...state, ...action.payload }
+
     default:
       return state
   }

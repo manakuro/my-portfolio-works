@@ -1,5 +1,5 @@
 import { IWork } from '@/reducers/home/index'
-import { createAction, ActionType } from 'typesafe-actions'
+import { createAction, ActionType, createAsyncAction } from 'typesafe-actions'
 
 const actions = {
   toggleOverlay: createAction('TOGGLE_OVERLAY', reslove => {
@@ -29,6 +29,12 @@ const actions = {
   updateTargetWork: createAction('UPDATE_TARGET_WORK', resolve => {
     return (targetWork: IWork) => resolve({ targetWork })
   }),
+
+  fetchWorks: createAsyncAction(
+    'FETCH_WORKS_REQUEST',
+    'FETCH_WORKS_SUCCESS',
+    'FETCH_WORKS_FAILURE',
+  )<void, IWork[], Error>(),
 }
 export type Action = ActionType<typeof actions>
 
