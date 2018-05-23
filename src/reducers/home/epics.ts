@@ -1,6 +1,6 @@
 import { filter, switchMap } from 'rxjs/operators'
 import 'rxjs/add/operator/map'
-import { combineEpics, Epic } from 'redux-observable'
+import { Epic } from 'redux-observable'
 import { isActionOf } from 'typesafe-actions'
 import { Action } from 'redux'
 import { RootState } from '@/reducers/reducers'
@@ -13,4 +13,4 @@ const fetchWorksEpic: Epic<Action, RootState> = action$ =>
     switchMap(_ => api.fetchWorks().map(actions.fetchWorks.success)),
   )
 
-export default combineEpics(fetchWorksEpic)
+export default [fetchWorksEpic]

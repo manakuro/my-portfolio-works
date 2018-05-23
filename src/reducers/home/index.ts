@@ -1,4 +1,3 @@
-import sampleImg from '@/static/images/sample.jpeg'
 import { getType } from 'typesafe-actions'
 import actions, { Action } from './actions'
 
@@ -11,7 +10,7 @@ export interface IWork {
   component: string
 }
 
-export interface IHomeState {
+export interface HomeState {
   works: IWork[]
   workContentImg: string
   isShowOverlay: boolean
@@ -22,18 +21,8 @@ export interface IHomeState {
 }
 
 /* reducer */
-const initialState: IHomeState = {
-  works: Array.apply(null, new Array(21)).map((_: null, i: number) => ({
-    id: i + 1,
-    title: 'EC Website',
-    description: `
-        I’ve been a CMT for ten years now, and I have, literally and
-        figuratively, held the pulse of a steaming cross-section of
-        San Franciscans
-      `,
-    img: sampleImg,
-    component: 'WorkOne',
-  })),
+const initialState: HomeState = {
+  works: [],
   workContentImg: '',
   isShowOverlay: false,
   isShowWorksContent: false,
@@ -42,7 +31,7 @@ const initialState: IHomeState = {
   targetWork: null,
 }
 
-export default function home(state: IHomeState = initialState, action: Action) {
+export default function home(state: HomeState = initialState, action: Action) {
   switch (action.type) {
     case getType(actions.toggleOverlay):
       return { ...state, ...action.payload }
@@ -63,8 +52,7 @@ export default function home(state: IHomeState = initialState, action: Action) {
       return { ...state, ...action.payload }
 
     case getType(actions.fetchWorks.success):
-      console.log('payload', action.payload)
-      return { ...state, ...action.payload }
+      return { ...state, works: action.payload }
 
     default:
       return state

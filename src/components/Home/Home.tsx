@@ -13,7 +13,7 @@ import Header from '@/components/Header/Header'
 import './Home.css'
 import addClassHtml from '@/utils/addClassHtml'
 import removeClassHtml from '@/utils/removeClassHtml'
-import { IHomeState, IWork } from '@/reducers/home/index'
+import { HomeState, IWork } from '@/reducers/home/index'
 import actions from '@/reducers/home/actions'
 import { RootState } from '@/reducers/reducers'
 import Work from '@/components/Work/Work'
@@ -207,7 +207,7 @@ export interface HomeDispatchFromProps {
   fetchWorks: () => any
 }
 
-export interface HomeStateFromProps extends IHomeState {}
+export interface HomeStateFromProps extends HomeState {}
 
 export function mapStateToProps(state: RootState) {
   return state.home

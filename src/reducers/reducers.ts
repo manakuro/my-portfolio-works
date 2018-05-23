@@ -1,7 +1,7 @@
-import home, { IHomeState } from '@/reducers/home/index'
+import home, { HomeState } from '@/reducers/home/index'
 
 export interface RootState {
-  home: IHomeState
+  home: HomeState
 }
 
 export default {

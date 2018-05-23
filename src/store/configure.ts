@@ -5,7 +5,7 @@ import rootReducer from '../reducers/reducers'
 import createBrowserHistory from 'history/createBrowserHistory'
 import { routerMiddleware, routerReducer } from 'react-router-redux'
 import { createEpicMiddleware } from 'redux-observable'
-import epics from '@/reducers/home/epics'
+import epics from '@/reducers/epics'
 
 // Create a history of your choosing (we're using a browser history in this case)
 const history = createBrowserHistory()
