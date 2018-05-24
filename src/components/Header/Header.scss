@@ -1,4 +1,4 @@
-$headerHeight: 70px;
+$headerHeight: 100px;
 
 .header {
   position: fixed;
@@ -7,6 +7,9 @@ $headerHeight: 70px;
   width: 100%;
   height: $headerHeight;
   background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
   .logo {
     display: flex;

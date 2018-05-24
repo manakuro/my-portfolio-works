@@ -1,63 +1,5 @@
-$headerHeight: 70px;
+$headerHeight: 100px;
 $bgOverlay: rgb(244, 247, 246);
-
-.header {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: $headerHeight;
-  background: rgba(255, 255, 255, 0.9);
-
-  .logo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 40px;
-
-    > a {
-      font-size: 2rem;
-      font-weight: 700;
-      font-family: 'Source Serif Pro', serif;
-      color: #2F2F2F;
-    }
-  }
-
-  .nav {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    /deep/ .swiper-slide {
-      width: auto;
-    }
-
-    .nav-container {
-      width: 50%;
-      overflow: hidden;
-
-      a {
-        font-family: 'Roboto';
-        font-size: .9rem;
-        color: #2F2F2F;
-        opacity: .8;
-
-        transition: .25s;
-
-        &:hover {
-          opacity: 1;
-        }
-      }
-    }
-
-
-    // angle icon
-    .icon {
-      cursor: pointer;
-      padding: 0 10px;
-    }
-  }
-}
 
 .works {
   $marginTop: $headerHeight + 30px;
@@ -71,8 +13,6 @@ $bgOverlay: rgb(244, 247, 246);
     grid-gap: 15px;
   }
 }
-
-
 
 .overlay {
   width: 100vw;

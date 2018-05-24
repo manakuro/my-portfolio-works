@@ -38,7 +38,7 @@ export default class Header extends React.PureComponent<HeaderProps, {}> {
         </div>
         <nav className="nav">
           <div>
-            <i className="fa fa-angle-left icon" onClick={this.goPrev} />
+            <i className="fa fa-angle-left icon" onClick={this.prev} />
           </div>
           <div className="nav-container">
             {rows && (
@@ -53,18 +53,18 @@ export default class Header extends React.PureComponent<HeaderProps, {}> {
             )}
           </div>
           <div>
-            <i className="fa fa-angle-right icon" onClick={this.goNext} />
+            <i className="fa fa-angle-right icon" onClick={this.next} />
           </div>
         </nav>
       </header>
     )
   }
 
-  private goNext = (): void => {
+  private next = (): void => {
     this.swiper.slideNext()
   }
 
-  private goPrev = (): void => {
+  private prev = (): void => {
     this.swiper.slidePrev()
   }
 }
