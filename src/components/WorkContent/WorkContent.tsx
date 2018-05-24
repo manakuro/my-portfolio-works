@@ -2,7 +2,7 @@ import * as React from 'react'
 import WorkContentLoader from '@/workContentLoader'
 
 import './WorkContent.css'
-import { IWork } from '@/modules/home'
+import { IWork } from '@/modules/home/reducer'
 
 interface WorkProps {
   updateWorkContentImg: (workContentImg: string) => void

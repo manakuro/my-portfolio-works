@@ -1,5 +1,5 @@
 import sampleImg from '@/static/images/sample.jpeg'
-import { IWork } from '@/modules/home'
+import { IWork } from '@/modules/home/reducer'
 
 const work1: IWork = {
   id: 1,

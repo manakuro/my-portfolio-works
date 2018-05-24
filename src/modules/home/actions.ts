@@ -1,4 +1,4 @@
-import { IWork } from '@/modules/home/index'
+import { IWork, Language } from '@/modules/home/reducer'
 import { createAction, ActionType, createAsyncAction } from 'typesafe-actions'
 
 const actions = {
@@ -35,6 +35,12 @@ const actions = {
     'FETCH_WORKS_SUCCESS',
     'FETCH_WORKS_FAILURE',
   )<void, IWork[], Error>(),
+
+  fetchLanguages: createAsyncAction(
+    'FETCH_LANGUAGES_REQUEST',
+    'FETCH_LANGUAGES_SUCCESS',
+    'FETCH_LANGUAGES_FAILURE',
+  )<void, Language[], Error>(),
 }
 export type Action = ActionType<typeof actions>
 

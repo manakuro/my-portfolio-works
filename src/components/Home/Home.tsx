@@ -13,7 +13,7 @@ import Header from '@/components/Header/Header'
 import './Home.css'
 import addClassHtml from '@/utils/addClassHtml'
 import removeClassHtml from '@/utils/removeClassHtml'
-import { HomeState, IWork } from '@/modules/home/index'
+import { HomeState, IWork } from '@/modules/home/reducer'
 import actions from '@/modules/home/actions'
 import { RootState } from '@/modules/reducers'
 import Work from '@/components/Work/Work'
@@ -30,6 +30,7 @@ export class Home extends React.Component<HomeProps, {}> {
 
   componentDidMount(): void {
     this.props.fetchWorks()
+    this.props.fetchLanguages()
   }
 
   showOverlay = (e: React.SyntheticEvent<EventTarget>): void => {
@@ -177,11 +178,11 @@ export class Home extends React.Component<HomeProps, {}> {
           </div>
         </CSSTransition>
 
-        <Header />
+        <Header languages={this.props.languages} />
         <main className="main container">
           <div className="works">
             <div className="works-list">
-              {this.props.works.map((work: IWork) => (
+              {this.props.works.map(work => (
                 <Work
                   key={work.id}
                   work={work}
@@ -205,6 +206,7 @@ export interface HomeDispatchFromProps {
   updateWorkContentImg: (workContentImg: string) => any
   updateTargetWork: (payload: IWork) => any
   fetchWorks: () => any
+  fetchLanguages: () => any
 }
 
 export interface HomeStateFromProps extends HomeState {}
@@ -231,6 +233,8 @@ export function mapDispatchToProps(dispatch: Dispatch<() => any>) {
       dispatch(actions.updateTargetWork(targetWork)),
 
     fetchWorks: () => dispatch(actions.fetchWorks.request()),
+
+    fetchLanguages: () => dispatch(actions.fetchLanguages.request()),
   }
 }
 

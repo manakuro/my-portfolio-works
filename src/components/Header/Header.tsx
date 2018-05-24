@@ -2,11 +2,16 @@ import * as React from 'react'
 import * as Swiper from 'react-id-swiper'
 
 import './Header.css'
+import { HomeState } from '@/modules/home/reducer'
 
-export default class Header extends React.Component {
+export interface HeaderProps {
+  languages: HomeState['languages']
+}
+
+export default class Header extends React.PureComponent<HeaderProps, {}> {
   private swiper: any
 
-  constructor(props: {}) {
+  constructor(props: HeaderProps) {
     super(props)
   }
 
@@ -18,26 +23,13 @@ export default class Header extends React.Component {
       spaceBetween: 10,
     }
 
-    const languages: string[] = [
-      'Ruby on Rails',
-      'React.js',
-      'Angular',
-      'Vue.js',
-      'Fuel PHP',
-      'TypeScript',
-      'GraphQL',
-      'JEST',
-      'PWAs',
-      'SSR',
-      'Elm',
-      'Reason React',
-    ]
-
-    const rows: JSX.Element[] = languages.map((l, index) => (
-      <a href="#" key={index}>
-        {l}
-      </a>
-    ))
+    const rows: JSX.Element[] | null = this.props.languages.length
+      ? this.props.languages.map(l => (
+          <a href="#" key={l.id}>
+            {l.name}
+          </a>
+        ))
+      : null
 
     return (
       <header className="header">
@@ -49,14 +41,16 @@ export default class Header extends React.Component {
             <i className="fa fa-angle-left icon" onClick={this.goPrev} />
           </div>
           <div className="nav-container">
-            <Swiper
-              {...params}
-              ref={(node: any) => {
-                if (node) this.swiper = node.swiper
-              }}
-            >
-              {rows}
-            </Swiper>
+            {rows && (
+              <Swiper
+                {...params}
+                ref={(node: any) => {
+                  if (node) this.swiper = node.swiper
+                }}
+              >
+                {rows}
+              </Swiper>
+            )}
           </div>
           <div>
             <i className="fa fa-angle-right icon" onClick={this.goNext} />

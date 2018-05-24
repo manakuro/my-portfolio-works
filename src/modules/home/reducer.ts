@@ -10,6 +10,11 @@ export interface IWork {
   component: string
 }
 
+export interface Language {
+  id: number
+  name: string
+}
+
 export interface HomeState {
   works: IWork[]
   workContentImg: string
@@ -18,6 +23,7 @@ export interface HomeState {
   isShowWorksContentAnimation: boolean
   circleStyle: React.CSSProperties
   targetWork: IWork | null
+  languages: Language[]
 }
 
 /* reducer */
@@ -29,6 +35,7 @@ const initialState: HomeState = {
   isShowWorksContentAnimation: false,
   circleStyle: {},
   targetWork: null,
+  languages: [],
 }
 
 export default function home(state: HomeState = initialState, action: Action) {
@@ -53,6 +60,9 @@ export default function home(state: HomeState = initialState, action: Action) {
 
     case getType(actions.fetchWorks.success):
       return { ...state, works: action.payload }
+
+    case getType(actions.fetchLanguages.success):
+      return { ...state, languages: action.payload }
 
     default:
       return state
