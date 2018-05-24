@@ -30,6 +30,7 @@ export default class Header extends React.Component {
       'PWAs',
       'SSR',
       'Elm',
+      'Reason React',
     ]
 
     const rows: JSX.Element[] = languages.map((l, index) => (

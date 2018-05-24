@@ -1,7 +1,7 @@
 import { of } from 'rxjs/observable/of'
 import { Observable } from 'rxjs/Observable'
-import { IWork } from '@/reducers/home/index'
-import { WORKS_DATA } from '@/static/data/works'
+import { IWork } from '@/modules/home/index'
+import { WORKS_DATA } from '@/static/works/works'
 
 const api = {
   fetchWorks: (): Observable<IWork[]> => {

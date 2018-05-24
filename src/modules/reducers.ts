@@ -1,4 +1,4 @@
-import home, { HomeState } from '@/reducers/home/index'
+import home, { HomeState } from '@/modules/home/index'
 
 export interface RootState {
   home: HomeState

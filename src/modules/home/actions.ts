@@ -1,4 +1,4 @@
-import { IWork } from '@/reducers/home/index'
+import { IWork } from '@/modules/home/index'
 import { createAction, ActionType, createAsyncAction } from 'typesafe-actions'
 
 const actions = {
