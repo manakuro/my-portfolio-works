@@ -8,11 +8,16 @@ export interface IWork {
   description: string
   img: string
   component: string
+  languages: SearchQuery['languages']
 }
 
 export interface Language {
   id: number
   name: string
+}
+
+export interface SearchQuery {
+  languages: number[]
 }
 
 export interface HomeState {
@@ -24,6 +29,7 @@ export interface HomeState {
   circleStyle: React.CSSProperties
   targetWork: IWork | null
   languages: Language[]
+  searchQuery: SearchQuery
 }
 
 /* reducer */
@@ -36,6 +42,9 @@ const initialState: HomeState = {
   circleStyle: {},
   targetWork: null,
   languages: [],
+  searchQuery: {
+    languages: [],
+  },
 }
 
 export default function home(state: HomeState = initialState, action: Action) {
@@ -56,6 +65,9 @@ export default function home(state: HomeState = initialState, action: Action) {
       return { ...state, ...action.payload }
 
     case getType(actions.updateTargetWork):
+      return { ...state, ...action.payload }
+
+    case getType(actions.updateSearchQuery):
       return { ...state, ...action.payload }
 
     case getType(actions.fetchWorks.success):

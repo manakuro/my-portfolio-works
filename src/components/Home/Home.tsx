@@ -13,11 +13,13 @@ import Header from '@/components/Header/Header'
 import './Home.css'
 import addClassHtml from '@/utils/addClassHtml'
 import removeClassHtml from '@/utils/removeClassHtml'
-import { HomeState, IWork } from '@/modules/home/reducer'
+import { HomeState, IWork, SearchQuery } from '@/modules/home/reducer'
 import actions from '@/modules/home/actions'
 import { RootState } from '@/modules/reducers'
 import Work from '@/components/Work/Work'
 import WorkContent from '@/components/WorkContent/WorkContent'
+import { History, Location } from 'history'
+import * as queryString from 'query-string'
 
 interface HomeProps extends HomeStateFromProps, HomeDispatchFromProps {}
 
@@ -29,8 +31,20 @@ export class Home extends React.Component<HomeProps, {}> {
   }
 
   componentDidMount(): void {
-    this.props.fetchWorks()
+    const query = this.parseQuery()
+
+    this.props.fetchWorks(query)
     this.props.fetchLanguages()
+  }
+
+  parseQuery(): SearchQuery {
+    let query
+    if (this.props.location) {
+      query = queryString.parse(this.props.location.search)
+      query.languages = query.languages.map((l: string) => parseInt(l, 10))
+    }
+
+    return query
   }
 
   showOverlay = (e: React.SyntheticEvent<EventTarget>): void => {
@@ -178,7 +192,12 @@ export class Home extends React.Component<HomeProps, {}> {
           </div>
         </CSSTransition>
 
-        <Header languages={this.props.languages} />
+        <Header
+          updateSearchQuery={this.props.updateSearchQuery}
+          searchQuery={this.props.searchQuery}
+          languages={this.props.languages}
+          history={this.props.history}
+        />
         <main className="main container">
           <div className="works">
             <div className="works-list">
@@ -205,11 +224,15 @@ export interface HomeDispatchFromProps {
   updateCircle: (circleStyle: React.CSSProperties) => any
   updateWorkContentImg: (workContentImg: string) => any
   updateTargetWork: (payload: IWork) => any
-  fetchWorks: () => any
+  updateSearchQuery: (searchQuery: any) => any
+  fetchWorks: (searchQuery?: SearchQuery) => any
   fetchLanguages: () => any
 }
 
-export interface HomeStateFromProps extends HomeState {}
+export interface HomeStateFromProps extends HomeState {
+  history?: History
+  location?: Location
+}
 
 export function mapStateToProps(state: RootState) {
   return state.home
@@ -231,8 +254,11 @@ export function mapDispatchToProps(dispatch: Dispatch<() => any>) {
       dispatch(actions.updateWorkContentImg(workContentImg)),
     updateTargetWork: (targetWork: IWork) =>
       dispatch(actions.updateTargetWork(targetWork)),
+    updateSearchQuery: (searchQuery: any) =>
+      dispatch(actions.updateSearchQuery(searchQuery)),
 
-    fetchWorks: () => dispatch(actions.fetchWorks.request()),
+    fetchWorks: (searchQuery?: SearchQuery) =>
+      dispatch(actions.fetchWorks.request(searchQuery)),
 
     fetchLanguages: () => dispatch(actions.fetchLanguages.request()),
   }

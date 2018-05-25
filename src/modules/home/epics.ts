@@ -10,7 +10,9 @@ import api from '@/modules/home/api'
 const fetchWorksEpic: Epic<Action, RootState> = action$ =>
   action$.pipe(
     filter(isActionOf(actions.fetchWorks.request)),
-    switchMap(_ => api.fetchWorks().map(actions.fetchWorks.success)),
+    switchMap(action =>
+      api.fetchWorks(action.payload).map(actions.fetchWorks.success),
+    ),
   )
 
 const fetchLanguagesEpic: Epic<Action, RootState> = action$ =>

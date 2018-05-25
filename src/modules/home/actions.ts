@@ -1,4 +1,4 @@
-import { IWork, Language } from '@/modules/home/reducer'
+import { IWork, Language, SearchQuery } from '@/modules/home/reducer'
 import { createAction, ActionType, createAsyncAction } from 'typesafe-actions'
 
 const actions = {
@@ -30,11 +30,15 @@ const actions = {
     return (targetWork: IWork) => resolve({ targetWork })
   }),
 
+  updateSearchQuery: createAction('UPDATE_SEARCH_QUERY', resolve => {
+    return (searchQuery: any) => resolve({ searchQuery })
+  }),
+
   fetchWorks: createAsyncAction(
     'FETCH_WORKS_REQUEST',
     'FETCH_WORKS_SUCCESS',
     'FETCH_WORKS_FAILURE',
-  )<void, IWork[], Error>(),
+  )<SearchQuery | undefined, IWork[], Error>(),
 
   fetchLanguages: createAsyncAction(
     'FETCH_LANGUAGES_REQUEST',
