@@ -30,21 +30,30 @@ export class Home extends React.Component<HomeProps, {}> {
     super(props)
   }
 
-  componentDidMount(): void {
-    const query = this.parseQuery()
+  async componentWillMount(): Promise<void> {
+    await this.mergeQuery()
 
-    this.props.fetchWorks(query)
+    this.props.fetchWorks()
     this.props.fetchLanguages()
   }
 
-  parseQuery(): SearchQuery {
-    let query
-    if (this.props.location) {
-      query = queryString.parse(this.props.location.search)
-      query.languages = query.languages.map((l: string) => parseInt(l, 10))
+  componentDidUpdate(prevProps: HomeProps) {
+    if (prevProps.searchQuery !== this.props.searchQuery) {
+      this.props.fetchWorks()
     }
+  }
 
-    return query
+  async mergeQuery(): Promise<void> {
+    if (this.props.location) {
+      const query = queryString.parse(this.props.location.search)
+      if (query.languages) {
+        if (typeof query.languages === 'string')
+          query.languages = query.languages.split()
+        query.languages = query.languages.map((l: string) => parseInt(l, 10))
+      }
+
+      await this.props.updateSearchQuery(query)
+    }
   }
 
   showOverlay = (e: React.SyntheticEvent<EventTarget>): void => {
@@ -257,8 +266,7 @@ export function mapDispatchToProps(dispatch: Dispatch<() => any>) {
     updateSearchQuery: (searchQuery: any) =>
       dispatch(actions.updateSearchQuery(searchQuery)),
 
-    fetchWorks: (searchQuery?: SearchQuery) =>
-      dispatch(actions.fetchWorks.request(searchQuery)),
+    fetchWorks: () => dispatch(actions.fetchWorks.request()),
 
     fetchLanguages: () => dispatch(actions.fetchLanguages.request()),
   }

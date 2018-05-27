@@ -7,11 +7,13 @@ import { RootState } from '@/modules/reducers'
 import actions from '@/modules/home/actions'
 import api from '@/modules/home/api'
 
-const fetchWorksEpic: Epic<Action, RootState> = action$ =>
+const fetchWorksEpic: Epic<Action, RootState> = (action$, store) =>
   action$.pipe(
     filter(isActionOf(actions.fetchWorks.request)),
-    switchMap(action =>
-      api.fetchWorks(action.payload).map(actions.fetchWorks.success),
+    switchMap(_ =>
+      api
+        .fetchWorks(store.getState().home.searchQuery)
+        .map(actions.fetchWorks.success),
     ),
   )
 

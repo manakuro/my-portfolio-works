@@ -68,7 +68,10 @@ export default function home(state: HomeState = initialState, action: Action) {
       return { ...state, ...action.payload }
 
     case getType(actions.updateSearchQuery):
-      return { ...state, ...action.payload }
+      return {
+        ...state,
+        searchQuery: { ...state.searchQuery, ...action.payload.searchQuery },
+      }
 
     case getType(actions.fetchWorks.success):
       return { ...state, works: action.payload }
