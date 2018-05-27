@@ -2,6 +2,7 @@ import * as React from 'react'
 import * as Swiper from 'react-id-swiper'
 import * as queryString from 'query-string'
 import { xor } from 'lodash'
+import * as classNames from 'classnames'
 
 import './Header.css'
 import { HomeState, SearchQuery } from '@/modules/home/reducer'
@@ -24,17 +25,28 @@ export default class Header extends React.PureComponent<HeaderProps, {}> {
   public render(): JSX.Element {
     const params = {
       freeMode: true,
-      loop: true,
       slidesPerView: 'auto',
       spaceBetween: 10,
     }
+    const mapActiveLanguages = this.props.searchQuery.languages.reduce(
+      (acc, l) => {
+        acc[l] = true
+        return acc
+      },
+      {},
+    )
 
     const rows: JSX.Element[] | null = this.props.languages.length
       ? this.props.languages.map(l => (
           // @todo figure out the best practice for passing args in event handler
           // @see https://github.com/palantir/tslint-react/issues/96
-          // tslint:disable-next-line jsx-no-lambda
-          <a href="#" key={l.id} onClick={e => this.clickHandler(e, l.id)}>
+          <a
+            href="#"
+            key={l.id}
+            // tslint:disable-next-line jsx-no-lambda
+            onClick={e => this.clickHandler(e, l.id)}
+            className={classNames({ active: mapActiveLanguages[l.id] })}
+          >
             {l.name}
           </a>
         ))

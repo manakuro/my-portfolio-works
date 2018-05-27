@@ -42,7 +42,14 @@ $headerHeight: 100px;
         font-family: 'Roboto';
         font-size: .9rem;
         color: #2F2F2F;
-        opacity: .8;
+        opacity: .7;
+        border-bottom: 1px solid transparent;
+
+        &.active {
+          opacity: 1;
+          color: #06dca3;
+          border-bottom: 1px solid #05f9b8b5;
+        }
 
         transition: .25s;
 
