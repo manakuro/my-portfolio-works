@@ -1,6 +1,7 @@
 .works-list-item .card {
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  cursor: pointer; }
+  border: 1px solid rgba(0, 0, 0, 0.1); }
+  .works-list-item .card .card-img {
+    cursor: pointer; }
   .works-list-item .card .card-desc {
     display: flex;
     flex-direction: column;

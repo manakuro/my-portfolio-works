@@ -39,7 +39,7 @@ export class Layout extends React.Component<any, {}> {
 
         <CSSTransition
           in={!this.props.isLoading}
-          timeout={2000}
+          timeout={200}
           classNames="loader"
         >
           <div className="loader" />

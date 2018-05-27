@@ -18,7 +18,7 @@ const fetchWorksEpic: Epic<Action, RootState> = (action$, store) =>
         of(actions.updateIsLoading(true)),
         api
           .fetchWorks(store.getState().home.searchQuery)
-          .delay(300)
+          .delay(200)
           .map(actions.fetchWorks.success),
         of(actions.updateIsLoading(false)),
       ),

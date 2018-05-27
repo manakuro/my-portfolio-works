@@ -17,9 +17,13 @@ export default class Work extends React.PureComponent<IWorkProps> {
 
   public render(): JSX.Element {
     return (
-      <div className="works-list-item" onClick={this.handleClick}>
+      <div className="works-list-item">
         <div className="card">
-          <img src={this.props.work.img} />
+          <img
+            src={this.props.work.img}
+            onClick={this.handleClick}
+            className="card-img"
+          />
 
           <div className="card-desc">
             <h3 className="card-desc-heading">{this.props.work.title}</h3>

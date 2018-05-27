@@ -11,10 +11,13 @@
 
 .loader-enter-active {
   opacity: 0;
+  visibility: visible;
   transition: .5s; }
 
 .loader-enter-done, .loader-exit {
-  opacity: 0; }
+  opacity: 0;
+  visibility: hidden; }
 
 .loader-exit-active {
-  opacity: 1; }
+  opacity: 1;
+  visibility: visible; }
