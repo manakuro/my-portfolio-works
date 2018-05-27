@@ -11,7 +11,7 @@ const work1: IWork = {
       `,
   img: sampleImg,
   component: 'WorkOne',
-  languages: [1, 2, 3, 4],
+  languages: [1, 2],
 }
 
 export default work1

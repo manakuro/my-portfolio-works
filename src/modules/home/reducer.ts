@@ -30,6 +30,7 @@ export interface HomeState {
   targetWork: IWork | null
   languages: Language[]
   searchQuery: SearchQuery
+  isLoading: boolean
 }
 
 /* reducer */
@@ -45,6 +46,7 @@ const initialState: HomeState = {
   searchQuery: {
     languages: [],
   },
+  isLoading: true,
 }
 
 export default function home(state: HomeState = initialState, action: Action) {
@@ -72,6 +74,9 @@ export default function home(state: HomeState = initialState, action: Action) {
         ...state,
         searchQuery: { ...state.searchQuery, ...action.payload.searchQuery },
       }
+
+    case getType(actions.updateIsLoading):
+      return { ...state, ...action.payload }
 
     case getType(actions.fetchWorks.success):
       return { ...state, works: action.payload }

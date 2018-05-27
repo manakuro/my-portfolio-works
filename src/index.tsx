@@ -1,4 +1,6 @@
 /* tslint:disable */
+import Layout from '@/components/Layout/Layout'
+
 require('intersection-observer')
 
 import * as React from 'react'
@@ -15,6 +17,8 @@ import './index.css'
 import 'font-awesome/css/font-awesome.min.css'
 import 'react-id-swiper/src/styles/css/swiper.css'
 import 'github-markdown-css/github-markdown.css'
+
+// modules
 import { ConnectedRouter } from 'react-router-redux'
 import createBrowserHistory from 'history/createBrowserHistory'
 import { Route } from 'react-router'
@@ -25,9 +29,9 @@ const history = createBrowserHistory()
 ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <div>
+      <Layout>
         <Route exact path="/" component={Home} />
-      </div>
+      </Layout>
     </ConnectedRouter>
   </Provider>,
   document.getElementById('root') as HTMLElement,

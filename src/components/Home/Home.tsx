@@ -6,9 +6,6 @@ import { CSSTransition } from 'react-transition-group'
 
 /* tslint:disable */
 
-// components
-import Header from '@/components/Header/Header'
-
 // others
 import './Home.css'
 import addClassHtml from '@/utils/addClassHtml'
@@ -34,7 +31,6 @@ export class Home extends React.Component<HomeProps, {}> {
     await this.mergeQuery()
 
     this.props.fetchWorks()
-    this.props.fetchLanguages()
   }
 
   componentDidUpdate(prevProps: HomeProps) {
@@ -201,26 +197,18 @@ export class Home extends React.Component<HomeProps, {}> {
           </div>
         </CSSTransition>
 
-        <Header
-          updateSearchQuery={this.props.updateSearchQuery}
-          searchQuery={this.props.searchQuery}
-          languages={this.props.languages}
-          history={this.props.history}
-        />
-        <main className="main container">
-          <div className="works">
-            <div className="works-list">
-              {this.props.works.map(work => (
-                <Work
-                  key={work.id}
-                  work={work}
-                  updateTargetWork={this.props.updateTargetWork}
-                  showOverlay={this.showOverlay}
-                />
-              ))}
-            </div>
+        <div className="works">
+          <div className="works-list">
+            {this.props.works.map((work, index) => (
+              <Work
+                key={index}
+                work={work}
+                updateTargetWork={this.props.updateTargetWork}
+                showOverlay={this.showOverlay}
+              />
+            ))}
           </div>
-        </main>
+        </div>
       </div>
     )
   }
@@ -235,7 +223,6 @@ export interface HomeDispatchFromProps {
   updateTargetWork: (payload: IWork) => any
   updateSearchQuery: (searchQuery: any) => any
   fetchWorks: (searchQuery?: SearchQuery) => any
-  fetchLanguages: () => any
 }
 
 export interface HomeStateFromProps extends HomeState {
@@ -267,8 +254,6 @@ export function mapDispatchToProps(dispatch: Dispatch<() => any>) {
       dispatch(actions.updateSearchQuery(searchQuery)),
 
     fetchWorks: () => dispatch(actions.fetchWorks.request()),
-
-    fetchLanguages: () => dispatch(actions.fetchLanguages.request()),
   }
 }
 

@@ -12,7 +12,7 @@ const api = {
     // ).then(res => res.json())
 
     let payload = WORKS_DATA
-    if (searchQuery)
+    if (searchQuery && searchQuery.languages.length)
       payload = WORKS_DATA.filter(
         w => !!w.languages.find(wl => searchQuery.languages.includes(wl)),
       )

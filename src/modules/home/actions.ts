@@ -34,6 +34,10 @@ const actions = {
     return (searchQuery: any) => resolve({ searchQuery })
   }),
 
+  updateIsLoading: createAction('UPDATE_IS_LOADING', resolve => {
+    return (isLoading: boolean) => resolve({ isLoading })
+  }),
+
   fetchWorks: createAsyncAction(
     'FETCH_WORKS_REQUEST',
     'FETCH_WORKS_SUCCESS',
