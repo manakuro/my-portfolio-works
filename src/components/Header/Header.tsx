@@ -15,6 +15,12 @@ export interface HeaderProps {
   history?: History
 }
 
+const SWIPER_OPTIONS = {
+  freeMode: true,
+  slidesPerView: 'auto',
+  spaceBetween: 10,
+}
+
 export default class Header extends React.PureComponent<HeaderProps, {}> {
   private swiper: any
 
@@ -23,11 +29,6 @@ export default class Header extends React.PureComponent<HeaderProps, {}> {
   }
 
   public render(): JSX.Element {
-    const params = {
-      freeMode: true,
-      slidesPerView: 'auto',
-      spaceBetween: 10,
-    }
     const mapActiveLanguages = this.props.searchQuery.languages.reduce(
       (acc, l) => {
         acc[l] = true
@@ -64,7 +65,7 @@ export default class Header extends React.PureComponent<HeaderProps, {}> {
           <div className="nav-container">
             {rows && (
               <Swiper
-                {...params}
+                {...SWIPER_OPTIONS}
                 ref={(node: any) => {
                   if (node) this.swiper = node.swiper
                 }}

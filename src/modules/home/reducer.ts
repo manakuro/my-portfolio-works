@@ -14,6 +14,7 @@ export interface IWork {
 export interface Language {
   id: number
   name: string
+  icon: string
 }
 
 export interface SearchQuery {

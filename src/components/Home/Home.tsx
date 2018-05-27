@@ -205,6 +205,7 @@ export class Home extends React.Component<HomeProps, {}> {
                 work={work}
                 updateTargetWork={this.props.updateTargetWork}
                 showOverlay={this.showOverlay}
+                languages={this.props.languages}
               />
             ))}
           </div>
@@ -231,7 +232,9 @@ export interface HomeStateFromProps extends HomeState {
 }
 
 export function mapStateToProps(state: RootState) {
-  return state.home
+  return {
+    ...state.home,
+  }
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<() => any>) {

@@ -23,3 +23,7 @@
   display: flex; }
   .works-list-item .tech-list .tech-list-item {
     margin-right: 10px; }
+  .works-list-item .tech-list .__react_component_tooltip.type-success {
+    background-color: #06dca3;
+    font-weight: bold;
+    color: #fff; }

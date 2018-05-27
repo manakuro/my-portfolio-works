@@ -1,14 +1,16 @@
 import * as React from 'react'
 
-import { IWork } from '@/modules/home/reducer'
+import { IWork, Language } from '@/modules/home/reducer'
 
 interface IWorkProps {
   work: IWork
   showOverlay: (e: React.SyntheticEvent<EventTarget>) => any
   updateTargetWork: (payload: IWork) => any
+  languages: Language[]
 }
 
 import './Work.css'
+import LanguageIcon from '@/components/LanguageIcon'
 
 export default class Work extends React.PureComponent<IWorkProps> {
   constructor(props: IWorkProps) {
@@ -16,6 +18,11 @@ export default class Work extends React.PureComponent<IWorkProps> {
   }
 
   public render(): JSX.Element {
+    const languageIcons = this.props.work.languages.map(l => {
+      const language = this.getLanguage(l)
+      return language ? <LanguageIcon language={language} key={l} /> : null
+    })
+
     return (
       <div className="works-list-item">
         <div className="card">
@@ -31,24 +38,15 @@ export default class Work extends React.PureComponent<IWorkProps> {
               {this.props.work.description}
             </p>
 
-            <ul className="tech-list">
-              <li className="tech-list-item">
-                <span className="icon-vuejs">
-                  <span className="path1" />
-                  <span className="path2" />
-                </span>
-              </li>
-              <li className="tech-list-item">
-                <span className="icon-vuejs">
-                  <span className="path1" />
-                  <span className="path2" />
-                </span>
-              </li>
-            </ul>
+            <div className="tech-list">{languageIcons}</div>
           </div>
         </div>
       </div>
     )
+  }
+
+  private getLanguage(id: number): Language | undefined {
+    return this.props.languages.find(l => l.id === id)
   }
 
   private handleClick = (e: React.SyntheticEvent<EventTarget>): void => {

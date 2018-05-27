@@ -35,5 +35,12 @@
     .tech-list-item {
       margin-right: 10px;
     }
+
+    // overwrite style of React Tooltip
+    .__react_component_tooltip.type-success {
+      background-color: #06dca3;
+      font-weight: bold;
+      color: #fff;
+    }
   }
 }
