@@ -2,7 +2,7 @@ import { getType } from 'typesafe-actions'
 import actions, { Action } from './actions'
 
 /* interfaces */
-export interface IWork {
+export interface Work {
   id: number
   title: string
   description: string
@@ -22,13 +22,14 @@ export interface SearchQuery {
 }
 
 export interface HomeState {
-  works: IWork[]
+  works: Work[]
   workContentImg: string
   isShowOverlay: boolean
   isShowWorksContent: boolean
   isShowWorksContentAnimation: boolean
+  isExpandWorksContent: boolean
   circleStyle: React.CSSProperties
-  targetWork: IWork | null
+  targetWork: Work | null
   languages: Language[]
   searchQuery: SearchQuery
   isLoading: boolean
@@ -41,6 +42,7 @@ const initialState: HomeState = {
   isShowOverlay: false,
   isShowWorksContent: false,
   isShowWorksContentAnimation: false,
+  isExpandWorksContent: false,
   circleStyle: {},
   targetWork: null,
   languages: [],
@@ -59,6 +61,9 @@ export default function home(state: HomeState = initialState, action: Action) {
       return { ...state, ...action.payload }
 
     case getType(actions.toggleWorksContentAnimation):
+      return { ...state, ...action.payload }
+
+    case getType(actions.toggleWorksContentExpand):
       return { ...state, ...action.payload }
 
     case getType(actions.updateCircle):

@@ -58,6 +58,20 @@ $bgOverlay: rgb(244, 247, 246);
     font-size: 4rem;
     line-height: 1.5;
   }
+
+  .works-content-wrapper {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+}
+
+.expand-overlay {
+  position: absolute;
+  padding: 20px;
+  right: 0;
+  top: 0;
+  font-size: 1.2rem;
+  cursor: pointer;
 }
 
 // enter transition
@@ -76,6 +90,27 @@ $bgOverlay: rgb(244, 247, 246);
   opacity: 0;
   transform: translateX(100%);
   transition: transform .7s cubic-bezier(0.215, 0.610, 0.355, 1.000), opacity .7s;
+}
+
+// expand transition
+.expand-works-enter-active {
+  width: 100%;
+  left: 0;
+  transform: translateX(0);
+  transition: .5s cubic-bezier(0.215, 0.610, 0.355, 1.000);
+}
+
+.expand-works-enter-done, .expand-works-exit {
+  width: 100%;
+  left: 0;
+  transform: translateX(0);
+}
+
+.expand-works-exit-active {
+  width: 50%;
+  left: 50%;
+  transform: translateX(0);
+  transition: .5s cubic-bezier(0.215, 0.610, 0.355, 1.000);
 }
 
 // back button
@@ -97,6 +132,11 @@ $bgOverlay: rgb(244, 247, 246);
     justify-content: center;
     align-items: center;
     position: relative;
+
+    &.expanded {
+      background: #f4f7f6;
+      transition: background .25s;
+    }
   }
 }
 
@@ -142,7 +182,7 @@ $bgOverlay: rgb(244, 247, 246);
  --------------------------------*/
 .works-content-left-wrapper {
   position: relative;
-  z-index: 3001;
+  z-index: 3000;
   opacity: 0;
 }
 
@@ -155,7 +195,7 @@ $bgOverlay: rgb(244, 247, 246);
   position: fixed;
   left: 0;
   top: 0;
-  z-index: 3001;
+  z-index: 3000;
   background: transparent;
   padding: 0 50px;
 }

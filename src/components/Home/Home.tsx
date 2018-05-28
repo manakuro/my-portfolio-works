@@ -10,13 +10,14 @@ import { CSSTransition } from 'react-transition-group'
 import './Home.css'
 import addClassHtml from '@/utils/addClassHtml'
 import removeClassHtml from '@/utils/removeClassHtml'
-import { HomeState, IWork, SearchQuery } from '@/modules/home/reducer'
+import { HomeState, Work as IWork, SearchQuery } from '@/modules/home/reducer'
 import actions from '@/modules/home/actions'
 import { RootState } from '@/modules/reducers'
 import Work from '@/components/Work/Work'
 import WorkContent from '@/components/WorkContent/WorkContent'
 import { History, Location } from 'history'
 import * as queryString from 'query-string'
+import * as classnames from 'classnames'
 
 interface HomeProps extends HomeStateFromProps, HomeDispatchFromProps {}
 
@@ -70,6 +71,7 @@ export class Home extends React.Component<HomeProps, {}> {
 
     this.props.toggleOverlay(false)
     this.props.toggleWorksContentAnimation(false)
+    this.props.toggleWorksContentExpand(false)
   }
 
   onExitedOverlay = (): void => {
@@ -106,7 +108,9 @@ export class Home extends React.Component<HomeProps, {}> {
       strokeDashoffset: 0,
     }
 
-    return this.props.workContentImg !== '' && this.props.isShowWorksContent ? (
+    return this.props.workContentImg !== '' &&
+      this.props.isShowWorksContent &&
+      !this.props.isExpandWorksContent ? (
       <Anime {...animeProps} key={`anime-${this.props.workContentImg}`}>
         <div className="uncover-slice" />
         <div className="uncover-slice" />
@@ -119,6 +123,15 @@ export class Home extends React.Component<HomeProps, {}> {
   }
 
   public render(): JSX.Element {
+    const compressIconClass = classnames('fa', {
+      'fa-expand': !this.props.isExpandWorksContent,
+      'fa-compress': this.props.isExpandWorksContent,
+    })
+
+    const worksBackButtonClass = classnames('fa fa-angle-left icon', {
+      expanded: this.props.isExpandWorksContent,
+    })
+
     return (
       <div className="home">
         <CSSTransition
@@ -127,26 +140,37 @@ export class Home extends React.Component<HomeProps, {}> {
           timeout={1000}
           onEntered={() => this.onEnteredShowWorksContent()}
         >
-          <div className="works-content-overlay">
-            <Animated
-              animationIn="fadeInDown"
-              animationOut="fadeOut"
-              isVisible={this.props.isShowWorksContentAnimation}
-            >
-              <h2 className="works-content-heading">EC Website</h2>
-            </Animated>
-            <Animated
-              animationIn="fadeInDown"
-              animationOut="fadeOut"
-              animationInDelay={300}
-              isVisible={this.props.isShowWorksContentAnimation}
-            >
-              <WorkContent
-                updateWorkContentImg={this.props.updateWorkContentImg}
-                targetWork={this.props.targetWork}
-              />
-            </Animated>
-          </div>
+          <CSSTransition
+            in={this.props.isExpandWorksContent}
+            classNames="expand-works"
+            timeout={1000}
+          >
+            <div className="works-content-overlay">
+              <div className="expand-overlay" onClick={this.expandWorksContent}>
+                <i className={compressIconClass} />
+              </div>
+              <div className="works-content-wrapper">
+                <Animated
+                  animationIn="fadeInDown"
+                  animationOut="fadeOut"
+                  isVisible={this.props.isShowWorksContentAnimation}
+                >
+                  <h2 className="works-content-heading">EC Website</h2>
+                </Animated>
+                <Animated
+                  animationIn="fadeInDown"
+                  animationOut="fadeOut"
+                  animationInDelay={300}
+                  isVisible={this.props.isShowWorksContentAnimation}
+                >
+                  <WorkContent
+                    updateWorkContentImg={this.props.updateWorkContentImg}
+                    targetWork={this.props.targetWork}
+                  />
+                </Animated>
+              </div>
+            </div>
+          </CSSTransition>
         </CSSTransition>
         <Animated
           className="works-content-left-wrapper"
@@ -193,7 +217,7 @@ export class Home extends React.Component<HomeProps, {}> {
           timeout={1000}
         >
           <div className="works-back-button">
-            <i className="fa fa-angle-left icon" onClick={this.hideOverlay} />
+            <i className={worksBackButtonClass} onClick={this.hideOverlay} />
           </div>
         </CSSTransition>
 
@@ -213,12 +237,17 @@ export class Home extends React.Component<HomeProps, {}> {
       </div>
     )
   }
+
+  private expandWorksContent = (): void => {
+    this.props.toggleWorksContentExpand(!this.props.isExpandWorksContent)
+  }
 }
 
 export interface HomeDispatchFromProps {
   toggleOverlay: (isShowOverlay: boolean) => any
   toggleWorksContent: (isShowWorksContent: boolean) => any
   toggleWorksContentAnimation: (isShowWorksContentAnimation: boolean) => any
+  toggleWorksContentExpand: (isExpandWorksContent: boolean) => any
   updateCircle: (circleStyle: React.CSSProperties) => any
   updateWorkContentImg: (workContentImg: string) => any
   updateTargetWork: (payload: IWork) => any
@@ -247,6 +276,9 @@ export function mapDispatchToProps(dispatch: Dispatch<() => any>) {
       dispatch(
         actions.toggleWorksContentAnimation(isShowWorksContentAnimation),
       ),
+    toggleWorksContentExpand: (isExpandWorksContent: boolean) =>
+      dispatch(actions.toggleWorksContentExpand(isExpandWorksContent)),
+
     updateCircle: (circleStyle: React.CSSProperties) =>
       dispatch(actions.updateCircle(circleStyle)),
     updateWorkContentImg: (workContentImg: string) =>

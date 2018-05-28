@@ -2,11 +2,11 @@ import * as React from 'react'
 import WorkContentLoader from '@/workContentLoader'
 
 import './WorkContent.css'
-import { IWork } from '@/modules/home/reducer'
+import { Work } from '@/modules/home/reducer'
 
 interface WorkProps {
   updateWorkContentImg: (workContentImg: string) => void
-  targetWork: IWork | null
+  targetWork: Work | null
 }
 
 export default class WorkContent extends React.PureComponent<WorkProps, {}> {

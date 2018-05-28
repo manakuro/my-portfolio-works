@@ -1,4 +1,4 @@
-import { IWork, Language } from '@/modules/home/reducer'
+import { Work, Language } from '@/modules/home/reducer'
 import { createAction, ActionType, createAsyncAction } from 'typesafe-actions'
 
 const actions = {
@@ -18,6 +18,14 @@ const actions = {
     },
   ),
 
+  toggleWorksContentExpand: createAction(
+    'TOGGLE_WORKS_CONTENT_EXPAND',
+    resolve => {
+      return (isExpandWorksContent: boolean) =>
+        resolve({ isExpandWorksContent })
+    },
+  ),
+
   updateCircle: createAction('UPDATE_CIRCLE', resolve => {
     return (circleStyle: React.CSSProperties) => resolve({ circleStyle })
   }),
@@ -27,7 +35,7 @@ const actions = {
   }),
 
   updateTargetWork: createAction('UPDATE_TARGET_WORK', resolve => {
-    return (targetWork: IWork) => resolve({ targetWork })
+    return (targetWork: Work) => resolve({ targetWork })
   }),
 
   updateSearchQuery: createAction('UPDATE_SEARCH_QUERY', resolve => {
@@ -42,7 +50,7 @@ const actions = {
     'FETCH_WORKS_REQUEST',
     'FETCH_WORKS_SUCCESS',
     'FETCH_WORKS_FAILURE',
-  )<void, IWork[], Error>(),
+  )<void, Work[], Error>(),
 
   fetchLanguages: createAsyncAction(
     'FETCH_LANGUAGES_REQUEST',

@@ -1,7 +1,7 @@
 import sampleImg from '@/static/images/sample.jpeg'
-import { IWork } from '@/modules/home/reducer'
+import { Work } from '@/modules/home/reducer'
 
-const work1: IWork = {
+const work1: Work = {
   id: 1,
   title: 'EC Website',
   description: `
