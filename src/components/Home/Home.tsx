@@ -5,10 +5,10 @@ import { connect, Dispatch } from 'react-redux'
 
 // others
 import './Home.css'
-import { HomeState, Work as IWork, SearchQuery } from '@/modules/home/reducer'
+import { HomeState, Work, SearchQuery } from '@/modules/home/reducer'
 import actions from '@/modules/home/actions'
 import { RootState } from '@/modules/reducers'
-import Work from '@/components/Work/Work'
+import WorkListItem from '@/components/WorkListItem/WorkListItem'
 import { History, Location } from 'history'
 import * as queryString from 'query-string'
 import { WorkDetail } from '@/components/WorkDetail/WorkDetail'
@@ -64,7 +64,7 @@ export class Home extends React.Component<HomeProps, {}> {
         <div className="works">
           <div className="works-list">
             {this.props.works.map((work, index) => (
-              <Work
+              <WorkListItem
                 key={index}
                 work={work}
                 updateTargetWork={this.props.updateTargetWork}
@@ -86,7 +86,7 @@ export interface HomeDispatchFromProps {
   toggleWorksContentExpand: (isExpandWorksContent: boolean) => any
   updateCircle: (circleStyle: React.CSSProperties) => any
   updateWorkContentImg: (workContentImg: string) => any
-  updateTargetWork: (payload: IWork) => any
+  updateTargetWork: (payload: Work) => any
   updateSearchQuery: (searchQuery: any) => any
   fetchWorks: (searchQuery?: SearchQuery) => any
 }
@@ -119,7 +119,7 @@ export function mapDispatchToProps(dispatch: Dispatch<() => any>) {
       dispatch(actions.updateCircle(circleStyle)),
     updateWorkContentImg: (workContentImg: string) =>
       dispatch(actions.updateWorkContentImg(workContentImg)),
-    updateTargetWork: (targetWork: IWork) =>
+    updateTargetWork: (targetWork: Work) =>
       dispatch(actions.updateTargetWork(targetWork)),
     updateSearchQuery: (searchQuery: any) =>
       dispatch(actions.updateSearchQuery(searchQuery)),

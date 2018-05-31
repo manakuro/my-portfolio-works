@@ -1,16 +1,19 @@
 import * as React from 'react'
 import WorkContentLoader from '@/workContentLoader'
 
-import './WorkContent.css'
+import './WorkDetailContent.css'
 import { Work } from '@/modules/home/reducer'
 
-interface WorkProps {
+export interface WorkDetailContentProps {
   updateWorkContentImg: (workContentImg: string) => void
   targetWork: Work | null
 }
 
-export default class WorkContent extends React.PureComponent<WorkProps, {}> {
-  constructor(props: WorkProps) {
+export default class WorkDetailContent extends React.PureComponent<
+  WorkDetailContentProps,
+  {}
+> {
+  constructor(props: WorkDetailContentProps) {
     super(props)
   }
 

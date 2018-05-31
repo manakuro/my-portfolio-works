@@ -13,7 +13,7 @@ import removeClassHtml from '@/utils/removeClassHtml'
 import { HomeState, Work as IWork, SearchQuery } from '@/modules/home/reducer'
 import actions from '@/modules/home/actions'
 import { RootState } from '@/modules/reducers'
-import WorkContent from '@/components/WorkContent/WorkContent'
+import WorkDetailContent from '@/components/WorkDetailContent/WorkDetailContent'
 import { History, Location } from 'history'
 import * as classnames from 'classnames'
 
@@ -130,7 +130,7 @@ export class WorkDetail extends React.Component<WorkDetailProps, {}> {
                   animationInDelay={300}
                   isVisible={this.props.isShowWorksContentAnimation}
                 >
-                  <WorkContent
+                  <WorkDetailContent
                     updateWorkContentImg={this.props.updateWorkContentImg}
                     targetWork={this.props.targetWork}
                   />

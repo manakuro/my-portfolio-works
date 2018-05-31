@@ -1,19 +1,21 @@
 import * as React from 'react'
 
-import { Work as IWork, Language } from '@/modules/home/reducer'
+import { Work, Language } from '@/modules/home/reducer'
 
-interface WorkProps {
-  work: IWork
+export interface WorkListItemProps {
+  work: Work
   showOverlay: (e: React.SyntheticEvent<EventTarget>) => any
-  updateTargetWork: (payload: IWork) => any
+  updateTargetWork: (payload: Work) => any
   languages: Language[]
 }
 
-import './Work.css'
+import './WorkListItem.css'
 import LanguageIcon from '@/components/LanguageIcon'
 
-export default class Work extends React.PureComponent<WorkProps> {
-  constructor(props: WorkProps) {
+export default class WorkListItem extends React.PureComponent<
+  WorkListItemProps
+> {
+  constructor(props: WorkListItemProps) {
     super(props)
   }
 
