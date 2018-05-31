@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { Animated } from 'react-animated-css'
 import Anime, { AnimeProps } from 'react-anime'
-import { connect, Dispatch } from 'react-redux'
 import { CSSTransition } from 'react-transition-group'
 
 /* tslint:disable */
@@ -10,16 +9,27 @@ import { CSSTransition } from 'react-transition-group'
 import './WorkDetail.css'
 import addClassHtml from '@/utils/addClassHtml'
 import removeClassHtml from '@/utils/removeClassHtml'
-import { HomeState, Work as IWork, SearchQuery } from '@/modules/home/reducer'
-import actions from '@/modules/home/actions'
-import { RootState } from '@/modules/reducers'
 import WorkDetailContent from '@/components/WorkDetailContent/WorkDetailContent'
-import { History, Location } from 'history'
 import * as classnames from 'classnames'
+import { HomeState } from '@/modules/home/reducer'
+import { HomeDispatchFromProps } from '@/components/Home/Home'
 
-interface WorkDetailProps
-  extends WorkDetailStateFromProps,
-    WorkDetailDispatchFromProps {}
+interface WorkDetailProps {
+  toggleOverlay: HomeDispatchFromProps['toggleOverlay']
+  toggleWorksContent: HomeDispatchFromProps['toggleWorksContent']
+  toggleWorksContentAnimation: HomeDispatchFromProps['toggleWorksContentAnimation']
+  toggleWorksContentExpand: HomeDispatchFromProps['toggleWorksContentExpand']
+  updateCircle: HomeDispatchFromProps['updateCircle']
+  updateWorkContentImg: HomeDispatchFromProps['updateWorkContentImg']
+
+  workContentImg: HomeState['workContentImg']
+  isShowOverlay: HomeState['isShowOverlay']
+  isShowWorksContent: HomeState['isShowWorksContent']
+  isExpandWorksContent: HomeState['isExpandWorksContent']
+  circleStyle: HomeState['circleStyle']
+  isShowWorksContentAnimation: HomeState['isShowWorksContentAnimation']
+  targetWork: HomeState['targetWork']
+}
 
 export class WorkDetail extends React.Component<WorkDetailProps, {}> {
   public anime: any
@@ -27,10 +37,6 @@ export class WorkDetail extends React.Component<WorkDetailProps, {}> {
   constructor(props: WorkDetailProps) {
     super(props)
   }
-
-  async componentWillMount(): Promise<void> {}
-
-  componentDidUpdate(prevProps: WorkDetailProps) {}
 
   hideOverlay = (): void => {
     this.props.toggleWorksContent(false)
@@ -195,58 +201,3 @@ export class WorkDetail extends React.Component<WorkDetailProps, {}> {
     this.props.toggleWorksContentExpand(!this.props.isExpandWorksContent)
   }
 }
-
-export interface WorkDetailDispatchFromProps {
-  toggleOverlay: (isShowOverlay: boolean) => any
-  toggleWorksContent: (isShowWorksContent: boolean) => any
-  toggleWorksContentAnimation: (isShowWorksContentAnimation: boolean) => any
-  toggleWorksContentExpand: (isExpandWorksContent: boolean) => any
-  updateCircle: (circleStyle: React.CSSProperties) => any
-  updateWorkContentImg: (workContentImg: string) => any
-  updateTargetWork: (payload: IWork) => any
-  updateSearchQuery: (searchQuery: any) => any
-  fetchWorks: (searchQuery?: SearchQuery) => any
-}
-
-export interface WorkDetailStateFromProps extends HomeState {
-  history?: History
-  location?: Location
-}
-
-export function mapStateToProps(state: RootState) {
-  return {
-    ...state.home,
-  }
-}
-
-export function mapDispatchToProps(dispatch: Dispatch<() => any>) {
-  return {
-    toggleOverlay: (isShowOverlay: boolean) =>
-      dispatch(actions.toggleOverlay(isShowOverlay)),
-    toggleWorksContent: (isShowWorksContent: boolean) =>
-      dispatch(actions.toggleWorksContent(isShowWorksContent)),
-    toggleWorksContentAnimation: (isShowWorksContentAnimation: boolean) =>
-      dispatch(
-        actions.toggleWorksContentAnimation(isShowWorksContentAnimation),
-      ),
-    toggleWorksContentExpand: (isExpandWorksContent: boolean) =>
-      dispatch(actions.toggleWorksContentExpand(isExpandWorksContent)),
-
-    updateCircle: (circleStyle: React.CSSProperties) =>
-      dispatch(actions.updateCircle(circleStyle)),
-    updateWorkContentImg: (workContentImg: string) =>
-      dispatch(actions.updateWorkContentImg(workContentImg)),
-    updateTargetWork: (targetWork: IWork) =>
-      dispatch(actions.updateTargetWork(targetWork)),
-    updateSearchQuery: (searchQuery: any) =>
-      dispatch(actions.updateSearchQuery(searchQuery)),
-
-    fetchWorks: () => dispatch(actions.fetchWorks.request()),
-  }
-}
-
-export default connect<
-  WorkDetailStateFromProps,
-  WorkDetailDispatchFromProps,
-  void
->(mapStateToProps, mapDispatchToProps)(WorkDetail)

@@ -1,60 +1,21 @@
 import * as React from 'react'
 import { connect, Dispatch } from 'react-redux'
 
-/* tslint:disable */
-
 // others
 import './Home.css'
 import { HomeState, Work, SearchQuery } from '@/modules/home/reducer'
 import actions from '@/modules/home/actions'
 import { RootState } from '@/modules/reducers'
 import WorkListItem from '@/components/WorkListItem/WorkListItem'
-import { History, Location } from 'history'
+import { Location } from 'history'
 import * as queryString from 'query-string'
 import { WorkDetail } from '@/components/WorkDetail/WorkDetail'
 
-interface HomeProps extends HomeStateFromProps, HomeDispatchFromProps {}
+export interface HomeProps extends HomeStateFromProps, HomeDispatchFromProps {}
 
 export class Home extends React.Component<HomeProps, {}> {
   constructor(props: HomeProps) {
     super(props)
-  }
-
-  async componentWillMount(): Promise<void> {
-    await this.mergeQuery()
-
-    this.props.fetchWorks()
-  }
-
-  componentDidUpdate(prevProps: HomeProps) {
-    if (prevProps.searchQuery !== this.props.searchQuery) {
-      this.props.fetchWorks()
-    }
-  }
-
-  async mergeQuery(): Promise<void> {
-    if (this.props.location) {
-      const query = queryString.parse(this.props.location.search)
-      if (query.languages) {
-        if (typeof query.languages === 'string')
-          query.languages = query.languages.split()
-        query.languages = query.languages.map((l: string) => parseInt(l, 10))
-      }
-
-      await this.props.updateSearchQuery(query)
-    }
-  }
-
-  showOverlay = (e: React.SyntheticEvent<EventTarget>): void => {
-    const nativeEvent: any = e.nativeEvent
-    const { pageX, pageY } = nativeEvent
-    const circleStyle = {
-      top: `${pageY - 50}px`,
-      left: `${pageX - 50}px`,
-    }
-
-    this.props.toggleOverlay(true)
-    this.props.updateCircle(circleStyle)
   }
 
   public render(): JSX.Element {
@@ -77,6 +38,42 @@ export class Home extends React.Component<HomeProps, {}> {
       </div>
     )
   }
+
+  public async componentWillMount(): Promise<void> {
+    await this.mergeQuery()
+
+    this.props.fetchWorks()
+  }
+
+  public componentDidUpdate(prevProps: HomeProps) {
+    if (prevProps.searchQuery !== this.props.searchQuery)
+      this.props.fetchWorks()
+  }
+
+  private async mergeQuery(): Promise<void> {
+    if (this.props.location) {
+      const query = queryString.parse(this.props.location.search)
+      if (query.languages) {
+        if (typeof query.languages === 'string')
+          query.languages = query.languages.split()
+        query.languages = query.languages.map((l: string) => parseInt(l, 10))
+      }
+
+      await this.props.updateSearchQuery(query)
+    }
+  }
+
+  private showOverlay = (e: React.SyntheticEvent<EventTarget>): void => {
+    const nativeEvent: any = e.nativeEvent
+    const { pageX, pageY } = nativeEvent
+    const circleStyle = {
+      top: `${pageY - 50}px`,
+      left: `${pageX - 50}px`,
+    }
+
+    this.props.toggleOverlay(true)
+    this.props.updateCircle(circleStyle)
+  }
 }
 
 export interface HomeDispatchFromProps {
@@ -92,7 +89,6 @@ export interface HomeDispatchFromProps {
 }
 
 export interface HomeStateFromProps extends HomeState {
-  history?: History
   location?: Location
 }
 
