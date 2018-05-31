@@ -1,18 +1,4 @@
-$headerHeight: 100px;
 $bgOverlay: rgb(244, 247, 246);
-
-.works {
-  $marginTop: $headerHeight + 30px;
-
-  margin-top: $marginTop;
-  margin-bottom: 50px;
-
-  .works-list {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-gap: 15px;
-  }
-}
 
 .overlay {
   width: 100vw;
