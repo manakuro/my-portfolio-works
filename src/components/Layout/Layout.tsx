@@ -11,9 +11,7 @@ import Header from '@/components/Header/Header'
 import './Layout.css'
 import { HomeState } from '@/modules/home/reducer'
 import actions from '@/modules/home/actions'
-import { RootState } from '@/modules/reducers'
-import { History, Location } from 'history'
-import { withRouter } from 'react-router'
+import { History } from 'history'
 
 interface LayoutProps extends LayoutStateFromProps, LayoutDispatchFromProps {}
 
@@ -44,6 +42,7 @@ export class Layout extends React.Component<any, {}> {
         >
           <div className="loader" />
         </CSSTransition>
+
         <main className="main container">{this.props.children}</main>
       </div>
     )
@@ -56,12 +55,14 @@ export interface LayoutDispatchFromProps {
 }
 
 export interface LayoutStateFromProps extends HomeState {
-  history?: History
-  location?: Location
+  history: History
 }
 
-export function mapStateToProps(state: RootState) {
-  return state.home
+export function mapStateToProps(state: any) {
+  return {
+    ...state.home,
+    router: state.router,
+  }
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<() => any>) {
@@ -75,4 +76,4 @@ export function mapDispatchToProps(dispatch: Dispatch<() => any>) {
 export default connect<LayoutStateFromProps, LayoutDispatchFromProps, void>(
   mapStateToProps,
   mapDispatchToProps,
-)(withRouter(Layout) as any) //@todo resolve type
+)(Layout) as any // @todo resolve types

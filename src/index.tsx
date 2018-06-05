@@ -28,11 +28,13 @@ const history = createBrowserHistory()
 
 ReactDOM.render(
   <Provider store={store}>
-    <ConnectedRouter history={history}>
-      <Layout>
-        <Route exact path="/" component={Home} />
-      </Layout>
-    </ConnectedRouter>
+    <Layout history={history}>
+      <ConnectedRouter history={history}>
+        <div>
+          <Route path="/" component={Home} />
+        </div>
+      </ConnectedRouter>
+    </Layout>
   </Provider>,
   document.getElementById('root') as HTMLElement,
 )
