@@ -119,7 +119,7 @@
 /* ------------------------------
   Animation
  --------------------------------*/
-.scale-enter-active {
+.scale-enter-active, .scale-appear-active {
   opacity: 1;
   transform: scale(40);
   transition: transform 2s cubic-bezier(0.215, 0.61, 0.355, 1) 0s; }

@@ -7,9 +7,10 @@ import { HomeState, Work, SearchQuery } from '@/modules/home/reducer'
 import actions from '@/modules/home/actions'
 import { RootState } from '@/modules/reducers'
 import WorkListItem from '@/components/WorkListItem/WorkListItem'
-import { Location } from 'history'
+import { History, Location } from 'history'
 import * as queryString from 'query-string'
 import { WorkDetail } from '@/components/WorkDetail/WorkDetail'
+import { Route } from 'react-router'
 
 export interface HomeProps extends HomeStateFromProps, HomeDispatchFromProps {}
 
@@ -21,7 +22,14 @@ export class Home extends React.Component<HomeProps, {}> {
   public render(): JSX.Element {
     return (
       <div className="home">
-        <WorkDetail {...this.props} />
+        <Route
+          path="/works"
+          render={() => {
+            // tslint:disable-next-line jsx-no-lambda
+            return <WorkDetail {...this.props} />
+          }}
+        />
+
         <div className="works">
           <div className="works-list">
             {this.props.works.map((work, index) => (
@@ -66,13 +74,20 @@ export class Home extends React.Component<HomeProps, {}> {
   private showOverlay = (e: React.SyntheticEvent<EventTarget>): void => {
     const nativeEvent: any = e.nativeEvent
     const { pageX, pageY } = nativeEvent
+
+    const marginTop = 130
     const circleStyle = {
-      top: `${pageY - 50}px`,
+      top: `${pageY - (marginTop + 50)}px`,
       left: `${pageX - 50}px`,
     }
 
     this.props.toggleOverlay(true)
     this.props.updateCircle(circleStyle)
+
+    if (this.props.history)
+      this.props.history.push({
+        pathname: '/works',
+      })
   }
 }
 
@@ -90,6 +105,7 @@ export interface HomeDispatchFromProps {
 
 export interface HomeStateFromProps extends HomeState {
   location?: Location
+  history?: History
 }
 
 export function mapStateToProps(state: RootState) {

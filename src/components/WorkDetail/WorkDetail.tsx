@@ -109,12 +109,14 @@ export class WorkDetail extends React.Component<WorkDetailProps, {}> {
       <div className="work-detail">
         <CSSTransition
           in={this.props.isShowWorksContent}
+          appear={true}
           classNames="slide-works"
           timeout={1000}
           onEntered={() => this.onEnteredShowWorksContent()}
         >
           <CSSTransition
             in={this.props.isExpandWorksContent}
+            appear={true}
             classNames="expand-works"
             timeout={1000}
           >
@@ -176,6 +178,7 @@ export class WorkDetail extends React.Component<WorkDetailProps, {}> {
 
         <CSSTransition
           in={this.props.isShowOverlay}
+          appear={true}
           classNames="scale"
           timeout={1000}
           onEnter={() => this.showWorksContent()}
@@ -186,6 +189,7 @@ export class WorkDetail extends React.Component<WorkDetailProps, {}> {
 
         <CSSTransition
           in={this.props.isShowWorksContent}
+          appear={true}
           classNames="slide-button"
           timeout={1000}
         >

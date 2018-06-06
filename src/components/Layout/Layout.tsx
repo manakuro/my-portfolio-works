@@ -2,8 +2,6 @@ import * as React from 'react'
 import { connect, Dispatch } from 'react-redux'
 import { CSSTransition } from 'react-transition-group'
 
-/* tslint:disable */
-
 // components
 import Header from '@/components/Header/Header'
 
@@ -15,13 +13,12 @@ import { History } from 'history'
 
 interface LayoutProps extends LayoutStateFromProps, LayoutDispatchFromProps {}
 
-//@todo resolve props type
 export class Layout extends React.Component<any, {}> {
   constructor(props: LayoutProps) {
     super(props)
   }
 
-  async componentWillMount(): Promise<void> {
+  public async componentWillMount(): Promise<void> {
     this.props.fetchLanguages()
   }
 

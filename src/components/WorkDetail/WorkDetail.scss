@@ -146,7 +146,7 @@ $bgOverlay: rgb(244, 247, 246);
 /* ------------------------------
   Animation
  --------------------------------*/
-.scale-enter-active {
+.scale-enter-active, .scale-appear-active {
   opacity: 1;
   transform: scale(40);
   transition: transform 2s cubic-bezier(0.215, 0.610, 0.355, 1.000) 0s; // easeOutCubic

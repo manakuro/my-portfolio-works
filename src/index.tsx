@@ -21,7 +21,7 @@ import 'github-markdown-css/github-markdown.css'
 // modules
 import { ConnectedRouter } from 'react-router-redux'
 import createBrowserHistory from 'history/createBrowserHistory'
-import { Route } from 'react-router'
+import { Route, Switch } from 'react-router'
 
 const store = configureStore()
 const history = createBrowserHistory()
@@ -30,9 +30,9 @@ ReactDOM.render(
   <Provider store={store}>
     <Layout history={history}>
       <ConnectedRouter history={history}>
-        <div>
+        <Switch>
           <Route path="/" component={Home} />
-        </div>
+        </Switch>
       </ConnectedRouter>
     </Layout>
   </Provider>,
