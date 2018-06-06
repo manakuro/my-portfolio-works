@@ -25,10 +25,18 @@ const fetchWorksEpic: Epic<Action, RootState> = (action$, store) =>
     ),
   )
 
+const fetchWorkEpic: Epic<Action, RootState> = (action$, store) =>
+  action$.pipe(
+    filter(isActionOf(actions.fetchWork.request)),
+    switchMap(action =>
+      api.fetchWork(action.payload).map(actions.fetchWork.success),
+    ),
+  )
+
 const fetchLanguagesEpic: Epic<Action, RootState> = action$ =>
   action$.pipe(
     filter(isActionOf(actions.fetchLanguages.request)),
     switchMap(_ => api.fetchLanguages().map(actions.fetchLanguages.success)),
   )
 
-export default [fetchWorksEpic, fetchLanguagesEpic]
+export default [fetchWorksEpic, fetchLanguagesEpic, fetchWorkEpic]

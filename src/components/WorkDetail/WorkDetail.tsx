@@ -13,6 +13,7 @@ import WorkDetailContent from '@/components/WorkDetailContent/WorkDetailContent'
 import * as classnames from 'classnames'
 import { HomeState } from '@/modules/home/reducer'
 import { HomeDispatchFromProps } from '@/components/Home/Home'
+import { History, Location } from 'history'
 
 interface WorkDetailProps {
   toggleOverlay: HomeDispatchFromProps['toggleOverlay']
@@ -21,6 +22,7 @@ interface WorkDetailProps {
   toggleWorksContentExpand: HomeDispatchFromProps['toggleWorksContentExpand']
   updateCircle: HomeDispatchFromProps['updateCircle']
   updateWorkContentImg: HomeDispatchFromProps['updateWorkContentImg']
+  fetchWork: HomeDispatchFromProps['fetchWork']
 
   workContentImg: HomeState['workContentImg']
   isShowOverlay: HomeState['isShowOverlay']
@@ -29,6 +31,26 @@ interface WorkDetailProps {
   circleStyle: HomeState['circleStyle']
   isShowWorksContentAnimation: HomeState['isShowWorksContentAnimation']
   targetWork: HomeState['targetWork']
+  history: History
+  location: Location
+  match: any
+}
+
+const ANIME_PROPS: AnimeProps = {
+  children: [],
+  easing: 'easeInOutCirc',
+  duration: 500,
+  delay: (_, i: number, t: number) => Math.abs(t / 2 - i) * 80,
+  translateX: '-100%',
+  scale: 1,
+  value: '',
+  translateY: 0,
+  rotate: 0,
+  opacity: 1,
+  color: '',
+  backgroundColor: '',
+  points: '',
+  strokeDashoffset: 0,
 }
 
 export class WorkDetail extends React.Component<WorkDetailProps, {}> {
@@ -38,53 +60,24 @@ export class WorkDetail extends React.Component<WorkDetailProps, {}> {
     super(props)
   }
 
-  hideOverlay = (): void => {
-    this.props.toggleWorksContent(false)
-    removeClassHtml()
+  public async componentDidMount(): Promise<void> {
+    this.props.toggleOverlay(true)
 
-    this.props.toggleOverlay(false)
-    this.props.toggleWorksContentAnimation(false)
-    this.props.toggleWorksContentExpand(false)
-  }
+    let { id } = this.props.match.params
+    id = parseInt(id, 10)
 
-  onExitedOverlay = (): void => {
-    this.props.updateCircle({
-      top: '0px',
-      left: '-1000px',
-    })
-  }
+    await this.props.fetchWork(id)
 
-  showWorksContent = (): void => {
-    this.props.toggleWorksContent(true)
-    addClassHtml('hidden')
-  }
-
-  onEnteredShowWorksContent(): void {
-    this.props.toggleWorksContentAnimation(true)
-  }
-
-  renderWorkContentImgAnimation = (): JSX.Element | null => {
-    const animeProps: AnimeProps = {
-      children: [],
-      easing: 'easeInOutCirc',
-      duration: 500,
-      delay: (_, i: number, t: number) => Math.abs(t / 2 - i) * 80,
-      translateX: '-100%',
-      scale: 1,
-      value: '',
-      translateY: 0,
-      rotate: 0,
-      opacity: 1,
-      color: '',
-      backgroundColor: '',
-      points: '',
-      strokeDashoffset: 0,
+    if (!this.props.targetWork) {
+      this.props.history.push('/')
     }
+  }
 
+  public renderWorkContentImgAnimation = (): JSX.Element | null => {
     return this.props.workContentImg !== '' &&
       this.props.isShowWorksContent &&
       !this.props.isExpandWorksContent ? (
-      <Anime {...animeProps} key={`anime-${this.props.workContentImg}`}>
+      <Anime {...ANIME_PROPS} key={`anime-${this.props.workContentImg}`}>
         <div className="uncover-slice" />
         <div className="uncover-slice" />
         <div className="uncover-slice" />
@@ -182,7 +175,7 @@ export class WorkDetail extends React.Component<WorkDetailProps, {}> {
           classNames="scale"
           timeout={1000}
           onEnter={() => this.showWorksContent()}
-          onExit={() => this.onExitedOverlay()}
+          onExited={() => this.onExitedOverlay()}
         >
           <div className="circle" style={this.props.circleStyle} />
         </CSSTransition>
@@ -199,6 +192,37 @@ export class WorkDetail extends React.Component<WorkDetailProps, {}> {
         </CSSTransition>
       </div>
     )
+  }
+
+  private goBack(): void {
+    if (this.props.history) this.props.history.goBack()
+  }
+
+  private hideOverlay = (): void => {
+    this.props.toggleWorksContent(false)
+    removeClassHtml()
+
+    this.props.toggleOverlay(false)
+    this.props.toggleWorksContentAnimation(false)
+    this.props.toggleWorksContentExpand(false)
+  }
+
+  private onExitedOverlay = (): void => {
+    this.props.updateCircle({
+      top: '0px',
+      left: '-1000px',
+    })
+
+    this.goBack()
+  }
+
+  private showWorksContent = (): void => {
+    this.props.toggleWorksContent(true)
+    addClassHtml('hidden')
+  }
+
+  private onEnteredShowWorksContent(): void {
+    this.props.toggleWorksContentAnimation(true)
   }
 
   private expandWorksContent = (): void => {

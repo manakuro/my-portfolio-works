@@ -52,7 +52,7 @@ export default class WorkListItem extends React.PureComponent<
   }
 
   private handleClick = (e: React.SyntheticEvent<EventTarget>): void => {
-    this.props.updateTargetWork(this.props.work)
+    // this.props.updateTargetWork(this.props.work)
     this.props.showOverlay(e)
   }
 }

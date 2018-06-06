@@ -43,7 +43,10 @@ const initialState: HomeState = {
   isShowWorksContent: false,
   isShowWorksContentAnimation: false,
   isExpandWorksContent: false,
-  circleStyle: {},
+  circleStyle: {
+    top: '500px',
+    left: '500px',
+  },
   targetWork: null,
   languages: [],
   searchQuery: {
@@ -86,6 +89,9 @@ export default function home(state: HomeState = initialState, action: Action) {
 
     case getType(actions.fetchWorks.success):
       return { ...state, works: action.payload }
+
+    case getType(actions.fetchWork.success):
+      return { ...state, targetWork: action.payload }
 
     case getType(actions.fetchLanguages.success):
       return { ...state, languages: action.payload }

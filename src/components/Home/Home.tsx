@@ -23,13 +23,13 @@ export class Home extends React.Component<HomeProps, {}> {
     return (
       <div className="home">
         <Route
-          path="/works"
-          render={() => {
+          path="/works/:id"
+          exact={true}
+          render={routeProps => {
             // tslint:disable-next-line jsx-no-lambda
-            return <WorkDetail {...this.props} />
+            return <WorkDetail {...this.props} {...routeProps} />
           }}
         />
-
         <div className="works">
           <div className="works-list">
             {this.props.works.map((work, index) => (
@@ -81,12 +81,12 @@ export class Home extends React.Component<HomeProps, {}> {
       left: `${pageX - 50}px`,
     }
 
-    this.props.toggleOverlay(true)
+    // this.props.toggleOverlay(true)
     this.props.updateCircle(circleStyle)
 
     if (this.props.history)
       this.props.history.push({
-        pathname: '/works',
+        pathname: '/works/1',
       })
   }
 }
@@ -101,6 +101,7 @@ export interface HomeDispatchFromProps {
   updateTargetWork: (payload: Work) => any
   updateSearchQuery: (searchQuery: any) => any
   fetchWorks: (searchQuery?: SearchQuery) => any
+  fetchWork: (id: number) => any
 }
 
 export interface HomeStateFromProps extends HomeState {
@@ -137,6 +138,7 @@ export function mapDispatchToProps(dispatch: Dispatch<() => any>) {
       dispatch(actions.updateSearchQuery(searchQuery)),
 
     fetchWorks: () => dispatch(actions.fetchWorks.request()),
+    fetchWork: (id: number) => dispatch(actions.fetchWork.request(id)),
   }
 }
 

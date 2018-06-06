@@ -52,6 +52,12 @@ const actions = {
     'FETCH_WORKS_FAILURE',
   )<void, Work[], Error>(),
 
+  fetchWork: createAsyncAction(
+    'FETCH_WORK_REQUEST',
+    'FETCH_WORK_SUCCESS',
+    'FETCH_WORK_FAILURE',
+  )<number, Work, Error>(),
+
   fetchLanguages: createAsyncAction(
     'FETCH_LANGUAGES_REQUEST',
     'FETCH_LANGUAGES_SUCCESS',

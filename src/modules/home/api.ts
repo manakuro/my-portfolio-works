@@ -20,6 +20,11 @@ const api = {
     return of(payload)
   },
 
+  fetchWork: (workId: number): Observable<Work | {}> => {
+    const payload = WORKS_DATA.find(w => w.id === workId) || {}
+    return of(payload)
+  },
+
   fetchLanguages: (): Observable<Language[]> => {
     return of(LANGUAGES)
   },
