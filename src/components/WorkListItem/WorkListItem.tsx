@@ -4,13 +4,16 @@ import { Work, Language } from '@/modules/home/reducer'
 
 export interface WorkListItemProps {
   work: Work
-  showOverlay: (e: React.SyntheticEvent<EventTarget>) => any
   updateTargetWork: (payload: Work) => any
+  updateCircle: HomeDispatchFromProps['updateCircle']
   languages: Language[]
+  history?: History
 }
 
 import './WorkListItem.css'
 import LanguageIcon from '@/components/LanguageIcon'
+import { History } from 'history'
+import { HomeDispatchFromProps } from '@/components/Home/Home'
 
 export default class WorkListItem extends React.PureComponent<
   WorkListItemProps
@@ -52,7 +55,20 @@ export default class WorkListItem extends React.PureComponent<
   }
 
   private handleClick = (e: React.SyntheticEvent<EventTarget>): void => {
-    // this.props.updateTargetWork(this.props.work)
-    this.props.showOverlay(e)
+    const nativeEvent: any = e.nativeEvent
+    const { pageX, pageY } = nativeEvent
+
+    const marginTop = 130
+    const circleStyle = {
+      top: `${pageY - (marginTop + 50)}px`,
+      left: `${pageX - 50}px`,
+    }
+
+    this.props.updateCircle(circleStyle)
+
+    if (this.props.history)
+      this.props.history.push({
+        pathname: `/works/${this.props.work.id}`,
+      })
   }
 }

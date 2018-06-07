@@ -91,7 +91,6 @@ export default function home(state: HomeState = initialState, action: Action) {
       return { ...state, works: action.payload }
 
     case getType(actions.fetchWork.success):
-      console.log('action', action.payload)
       return { ...state, targetWork: action.payload }
 
     case getType(actions.fetchLanguages.success):

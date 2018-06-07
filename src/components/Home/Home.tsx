@@ -37,8 +37,9 @@ export class Home extends React.Component<HomeProps, {}> {
                 key={index}
                 work={work}
                 updateTargetWork={this.props.updateTargetWork}
-                showOverlay={this.showOverlay}
                 languages={this.props.languages}
+                updateCircle={this.props.updateCircle}
+                history={this.props.history}
               />
             ))}
           </div>
@@ -69,25 +70,6 @@ export class Home extends React.Component<HomeProps, {}> {
 
       await this.props.updateSearchQuery(query)
     }
-  }
-
-  private showOverlay = (e: React.SyntheticEvent<EventTarget>): void => {
-    const nativeEvent: any = e.nativeEvent
-    const { pageX, pageY } = nativeEvent
-
-    const marginTop = 130
-    const circleStyle = {
-      top: `${pageY - (marginTop + 50)}px`,
-      left: `${pageX - 50}px`,
-    }
-
-    // this.props.toggleOverlay(true)
-    this.props.updateCircle(circleStyle)
-
-    if (this.props.history)
-      this.props.history.push({
-        pathname: '/works/1',
-      })
   }
 }
 

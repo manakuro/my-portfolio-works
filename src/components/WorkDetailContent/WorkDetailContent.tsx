@@ -18,7 +18,6 @@ export default class WorkDetailContent extends React.PureComponent<
   }
 
   public render(): JSX.Element | null {
-    console.log('this.props.targetWork', this.props.targetWork)
     if (!this.props.targetWork) return null
 
     const Component = WorkContentLoader[this.props.targetWork.component]
