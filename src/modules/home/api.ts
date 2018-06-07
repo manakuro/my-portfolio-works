@@ -1,4 +1,5 @@
 import { of } from 'rxjs/observable/of'
+import { empty } from 'rxjs/observable/empty'
 import { Observable } from 'rxjs/Observable'
 import { Work, Language, SearchQuery } from '@/modules/home/reducer'
 import { WORKS_DATA } from '@/static/works/works'
@@ -20,9 +21,9 @@ const api = {
     return of(payload)
   },
 
-  fetchWork: (workId: number): Observable<Work | {}> => {
-    const payload = WORKS_DATA.find(w => w.id === workId) || {}
-    return of(payload)
+  fetchWork: (workId: number): Observable<Work> => {
+    const payload = WORKS_DATA.find(w => w.id === workId)
+    return payload ? of(payload) : empty()
   },
 
   fetchLanguages: (): Observable<Language[]> => {
