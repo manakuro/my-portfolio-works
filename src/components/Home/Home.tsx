@@ -19,6 +19,16 @@ export class Home extends React.Component<HomeProps, {}> {
     super(props)
   }
 
+  public async componentWillMount(): Promise<void> {
+    await this.mergeQuery()
+    this.props.fetchWorks()
+  }
+
+  public componentDidUpdate(prevProps: HomeProps) {
+    if (prevProps.searchQuery !== this.props.searchQuery)
+      this.props.fetchWorks()
+  }
+
   public render(): JSX.Element {
     return (
       <div className="home">
@@ -46,17 +56,6 @@ export class Home extends React.Component<HomeProps, {}> {
         </div>
       </div>
     )
-  }
-
-  public async componentWillMount(): Promise<void> {
-    await this.mergeQuery()
-
-    this.props.fetchWorks()
-  }
-
-  public componentDidUpdate(prevProps: HomeProps) {
-    if (prevProps.searchQuery !== this.props.searchQuery)
-      this.props.fetchWorks()
   }
 
   private async mergeQuery(): Promise<void> {

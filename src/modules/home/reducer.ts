@@ -44,8 +44,8 @@ const initialState: HomeState = {
   isShowWorksContentAnimation: false,
   isExpandWorksContent: false,
   circleStyle: {
-    top: '500px',
-    left: '500px',
+    top: 'calc(50% - 50px)',
+    left: 'calc(50% - 50px)',
   },
   targetWork: null,
   languages: [],
