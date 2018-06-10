@@ -1,6 +1,10 @@
 import * as React from 'react'
-
 import { Work, Language } from '@/modules/home/reducer'
+import pure from 'recompose/pure'
+import './WorkListItem.css'
+import LanguageIcon from '@/components/LanguageIcon'
+import { History } from 'history'
+import { HomeDispatchFromProps } from '@/components/Home/Home'
 
 export interface WorkListItemProps {
   work: Work
@@ -10,23 +14,48 @@ export interface WorkListItemProps {
   history?: History
 }
 
-import './WorkListItem.css'
-import LanguageIcon from '@/components/LanguageIcon'
-import { History } from 'history'
-import { HomeDispatchFromProps } from '@/components/Home/Home'
+export interface WorkListItemHandleClickProps {
+  work: WorkListItemProps['work']
+  history?: WorkListItemProps['history']
+  updateCircle: WorkListItemProps['updateCircle']
+}
 
-export default class WorkListItem extends React.PureComponent<
-  WorkListItemProps
-> {
-  constructor(props: WorkListItemProps) {
-    super(props)
+export function getLanguage(
+  id: number,
+  { languages }: { languages: Language[] },
+): Language | undefined {
+  return languages.find(l => l.id === id)
+}
+
+export function handleClick(
+  e: React.SyntheticEvent<EventTarget>,
+  props: WorkListItemHandleClickProps,
+): void {
+  const { updateCircle, history, work } = props
+
+  const nativeEvent: any = e.nativeEvent
+  const { pageX, pageY } = nativeEvent
+
+  const marginTop = 130
+  const circleStyle = {
+    top: `${pageY - (marginTop + 50)}px`,
+    left: `${pageX - 50}px`,
   }
 
-  public render(): JSX.Element {
-    const { work } = this.props
+  updateCircle(circleStyle)
+
+  if (history)
+    history.push({
+      pathname: `/works/${work.id}`,
+    })
+}
+
+const WorkListItem: React.ComponentType<WorkListItemProps> = pure(
+  (props): JSX.Element => {
+    const { work } = props
 
     const languageIcons = work.languages.map(l => {
-      const language = this.getLanguage(l)
+      const language = getLanguage(l, props)
       return language ? <LanguageIcon language={language} key={l} /> : null
     })
 
@@ -35,7 +64,8 @@ export default class WorkListItem extends React.PureComponent<
         <div className="work-list-item-Card">
           <img
             src={work.img}
-            onClick={this.handleClick}
+            // tslint:disable-next-line jsx-no-lambda
+            onClick={e => handleClick(e, props)}
             className="work-list-item-Card_Img"
           />
 
@@ -50,27 +80,7 @@ export default class WorkListItem extends React.PureComponent<
         </div>
       </div>
     )
-  }
+  },
+)
 
-  private getLanguage(id: number): Language | undefined {
-    return this.props.languages.find(l => l.id === id)
-  }
-
-  private handleClick = (e: React.SyntheticEvent<EventTarget>): void => {
-    const nativeEvent: any = e.nativeEvent
-    const { pageX, pageY } = nativeEvent
-
-    const marginTop = 130
-    const circleStyle = {
-      top: `${pageY - (marginTop + 50)}px`,
-      left: `${pageX - 50}px`,
-    }
-
-    this.props.updateCircle(circleStyle)
-
-    if (this.props.history)
-      this.props.history.push({
-        pathname: `/works/${this.props.work.id}`,
-      })
-  }
-}
+export default WorkListItem
