@@ -78,12 +78,12 @@ export class WorkDetail extends React.Component<WorkDetailProps, {}> {
       this.props.isShowWorksContent &&
       !this.props.isExpandWorksContent ? (
       <Anime {...ANIME_PROPS} key={`anime-${this.props.workContentImg}`}>
-        <div className="uncover-slice" />
-        <div className="uncover-slice" />
-        <div className="uncover-slice" />
-        <div className="uncover-slice" />
-        <div className="uncover-slice" />
-        <div className="uncover-slice" />
+        <div className="work-detail-Uncover_Slice" />
+        <div className="work-detail-Uncover_Slice" />
+        <div className="work-detail-Uncover_Slice" />
+        <div className="work-detail-Uncover_Slice" />
+        <div className="work-detail-Uncover_Slice" />
+        <div className="work-detail-Uncover_Slice" />
       </Anime>
     ) : null
   }
@@ -113,17 +113,20 @@ export class WorkDetail extends React.Component<WorkDetailProps, {}> {
             classNames="expand-works"
             timeout={1000}
           >
-            <div className="works-content-overlay">
-              <div className="expand-overlay" onClick={this.expandWorksContent}>
+            <div className="work-detail-Overlay">
+              <div
+                className="work-detail-ExpandOverlay"
+                onClick={this.expandWorksContent}
+              >
                 <i className={compressIconClass} />
               </div>
-              <div className="works-content-wrapper">
+              <div className="work-detail-Content_Wrapper">
                 <Animated
                   animationIn="fadeInDown"
                   animationOut="fadeOut"
                   isVisible={this.props.isShowWorksContentAnimation}
                 >
-                  <h2 className="works-content-heading">EC Website</h2>
+                  <h2 className="work-detail-Content_Heading">EC Website</h2>
                 </Animated>
                 <Animated
                   animationIn="fadeInDown"
@@ -141,26 +144,26 @@ export class WorkDetail extends React.Component<WorkDetailProps, {}> {
           </CSSTransition>
         </CSSTransition>
         <Animated
-          className="works-content-left-wrapper"
+          className="work-detail-ContentLeftWrapper"
           animationIn="fadeIn"
           animationOut="fadeOut"
           animateOnMount={false}
           isVisible={this.props.isShowWorksContentAnimation}
         >
-          <div className="works-content-left">
-            <div className="works-content-left-inner">
+          <div className="work-detail-ContentLeft">
+            <div className="work-detail-ContentLeft_Inner">
               <Animated
                 animationIn="fadeInDown"
                 animationOut="fadeOut"
                 animationInDelay={300}
                 isVisible={this.props.isShowWorksContentAnimation}
               >
-                <div className="uncover">
+                <div className="work-detail-Uncover">
                   <a href="https://google.com" target="blank">
                     <img src={this.props.workContentImg} />
                   </a>
 
-                  <div className="uncover-slices">
+                  <div className="work-detail-Uncover_Slices">
                     {this.renderWorkContentImgAnimation()}
                   </div>
                 </div>
@@ -177,7 +180,7 @@ export class WorkDetail extends React.Component<WorkDetailProps, {}> {
           onEnter={() => this.showWorksContent()}
           onExited={() => this.onExitedOverlay()}
         >
-          <div className="circle" style={this.props.circleStyle} />
+          <div className="work-detail-Circle" style={this.props.circleStyle} />
         </CSSTransition>
 
         <CSSTransition
@@ -186,7 +189,7 @@ export class WorkDetail extends React.Component<WorkDetailProps, {}> {
           classNames="slide-button"
           timeout={1000}
         >
-          <div className="works-back-button">
+          <div className="work-detail-BackButton">
             <i className={worksBackButtonClass} onClick={this.hideOverlay} />
           </div>
         </CSSTransition>

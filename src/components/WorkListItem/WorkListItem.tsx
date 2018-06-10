@@ -29,21 +29,23 @@ export default class WorkListItem extends React.PureComponent<
     })
 
     return (
-      <div className="works-list-item">
-        <div className="card">
+      <div className="work-list-item">
+        <div className="work-list-item-Card">
           <img
             src={this.props.work.img}
             onClick={this.handleClick}
-            className="card-img"
+            className="work-list-item-Card_Img"
           />
 
-          <div className="card-desc">
-            <h3 className="card-desc-heading">{this.props.work.title}</h3>
-            <p className="card-desc-sub-heading">
+          <div className="work-list-item-Card_Desc">
+            <h3 className="work-list-item-Card_DescHeading">
+              {this.props.work.title}
+            </h3>
+            <p className="work-list-item-Card_DescSubHeading">
               {this.props.work.description}
             </p>
 
-            <div className="tech-list">{languageIcons}</div>
+            <div className="work-list-item-TechList">{languageIcons}</div>
           </div>
         </div>
       </div>

@@ -1,29 +1,30 @@
-.works-list-item .card {
+.work-list-item-Card {
   border: 1px solid rgba(0, 0, 0, 0.1); }
-  .works-list-item .card .card-img {
+  .work-list-item-Card_Img {
     cursor: pointer; }
-  .works-list-item .card .card-desc {
+  .work-list-item-Card_Desc {
     display: flex;
     flex-direction: column;
     height: 160px;
     padding: 12px; }
-  .works-list-item .card .card-desc-heading {
+  .work-list-item-Card_DescHeading {
     margin-bottom: 10px;
     color: #2F2F2F;
     line-height: 1.5;
     font-size: 1rem; }
-  .works-list-item .card .card-desc-sub-heading {
+  .work-list-item-Card_DescSubHeading {
     color: rgba(0, 0, 0, 0.54);
     font-size: .9rem;
     line-height: 1.5; }
 
-.works-list-item .tech-list {
+.work-list-item .work-list-item-TechList {
   margin-top: auto;
   font-size: 1.2rem;
   display: flex; }
-  .works-list-item .tech-list .tech-list-item {
-    margin-right: 10px; }
-  .works-list-item .tech-list .__react_component_tooltip.type-success {
+  .work-list-item .work-list-item-TechList .__react_component_tooltip.type-success {
     background-color: #06dca3;
     font-weight: bold;
     color: #fff; }
+
+.work-list-item .language-icon {
+  margin-right: 10px; }

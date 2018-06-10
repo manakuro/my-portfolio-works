@@ -2,17 +2,17 @@ $headerHeight: 100px;
 
 .home {
   min-height: 100vh;
-}
 
-.works {
-  $marginTop: $headerHeight + 30px;
+  &-Works {
+    $marginTop: $headerHeight + 30px;
 
-  margin-top: $marginTop;
-  margin-bottom: 50px;
+    margin-top: $marginTop;
+    margin-bottom: 50px;
 
-  .works-list {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-gap: 15px;
+    &_List {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-gap: 15px;
+    }
   }
 }

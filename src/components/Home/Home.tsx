@@ -40,8 +40,8 @@ export class Home extends React.Component<HomeProps, {}> {
             return <WorkDetail {...this.props} {...routeProps} />
           }}
         />
-        <div className="works">
-          <div className="works-list">
+        <div className="home-Works">
+          <div className="home-Works_List">
             {this.props.works.map((work, index) => (
               <WorkListItem
                 key={index}

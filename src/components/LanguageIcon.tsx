@@ -43,7 +43,7 @@ export default class LanguageIcon extends React.PureComponent<
       )
 
     return (
-      <div className="tech-list-item" data-tip={this.props.language.name}>
+      <div className="language-icon" data-tip={this.props.language.name}>
         <Component />
         <ReactTooltip type="success" effect="solid" />
       </div>

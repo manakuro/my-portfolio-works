@@ -46,7 +46,9 @@ export default class Header extends React.PureComponent<HeaderProps, {}> {
             key={l.id}
             // tslint:disable-next-line jsx-no-lambda
             onClick={e => this.clickHandler(e, l.id)}
-            className={classNames({ active: mapActiveLanguages[l.id] })}
+            className={classNames('header-Nav_Link', {
+              'header-Nav_Link-active': mapActiveLanguages[l.id],
+            })}
           >
             {l.name}
           </a>
@@ -55,14 +57,17 @@ export default class Header extends React.PureComponent<HeaderProps, {}> {
 
     return (
       <header className="header">
-        <div className="logo">
+        <div className="header-Logo">
           <a href="/">Manato</a>
         </div>
-        <nav className="nav">
+        <nav className="header-Nav">
           <div>
-            <i className="fa fa-angle-left icon" onClick={this.prev} />
+            <i
+              className="fa fa-angle-left header-Nav_Icon"
+              onClick={this.prev}
+            />
           </div>
-          <div className="nav-container">
+          <div className="header-Nav_Container">
             {rows && (
               <Swiper
                 {...SWIPER_OPTIONS}
@@ -75,7 +80,10 @@ export default class Header extends React.PureComponent<HeaderProps, {}> {
             )}
           </div>
           <div>
-            <i className="fa fa-angle-right icon" onClick={this.next} />
+            <i
+              className="fa fa-angle-right header-Nav_Icon"
+              onClick={this.next}
+            />
           </div>
         </nav>
       </header>
