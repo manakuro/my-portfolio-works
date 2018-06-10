@@ -1,10 +1,11 @@
 import * as React from 'react'
 import { Work, Language } from '@/modules/home/reducer'
-import pure from 'recompose/pure'
+import compose from 'recompose/compose'
 import './WorkListItem.css'
 import LanguageIcon from '@/components/LanguageIcon'
 import { History } from 'history'
 import { HomeDispatchFromProps } from '@/components/Home/Home'
+import { onlyUpdateForKeys, withHandlers } from 'recompose'
 
 export interface WorkListItemProps {
   work: Work
@@ -50,37 +51,46 @@ export function handleClick(
     })
 }
 
-const WorkListItem: React.ComponentType<WorkListItemProps> = pure(
-  (props): JSX.Element => {
-    const { work } = props
+const enhance = compose<WorkListItemProps, {}>(
+  withHandlers({
+    handleClick: (props: WorkListItemHandleClickProps) => (
+      event: React.SyntheticEvent<EventTarget>,
+    ) => {
+      handleClick(event, props)
+    },
+  }),
+  onlyUpdateForKeys(['work', 'updateTargetWork', 'updateCircle', 'history']),
+)
 
-    const languageIcons = work.languages.map(l => {
-      const language = getLanguage(l, props)
-      return language ? <LanguageIcon language={language} key={l} /> : null
-    })
+const WorkListItem = enhance((props): JSX.Element => {
+  const { work } = props
 
-    return (
-      <div className="work-list-item">
-        <div className="work-list-item-Card">
-          <img
-            src={work.img}
-            // tslint:disable-next-line jsx-no-lambda
-            onClick={e => handleClick(e, props)}
-            className="work-list-item-Card_Img"
-          />
+  const languageIcons = work.languages.map(l => {
+    const language = getLanguage(l, props)
+    return language ? <LanguageIcon language={language} key={l} /> : null
+  })
 
-          <div className="work-list-item-Card_Desc">
-            <h3 className="work-list-item-Card_DescHeading">{work.title}</h3>
-            <p className="work-list-item-Card_DescSubHeading">
-              {work.description}
-            </p>
+  return (
+    <div className="work-list-item">
+      <div className="work-list-item-Card">
+        <img
+          src={work.img}
+          // tslint:disable-next-line jsx-no-lambda
+          onClick={e => handleClick(e, props)}
+          className="work-list-item-Card_Img"
+        />
 
-            <div className="work-list-item-TechList">{languageIcons}</div>
-          </div>
+        <div className="work-list-item-Card_Desc">
+          <h3 className="work-list-item-Card_DescHeading">{work.title}</h3>
+          <p className="work-list-item-Card_DescSubHeading">
+            {work.description}
+          </p>
+
+          <div className="work-list-item-TechList">{languageIcons}</div>
         </div>
       </div>
-    )
-  },
-)
+    </div>
+  )
+}) as React.ComponentType<WorkListItemProps>
 
 export default WorkListItem

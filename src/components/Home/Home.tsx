@@ -43,14 +43,7 @@ export class Home extends React.Component<HomeProps, {}> {
         <div className="home-Works">
           <div className="home-Works_List">
             {this.props.works.map((work, index) => (
-              <WorkListItem
-                key={index}
-                work={work}
-                updateTargetWork={this.props.updateTargetWork}
-                languages={this.props.languages}
-                updateCircle={this.props.updateCircle}
-                history={this.props.history}
-              />
+              <WorkListItem key={index} work={work} {...this.props} />
             ))}
           </div>
         </div>
