@@ -23,7 +23,9 @@ export default class WorkListItem extends React.PureComponent<
   }
 
   public render(): JSX.Element {
-    const languageIcons = this.props.work.languages.map(l => {
+    const { work } = this.props
+
+    const languageIcons = work.languages.map(l => {
       const language = this.getLanguage(l)
       return language ? <LanguageIcon language={language} key={l} /> : null
     })
@@ -32,17 +34,15 @@ export default class WorkListItem extends React.PureComponent<
       <div className="work-list-item">
         <div className="work-list-item-Card">
           <img
-            src={this.props.work.img}
+            src={work.img}
             onClick={this.handleClick}
             className="work-list-item-Card_Img"
           />
 
           <div className="work-list-item-Card_Desc">
-            <h3 className="work-list-item-Card_DescHeading">
-              {this.props.work.title}
-            </h3>
+            <h3 className="work-list-item-Card_DescHeading">{work.title}</h3>
             <p className="work-list-item-Card_DescSubHeading">
-              {this.props.work.description}
+              {work.description}
             </p>
 
             <div className="work-list-item-TechList">{languageIcons}</div>

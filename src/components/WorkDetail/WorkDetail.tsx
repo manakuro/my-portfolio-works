@@ -89,26 +89,35 @@ export class WorkDetail extends React.Component<WorkDetailProps, {}> {
   }
 
   public render(): JSX.Element {
+    const {
+      isExpandWorksContent,
+      isShowWorksContent,
+      isShowWorksContentAnimation,
+      updateWorkContentImg,
+      isShowOverlay,
+      circleStyle,
+    } = this.props
+
     const compressIconClass = classnames('fa', {
-      'fa-expand': !this.props.isExpandWorksContent,
-      'fa-compress': this.props.isExpandWorksContent,
+      'fa-expand': !isExpandWorksContent,
+      'fa-compress': isExpandWorksContent,
     })
 
     const worksBackButtonClass = classnames('fa fa-angle-left icon', {
-      expanded: this.props.isExpandWorksContent,
+      expanded: isExpandWorksContent,
     })
 
     return (
       <div className="work-detail">
         <CSSTransition
-          in={this.props.isShowWorksContent}
+          in={isShowWorksContent}
           appear={true}
           classNames="slide-works"
           timeout={1000}
           onEntered={() => this.onEnteredShowWorksContent()}
         >
           <CSSTransition
-            in={this.props.isExpandWorksContent}
+            in={isExpandWorksContent}
             appear={true}
             classNames="expand-works"
             timeout={1000}
@@ -124,7 +133,7 @@ export class WorkDetail extends React.Component<WorkDetailProps, {}> {
                 <Animated
                   animationIn="fadeInDown"
                   animationOut="fadeOut"
-                  isVisible={this.props.isShowWorksContentAnimation}
+                  isVisible={isShowWorksContentAnimation}
                 >
                   <h2 className="work-detail-Content_Heading">EC Website</h2>
                 </Animated>
@@ -132,10 +141,10 @@ export class WorkDetail extends React.Component<WorkDetailProps, {}> {
                   animationIn="fadeInDown"
                   animationOut="fadeOut"
                   animationInDelay={300}
-                  isVisible={this.props.isShowWorksContentAnimation}
+                  isVisible={isShowWorksContentAnimation}
                 >
                   <WorkDetailContent
-                    updateWorkContentImg={this.props.updateWorkContentImg}
+                    updateWorkContentImg={updateWorkContentImg}
                     targetWork={this.props.targetWork}
                   />
                 </Animated>
@@ -148,7 +157,7 @@ export class WorkDetail extends React.Component<WorkDetailProps, {}> {
           animationIn="fadeIn"
           animationOut="fadeOut"
           animateOnMount={false}
-          isVisible={this.props.isShowWorksContentAnimation}
+          isVisible={isShowWorksContentAnimation}
         >
           <div className="work-detail-ContentLeft">
             <div className="work-detail-ContentLeft_Inner">
@@ -156,7 +165,7 @@ export class WorkDetail extends React.Component<WorkDetailProps, {}> {
                 animationIn="fadeInDown"
                 animationOut="fadeOut"
                 animationInDelay={300}
-                isVisible={this.props.isShowWorksContentAnimation}
+                isVisible={isShowWorksContentAnimation}
               >
                 <div className="work-detail-Uncover">
                   <a href="https://google.com" target="blank">
@@ -173,18 +182,18 @@ export class WorkDetail extends React.Component<WorkDetailProps, {}> {
         </Animated>
 
         <CSSTransition
-          in={this.props.isShowOverlay}
+          in={isShowOverlay}
           appear={true}
           classNames="scale"
           timeout={1000}
           onEnter={() => this.showWorksContent()}
           onExited={() => this.onExitedOverlay()}
         >
-          <div className="work-detail-Circle" style={this.props.circleStyle} />
+          <div className="work-detail-Circle" style={circleStyle} />
         </CSSTransition>
 
         <CSSTransition
-          in={this.props.isShowWorksContent}
+          in={isShowWorksContent}
           appear={true}
           classNames="slide-button"
           timeout={1000}
