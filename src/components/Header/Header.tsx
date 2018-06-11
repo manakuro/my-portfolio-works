@@ -12,7 +12,7 @@ export interface HeaderProps {
   languages: HomeState['languages']
   searchQuery: SearchQuery
   updateSearchQuery: (searchQuery: any) => any
-  history?: History
+  history: History
 }
 
 const SWIPER_OPTIONS = {
@@ -103,11 +103,10 @@ export default class Header extends React.PureComponent<HeaderProps, {}> {
   }
 
   private search = (): void => {
-    if (this.props.history)
-      this.props.history.push({
-        pathname: '/',
-        search: `?${queryString.stringify(this.props.searchQuery)}`,
-      })
+    this.props.history.push({
+      pathname: '/',
+      search: `?${queryString.stringify(this.props.searchQuery)}`,
+    })
   }
 
   private next = (): void => {

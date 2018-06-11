@@ -9,11 +9,15 @@ import Header from '@/components/Header/Header'
 import './Layout.css'
 import { HomeState } from '@/modules/home/reducer'
 import actions from '@/modules/home/actions'
-import { History } from 'history'
+import { RouteComponentProps } from 'react-router'
+import { RootState } from '@/modules/reducers'
 
-interface LayoutProps extends LayoutStateFromProps, LayoutDispatchFromProps {}
+interface LayoutProps
+  extends LayoutStateFromProps,
+    LayoutDispatchFromProps,
+    LayoutOwnProps {}
 
-export class Layout extends React.Component<any, {}> {
+export class Layout extends React.Component<LayoutProps, {}> {
   constructor(props: LayoutProps) {
     super(props)
   }
@@ -25,12 +29,7 @@ export class Layout extends React.Component<any, {}> {
   public render(): JSX.Element {
     return (
       <div className="layout">
-        <Header
-          updateSearchQuery={this.props.updateSearchQuery}
-          searchQuery={this.props.searchQuery}
-          languages={this.props.languages}
-          history={this.props.history}
-        />
+        <Header {...this.props} />
 
         <CSSTransition
           in={!this.props.isLoading}
@@ -51,14 +50,14 @@ export interface LayoutDispatchFromProps {
   updateSearchQuery: (searchQuery: any) => any
 }
 
-export interface LayoutStateFromProps extends HomeState {
-  history: History
-}
+export interface LayoutStateFromProps extends HomeState {}
 
-export function mapStateToProps(state: any) {
+export interface LayoutOwnProps extends RouteComponentProps<any> {}
+
+export function mapStateToProps(state: RootState, ownProps: LayoutOwnProps) {
   return {
     ...state.home,
-    router: state.router,
+    ...ownProps,
   }
 }
 
@@ -70,7 +69,8 @@ export function mapDispatchToProps(dispatch: Dispatch<() => any>) {
   }
 }
 
-export default connect<LayoutStateFromProps, LayoutDispatchFromProps, void>(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Layout) as any // @todo resolve types
+export default connect<
+  LayoutStateFromProps,
+  LayoutDispatchFromProps,
+  LayoutOwnProps
+>(mapStateToProps, mapDispatchToProps)(Layout) as any // @todo resolve types

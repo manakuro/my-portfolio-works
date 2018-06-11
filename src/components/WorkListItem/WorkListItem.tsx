@@ -3,8 +3,7 @@ import { Work, Language } from '@/modules/home/reducer'
 import compose from 'recompose/compose'
 import './WorkListItem.css'
 import LanguageIcon from '@/components/LanguageIcon'
-import { History } from 'history'
-import { HomeDispatchFromProps } from '@/components/Home/Home'
+import { HomeDispatchFromProps, HomeOwnProps } from '@/components/Home/Home'
 import { onlyUpdateForKeys, withHandlers } from 'recompose'
 
 export interface WorkListItemProps {
@@ -12,12 +11,12 @@ export interface WorkListItemProps {
   updateTargetWork: (payload: Work) => any
   updateCircle: HomeDispatchFromProps['updateCircle']
   languages: Language[]
-  history?: History
+  history: HomeOwnProps['history']
 }
 
 export interface WorkListItemHandleClickProps {
   work: WorkListItemProps['work']
-  history?: WorkListItemProps['history']
+  history: WorkListItemProps['history']
   updateCircle: WorkListItemProps['updateCircle']
 }
 
@@ -45,10 +44,9 @@ export function handleClick(
 
   updateCircle(circleStyle)
 
-  if (history)
-    history.push({
-      pathname: `/works/${work.id}`,
-    })
+  history.push({
+    pathname: `/works/${work.id}`,
+  })
 }
 
 const enhance = compose<WorkListItemProps, {}>(

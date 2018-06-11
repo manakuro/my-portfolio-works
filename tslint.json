@@ -9,6 +9,7 @@
   },
   "rules": {
     "object-literal-sort-keys": false,
+    "no-empty-interface": false,
     "no-console": false,
     "curly": [true, "as-needed"],
     "indent": [true, "spaces", 2],

@@ -12,8 +12,7 @@ import removeClassHtml from '@/utils/removeClassHtml'
 import WorkDetailContent from '@/components/WorkDetailContent/WorkDetailContent'
 import * as classnames from 'classnames'
 import { HomeState } from '@/modules/home/reducer'
-import { HomeDispatchFromProps } from '@/components/Home/Home'
-import { History, Location } from 'history'
+import { HomeDispatchFromProps, HomeOwnProps } from '@/components/Home/Home'
 
 interface WorkDetailProps {
   toggleOverlay: HomeDispatchFromProps['toggleOverlay']
@@ -31,9 +30,9 @@ interface WorkDetailProps {
   circleStyle: HomeState['circleStyle']
   isShowWorksContentAnimation: HomeState['isShowWorksContentAnimation']
   targetWork: HomeState['targetWork']
-  history: History
-  location: Location
-  match: any
+  history: HomeOwnProps['history']
+  location: HomeOwnProps['location']
+  match: HomeOwnProps['match']
 }
 
 const ANIME_PROPS: AnimeProps = {
@@ -207,7 +206,7 @@ export class WorkDetail extends React.Component<WorkDetailProps, {}> {
   }
 
   private goBack(): void {
-    if (this.props.history) this.props.history.goBack()
+    this.props.history.goBack()
   }
 
   private hideOverlay = (): void => {

@@ -7,12 +7,14 @@ import { HomeState, Work, SearchQuery } from '@/modules/home/reducer'
 import actions from '@/modules/home/actions'
 import { RootState } from '@/modules/reducers'
 import WorkListItem from '@/components/WorkListItem/WorkListItem'
-import { History, Location } from 'history'
 import * as queryString from 'query-string'
 import { WorkDetail } from '@/components/WorkDetail/WorkDetail'
-import { Route } from 'react-router'
+import { Route, RouteComponentProps } from 'react-router'
 
-export interface HomeProps extends HomeStateFromProps, HomeDispatchFromProps {}
+export interface HomeProps
+  extends HomeStateFromProps,
+    HomeDispatchFromProps,
+    HomeOwnProps {}
 
 export class Home extends React.Component<HomeProps, {}> {
   constructor(props: HomeProps) {
@@ -78,14 +80,14 @@ export interface HomeDispatchFromProps {
   fetchWork: (id: number) => any
 }
 
-export interface HomeStateFromProps extends HomeState {
-  location?: Location
-  history?: History
-}
+export interface HomeStateFromProps extends HomeState {}
 
-export function mapStateToProps(state: RootState) {
+export interface HomeOwnProps extends RouteComponentProps<any> {}
+
+export function mapStateToProps(state: RootState, ownProps: HomeOwnProps) {
   return {
     ...state.home,
+    ...ownProps,
   }
 }
 
@@ -116,7 +118,7 @@ export function mapDispatchToProps(dispatch: Dispatch<() => any>) {
   }
 }
 
-export default connect<HomeStateFromProps, HomeDispatchFromProps, void>(
+export default connect<HomeStateFromProps, HomeDispatchFromProps, HomeOwnProps>(
   mapStateToProps,
   mapDispatchToProps,
 )(Home)
