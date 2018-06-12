@@ -49,13 +49,15 @@ export function handleClick(
   })
 }
 
-const enhance = compose<WorkListItemProps, {}>(
+interface WithHandlers {
+  handleClick: () => any
+}
+
+const enhance = compose<WorkListItemProps & WithHandlers, WorkListItemProps>(
   withHandlers({
     handleClick: (props: WorkListItemHandleClickProps) => (
       event: React.SyntheticEvent<EventTarget>,
-    ) => {
-      handleClick(event, props)
-    },
+    ) => handleClick(event, props),
   }),
   onlyUpdateForKeys(['work', 'updateTargetWork', 'updateCircle', 'history']),
 )
@@ -73,8 +75,7 @@ const WorkListItem = enhance((props): JSX.Element => {
       <div className="work-list-item-Card">
         <img
           src={work.img}
-          // tslint:disable-next-line jsx-no-lambda
-          onClick={e => handleClick(e, props)}
+          onClick={props.handleClick}
           className="work-list-item-Card_Img"
         />
 
@@ -89,6 +90,6 @@ const WorkListItem = enhance((props): JSX.Element => {
       </div>
     </div>
   )
-}) as React.ComponentType<WorkListItemProps>
+})
 
 export default WorkListItem
