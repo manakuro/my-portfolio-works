@@ -74,7 +74,7 @@ const enhance = compose<HeaderProps & WithHandlers, HeaderProps>(
   ]),
 )
 
-const Header = enhance((props): JSX.Element => {
+export const Header = (props: HeaderProps & WithHandlers): JSX.Element => {
   let swiper: any
 
   const mapActiveLanguages = props.searchQuery.languages.reduce((acc, l) => {
@@ -135,6 +135,6 @@ const Header = enhance((props): JSX.Element => {
       </nav>
     </header>
   )
-})
+}
 
-export default Header
+export default enhance(Header)
