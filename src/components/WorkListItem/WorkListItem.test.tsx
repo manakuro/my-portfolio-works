@@ -33,4 +33,33 @@ describe('WorkListItem', () => {
     const wrapper = shallow(<WorkListItem.WorkListItem {...props} />)
     expect(wrapper).toMatchSnapshot()
   })
+
+  describe('getLanguage', () => {
+    it('should get language', () => {
+      const id = 1
+
+      const result = WorkListItem.getLanguage(id, props)
+
+      expect(result).toEqual({ icon: 'rails', id: 1, name: 'Ruby on Rails' })
+    })
+  })
+
+  describe('handleClick', () => {
+    it('should successfully update circle style', () => {
+      const e: any = {
+        nativeEvent: {
+          pageX: 10,
+          pageY: 20,
+        },
+      }
+
+      WorkListItem.handleClick(e, props)
+
+      expect(props.updateCircle).toHaveBeenCalledWith({
+        left: '-40px',
+        top: '-160px',
+      })
+      expect(props.history.push).toHaveBeenCalledWith({ pathname: '/works/1' })
+    })
+  })
 })
