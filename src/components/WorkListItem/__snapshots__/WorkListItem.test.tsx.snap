@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WorkListItem should render 1`] = `
+<div
+  className="work-list-item"
+>
+  <div
+    className="work-list-item-Card"
+  >
+    <img
+      className="work-list-item-Card_Img"
+      onClick={[MockFunction]}
+      src="http://sample.jpg"
+    />
+    <div
+      className="work-list-item-Card_Desc"
+    >
+      <h3
+        className="work-list-item-Card_DescHeading"
+      >
+        EC Website
+      </h3>
+      <p
+        className="work-list-item-Card_DescSubHeading"
+      >
+        
+      I’ve been a CMT for ten years now, and I have, literally and
+      figuratively, held the pulse of a steaming cross-section of
+      San Franciscans
+      
+      </p>
+      <div
+        className="work-list-item-TechList"
+      >
+        <LanguageIcon
+          key="1"
+          language={
+            Object {
+              "icon": "rails",
+              "id": 1,
+              "name": "Ruby on Rails",
+            }
+          }
+        />
+        <LanguageIcon
+          key="2"
+          language={
+            Object {
+              "icon": "react",
+              "id": 2,
+              "name": "React.js",
+            }
+          }
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

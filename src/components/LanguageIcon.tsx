@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Language } from '@/modules/home/reducer'
 import * as ReactTooltip from 'react-tooltip'
 
-interface LanguageIconProps {
+export interface LanguageIconProps {
   language: Language
 }
 

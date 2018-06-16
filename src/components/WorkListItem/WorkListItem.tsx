@@ -14,11 +14,13 @@ export interface WorkListItemProps {
   history: HomeOwnProps['history']
 }
 
-export interface WorkListItemHandleClickProps {
-  work: WorkListItemProps['work']
-  history: WorkListItemProps['history']
-  updateCircle: WorkListItemProps['updateCircle']
+export interface WithHandlers {
+  handleClick: () => any
 }
+
+export interface WorkListItemPropsWithCompose
+  extends WorkListItemProps,
+    WithHandlers {}
 
 export function getLanguage(
   id: number,
@@ -29,7 +31,7 @@ export function getLanguage(
 
 export function handleClick(
   e: React.SyntheticEvent<EventTarget>,
-  props: WorkListItemHandleClickProps,
+  props: WorkListItemProps,
 ): void {
   const { updateCircle, history, work } = props
 
@@ -49,20 +51,18 @@ export function handleClick(
   })
 }
 
-interface WithHandlers {
-  handleClick: () => any
-}
-
-const enhance = compose<WorkListItemProps & WithHandlers, WorkListItemProps>(
+export const enhance = compose<WorkListItemPropsWithCompose, WorkListItemProps>(
   withHandlers({
-    handleClick: (props: WorkListItemHandleClickProps) => (
+    handleClick: (props: WorkListItemProps) => (
       event: React.SyntheticEvent<EventTarget>,
     ) => handleClick(event, props),
   }),
   onlyUpdateForKeys(['work', 'updateTargetWork', 'updateCircle', 'history']),
 )
 
-const WorkListItem = enhance((props): JSX.Element => {
+export const WorkListItem = (
+  props: WorkListItemPropsWithCompose,
+): JSX.Element => {
   const { work } = props
 
   const languageIcons = work.languages.map(l => {
@@ -90,6 +90,6 @@ const WorkListItem = enhance((props): JSX.Element => {
       </div>
     </div>
   )
-})
+}
 
-export default WorkListItem
+export default enhance(WorkListItem)
