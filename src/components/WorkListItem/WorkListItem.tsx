@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Work, Language } from '@/modules/home/reducer'
 import compose from 'recompose/compose'
 import './WorkListItem.css'
-import LanguageIcon from '@/components/LanguageIcon'
+import LanguageIcon from '@/components/LanguageIcon/LanguageIcon'
 import { HomeDispatchFromProps, HomeOwnProps } from '@/components/Home/Home'
 import { onlyUpdateForKeys, withHandlers } from 'recompose'
 

@@ -1,6 +1,8 @@
 import * as React from 'react'
 import { Language } from '@/modules/home/reducer'
 import * as ReactTooltip from 'react-tooltip'
+import { onlyUpdateForKeys } from 'recompose'
+import compose from 'recompose/compose'
 
 export interface LanguageIconProps {
   language: Language
@@ -27,26 +29,21 @@ export const COMPONENTS = {
   ),
 }
 
-export default class LanguageIcon extends React.PureComponent<
-  LanguageIconProps,
-  {}
-> {
-  constructor(props: LanguageIconProps) {
-    super(props)
-  }
+export const enhance = compose<LanguageIconProps, LanguageIconProps>(
+  onlyUpdateForKeys(['language']),
+)
 
-  public render(): JSX.Element {
-    const Component = COMPONENTS[this.props.language.icon]
-    if (!Component)
-      throw new Error(
-        `There is no such a component: ${this.props.language.icon}`,
-      )
+export const LanguageIcon = (props: LanguageIconProps): JSX.Element => {
+  const Component = COMPONENTS[props.language.icon]
+  if (!Component)
+    throw new Error(`There is no such a component: ${props.language.icon}`)
 
-    return (
-      <div className="language-icon" data-tip={this.props.language.name}>
-        <Component />
-        <ReactTooltip type="success" effect="solid" />
-      </div>
-    )
-  }
+  return (
+    <div className="language-icon" data-tip={props.language.name}>
+      <Component />
+      <ReactTooltip type="success" effect="solid" />
+    </div>
+  )
 }
+
+export default enhance(LanguageIcon)
