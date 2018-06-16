@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LanguageIcon should render 1`] = `
+<div
+  className="language-icon"
+  data-tip="Ruby on Rails"
+>
+  <rails />
+  <ReactTooltip
+    effect="solid"
+    insecure={true}
+    resizeHide={true}
+    type="success"
+    wrapper="div"
+  />
+</div>
+`;
