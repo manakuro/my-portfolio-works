@@ -8,7 +8,7 @@ import actions from '@/modules/home/actions'
 import { RootState } from '@/modules/reducers'
 import WorkListItem from '@/components/WorkListItem/WorkListItem'
 import * as queryString from 'query-string'
-import { WorkDetail } from '@/components/WorkDetail/WorkDetail'
+import WorkDetail from '@/components/WorkDetail/WorkDetail'
 import { Route, RouteComponentProps } from 'react-router'
 
 export interface HomeProps

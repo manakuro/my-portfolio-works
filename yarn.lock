@@ -8915,7 +8915,7 @@ ts-loader@^2.3.7:
     loader-utils "^1.0.2"
     semver "^5.0.1"
 
-ts-transformer-keys@^0.3.1:
+ts-transformer-keys@^0.3.0:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/ts-transformer-keys/-/ts-transformer-keys-0.3.1.tgz#4e623512dad008c073c11c84b4c914cd438d6e24"
 

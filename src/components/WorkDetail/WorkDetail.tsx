@@ -2,8 +2,7 @@ import * as React from 'react'
 import { Animated } from 'react-animated-css'
 import Anime, { AnimeProps } from 'react-anime'
 import { CSSTransition } from 'react-transition-group'
-
-/* tslint:disable */
+import compose from 'recompose/compose'
 
 // others
 import './WorkDetail.css'
@@ -13,8 +12,9 @@ import WorkDetailContent from '@/components/WorkDetailContent/WorkDetailContent'
 import * as classnames from 'classnames'
 import { HomeState } from '@/modules/home/reducer'
 import { HomeDispatchFromProps, HomeOwnProps } from '@/components/Home/Home'
+import { withHandlers } from 'recompose'
 
-interface WorkDetailProps {
+export interface WorkDetailProps {
   toggleOverlay: HomeDispatchFromProps['toggleOverlay']
   toggleWorksContent: HomeDispatchFromProps['toggleWorksContent']
   toggleWorksContentAnimation: HomeDispatchFromProps['toggleWorksContentAnimation']
@@ -52,191 +52,224 @@ const ANIME_PROPS: AnimeProps = {
   strokeDashoffset: 0,
 }
 
-export class WorkDetail extends React.Component<WorkDetailProps, {}> {
-  public anime: any
+export function renderWorkContentImgAnimation(
+  props: WorkDetailProps,
+): JSX.Element | null {
+  return props.workContentImg !== '' &&
+    props.isShowWorksContent &&
+    !props.isExpandWorksContent ? (
+    <Anime {...ANIME_PROPS} key={`anime-${props.workContentImg}`}>
+      <div className="work-detail-Uncover_Slice" />
+      <div className="work-detail-Uncover_Slice" />
+      <div className="work-detail-Uncover_Slice" />
+      <div className="work-detail-Uncover_Slice" />
+      <div className="work-detail-Uncover_Slice" />
+      <div className="work-detail-Uncover_Slice" />
+    </Anime>
+  ) : null
+}
 
-  constructor(props: WorkDetailProps) {
-    super(props)
-  }
+export function goBack(props: WorkDetailProps): void {
+  props.history.goBack()
+}
 
-  public async componentDidMount(): Promise<void> {
-    this.props.toggleOverlay(true)
+export function hideOverlay(props: WorkDetailProps): void {
+  props.toggleWorksContent(false)
+  removeClassHtml()
 
-    let { id } = this.props.match.params
-    id = parseInt(id, 10)
+  props.toggleOverlay(false)
+  props.toggleWorksContentAnimation(false)
+  props.toggleWorksContentExpand(false)
+}
 
-    await this.props.fetchWork(id)
+export function onExitedOverlay(props: WorkDetailProps): void {
+  props.updateCircle({
+    top: '0px',
+    left: '-1000px',
+  })
 
-    if (!this.props.targetWork) {
-      this.props.history.push('/')
+  goBack(props)
+}
+
+export function showWorksContent(props: WorkDetailProps): void {
+  props.toggleWorksContent(true)
+  addClassHtml('hidden')
+}
+
+export function onEnteredShowWorksContent(props: WorkDetailProps): void {
+  props.toggleWorksContentAnimation(true)
+}
+
+export function expandWorksContent(props: WorkDetailProps): void {
+  props.toggleWorksContentExpand(!props.isExpandWorksContent)
+}
+
+const enhance = compose<
+  WorkDetailProps & WorkDetailWithHandlers,
+  WorkDetailProps
+>(
+  withHandlers({
+    expandWorksContent: (props: WorkDetailProps) => () =>
+      expandWorksContent(props),
+    hideOverlay: (props: WorkDetailProps) => () => hideOverlay(props),
+  }),
+)
+
+export interface WorkDetailWithHandlers {
+  expandWorksContent: () => any
+  hideOverlay: () => any
+}
+
+// NOTE: might not want to use lifecycle in recompose
+// @see https://github.com/acdlite/recompose/issues/653#issuecomment-383645282
+export const WorkDetailLifeCycle = (Component: any) =>
+  class WorkDetail extends React.Component<WorkDetailProps, {}> {
+    constructor(props: WorkDetailProps) {
+      super(props)
+    }
+
+    public async componentDidMount(): Promise<void> {
+      this.props.toggleOverlay(true)
+
+      let { id } = this.props.match.params
+      id = parseInt(id, 10)
+
+      await this.props.fetchWork(id)
+
+      if (!this.props.targetWork) this.props.history.push('/')
+    }
+
+    public render() {
+      return <Component {...this.props} />
     }
   }
 
-  public renderWorkContentImgAnimation = (): JSX.Element | null => {
-    return this.props.workContentImg !== '' &&
-      this.props.isShowWorksContent &&
-      !this.props.isExpandWorksContent ? (
-      <Anime {...ANIME_PROPS} key={`anime-${this.props.workContentImg}`}>
-        <div className="work-detail-Uncover_Slice" />
-        <div className="work-detail-Uncover_Slice" />
-        <div className="work-detail-Uncover_Slice" />
-        <div className="work-detail-Uncover_Slice" />
-        <div className="work-detail-Uncover_Slice" />
-        <div className="work-detail-Uncover_Slice" />
-      </Anime>
-    ) : null
-  }
+export const workDetailComponent = (props: WorkDetailProps): JSX.Element => {
+  const {
+    isExpandWorksContent,
+    isShowWorksContent,
+    isShowWorksContentAnimation,
+    updateWorkContentImg,
+    isShowOverlay,
+    circleStyle,
+    targetWork,
+    workContentImg,
+  } = props
 
-  public render(): JSX.Element {
-    const {
-      isExpandWorksContent,
-      isShowWorksContent,
-      isShowWorksContentAnimation,
-      updateWorkContentImg,
-      isShowOverlay,
-      circleStyle,
-    } = this.props
+  const compressIconClass = classnames('fa', {
+    'fa-expand': !isExpandWorksContent,
+    'fa-compress': isExpandWorksContent,
+  })
 
-    const compressIconClass = classnames('fa', {
-      'fa-expand': !isExpandWorksContent,
-      'fa-compress': isExpandWorksContent,
-    })
+  const worksBackButtonClass = classnames('fa fa-angle-left icon', {
+    expanded: isExpandWorksContent,
+  })
 
-    const worksBackButtonClass = classnames('fa fa-angle-left icon', {
-      expanded: isExpandWorksContent,
-    })
-
-    return (
-      <div className="work-detail">
+  return (
+    <div className="work-detail">
+      <CSSTransition
+        in={isShowWorksContent}
+        appear={true}
+        classNames="slide-works"
+        timeout={1000}
+        // tslint:disable-next-line jsx-no-lambda
+        onEntered={() => onEnteredShowWorksContent(props)}
+      >
         <CSSTransition
-          in={isShowWorksContent}
+          in={isExpandWorksContent}
           appear={true}
-          classNames="slide-works"
+          classNames="expand-works"
           timeout={1000}
-          onEntered={() => this.onEnteredShowWorksContent()}
         >
-          <CSSTransition
-            in={isExpandWorksContent}
-            appear={true}
-            classNames="expand-works"
-            timeout={1000}
-          >
-            <div className="work-detail-Overlay">
-              <div
-                className="work-detail-ExpandOverlay"
-                onClick={this.expandWorksContent}
-              >
-                <i className={compressIconClass} />
-              </div>
-              <div className="work-detail-Content_Wrapper">
-                <Animated
-                  animationIn="fadeInDown"
-                  animationOut="fadeOut"
-                  isVisible={isShowWorksContentAnimation}
-                >
-                  <h2 className="work-detail-Content_Heading">EC Website</h2>
-                </Animated>
-                <Animated
-                  animationIn="fadeInDown"
-                  animationOut="fadeOut"
-                  animationInDelay={300}
-                  isVisible={isShowWorksContentAnimation}
-                >
-                  <WorkDetailContent
-                    updateWorkContentImg={updateWorkContentImg}
-                    targetWork={this.props.targetWork}
-                  />
-                </Animated>
-              </div>
+          <div className="work-detail-Overlay">
+            <div
+              className="work-detail-ExpandOverlay"
+              // tslint:disable-next-line jsx-no-lambda
+              onClick={() => expandWorksContent(props)}
+            >
+              <i className={compressIconClass} />
             </div>
-          </CSSTransition>
-        </CSSTransition>
-        <Animated
-          className="work-detail-ContentLeftWrapper"
-          animationIn="fadeIn"
-          animationOut="fadeOut"
-          animateOnMount={false}
-          isVisible={isShowWorksContentAnimation}
-        >
-          <div className="work-detail-ContentLeft">
-            <div className="work-detail-ContentLeft_Inner">
+            <div className="work-detail-Content_Wrapper">
+              <Animated
+                animationIn="fadeInDown"
+                animationOut="fadeOut"
+                isVisible={isShowWorksContentAnimation}
+              >
+                <h2 className="work-detail-Content_Heading">EC Website</h2>
+              </Animated>
               <Animated
                 animationIn="fadeInDown"
                 animationOut="fadeOut"
                 animationInDelay={300}
                 isVisible={isShowWorksContentAnimation}
               >
-                <div className="work-detail-Uncover">
-                  <a href="https://google.com" target="blank">
-                    <img src={this.props.workContentImg} />
-                  </a>
-
-                  <div className="work-detail-Uncover_Slices">
-                    {this.renderWorkContentImgAnimation()}
-                  </div>
-                </div>
+                <WorkDetailContent
+                  updateWorkContentImg={updateWorkContentImg}
+                  targetWork={targetWork}
+                />
               </Animated>
             </div>
           </div>
-        </Animated>
-
-        <CSSTransition
-          in={isShowOverlay}
-          appear={true}
-          classNames="scale"
-          timeout={1000}
-          onEnter={() => this.showWorksContent()}
-          onExited={() => this.onExitedOverlay()}
-        >
-          <div className="work-detail-Circle" style={circleStyle} />
         </CSSTransition>
+      </CSSTransition>
+      <Animated
+        className="work-detail-ContentLeftWrapper"
+        animationIn="fadeIn"
+        animationOut="fadeOut"
+        animateOnMount={false}
+        isVisible={isShowWorksContentAnimation}
+      >
+        <div className="work-detail-ContentLeft">
+          <div className="work-detail-ContentLeft_Inner">
+            <Animated
+              animationIn="fadeInDown"
+              animationOut="fadeOut"
+              animationInDelay={300}
+              isVisible={isShowWorksContentAnimation}
+            >
+              <div className="work-detail-Uncover">
+                <a href="https://google.com" target="blank">
+                  <img src={workContentImg} />
+                </a>
 
-        <CSSTransition
-          in={isShowWorksContent}
-          appear={true}
-          classNames="slide-button"
-          timeout={1000}
-        >
-          <div className="work-detail-BackButton">
-            <i className={worksBackButtonClass} onClick={this.hideOverlay} />
+                <div className="work-detail-Uncover_Slices">
+                  {renderWorkContentImgAnimation(props)}
+                </div>
+              </div>
+            </Animated>
           </div>
-        </CSSTransition>
-      </div>
-    )
-  }
+        </div>
+      </Animated>
 
-  private goBack(): void {
-    this.props.history.goBack()
-  }
+      <CSSTransition
+        in={isShowOverlay}
+        appear={true}
+        classNames="scale"
+        timeout={1000}
+        // tslint:disable-next-line jsx-no-lambda
+        onEnter={() => showWorksContent(props)}
+        // tslint:disable-next-line jsx-no-lambda
+        onExited={() => onExitedOverlay(props)}
+      >
+        <div className="work-detail-Circle" style={circleStyle} />
+      </CSSTransition>
 
-  private hideOverlay = (): void => {
-    this.props.toggleWorksContent(false)
-    removeClassHtml()
-
-    this.props.toggleOverlay(false)
-    this.props.toggleWorksContentAnimation(false)
-    this.props.toggleWorksContentExpand(false)
-  }
-
-  private onExitedOverlay = (): void => {
-    this.props.updateCircle({
-      top: '0px',
-      left: '-1000px',
-    })
-
-    this.goBack()
-  }
-
-  private showWorksContent = (): void => {
-    this.props.toggleWorksContent(true)
-    addClassHtml('hidden')
-  }
-
-  private onEnteredShowWorksContent(): void {
-    this.props.toggleWorksContentAnimation(true)
-  }
-
-  private expandWorksContent = (): void => {
-    this.props.toggleWorksContentExpand(!this.props.isExpandWorksContent)
-  }
+      <CSSTransition
+        in={isShowWorksContent}
+        appear={true}
+        classNames="slide-button"
+        timeout={1000}
+      >
+        <div className="work-detail-BackButton">
+          <i
+            className={worksBackButtonClass}
+            // tslint:disable-next-line jsx-no-lambda
+            onClick={() => hideOverlay(props)}
+          />
+        </div>
+      </CSSTransition>
+    </div>
+  )
 }
+
+export default WorkDetailLifeCycle(enhance(workDetailComponent))
