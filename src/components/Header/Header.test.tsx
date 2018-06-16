@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { shallow } from 'enzyme'
-import toJson from 'enzyme-to-json'
-import { handleClick, Header, search, next, prev } from './Header'
+import * as Header from './Header'
 import { HeaderPropsWithCompose } from '@/components/Header/Header'
 
 const props: HeaderPropsWithCompose = {
@@ -21,13 +20,13 @@ const props: HeaderPropsWithCompose = {
 
 describe('Header', () => {
   it('should render', () => {
-    const wrapper = shallow(<Header {...props} />)
-    expect(toJson(wrapper)).toMatchSnapshot()
+    const wrapper = shallow(<Header.Header {...props} />)
+    expect(wrapper).toMatchSnapshot()
   })
 
   describe('search', () => {
     it('should successfully search', () => {
-      search(props)
+      Header.search(props)
 
       expect(props.history.push).toHaveBeenCalledWith({
         pathname: '/',
@@ -43,7 +42,7 @@ describe('Header', () => {
       }
       const id = 1
 
-      handleClick(e, props, id)
+      Header.handleClick(e, props, id)
 
       expect(props.updateSearchQuery).toHaveBeenCalledWith({ languages: [2] })
     })
@@ -55,7 +54,7 @@ describe('Header', () => {
         slideNext: jest.fn(),
       }
 
-      next(swiper)
+      Header.next(swiper)
 
       expect(swiper.slideNext).toHaveBeenCalled()
     })
@@ -67,7 +66,7 @@ describe('Header', () => {
         slidePrev: jest.fn(),
       }
 
-      prev(swiper)
+      Header.prev(swiper)
 
       expect(swiper.slidePrev).toHaveBeenCalled()
     })

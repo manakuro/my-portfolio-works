@@ -55,7 +55,7 @@ export function prev(swiper: any): void {
   swiper.slidePrev()
 }
 
-const enhance = compose<HeaderPropsWithCompose, HeaderProps>(
+export const enhance = compose<HeaderPropsWithCompose, HeaderProps>(
   withHandlers({
     handleClick: (props: HeaderProps) => async (
       e: React.SyntheticEvent<EventTarget>,

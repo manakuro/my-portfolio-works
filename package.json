@@ -49,6 +49,9 @@
     "precommit": "lint-staged",
     "commit": "git-cz"
   },
+  "jest": {
+    "snapshotSerializers": ["enzyme-to-json/serializer"]
+  },
   "lint-staged": {
     "*.js": [
       "prettier --single-quote --no-semi --trailing-comma all --write",
