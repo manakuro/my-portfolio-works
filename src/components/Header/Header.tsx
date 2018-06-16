@@ -21,6 +21,8 @@ export interface WithHandlers {
   handleClick: (e: React.SyntheticEvent<EventTarget>, id: number) => any
 }
 
+export interface HeaderPropsWithCompose extends HeaderProps, WithHandlers {}
+
 const SWIPER_OPTIONS = {
   freeMode: true,
   slidesPerView: 'auto',
@@ -53,7 +55,7 @@ export function prev(swiper: any): void {
   swiper.slidePrev()
 }
 
-const enhance = compose<HeaderProps & WithHandlers, HeaderProps>(
+const enhance = compose<HeaderPropsWithCompose, HeaderProps>(
   withHandlers({
     handleClick: (props: HeaderProps) => async (
       e: React.SyntheticEvent<EventTarget>,
@@ -74,7 +76,7 @@ const enhance = compose<HeaderProps & WithHandlers, HeaderProps>(
   ]),
 )
 
-export const Header = (props: HeaderProps & WithHandlers): JSX.Element => {
+export const Header = (props: HeaderPropsWithCompose): JSX.Element => {
   let swiper: any
 
   const mapActiveLanguages = props.searchQuery.languages.reduce((acc, l) => {

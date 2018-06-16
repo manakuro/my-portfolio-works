@@ -24,7 +24,35 @@ exports[`Header should render 1`] = `
     </div>
     <div
       className="header-Nav_Container"
-    />
+    >
+      <ReactIdSwiper
+        ContainerEl="div"
+        WrapperEl="div"
+        containerClass="swiper-container"
+        freeMode={true}
+        slideClass="swiper-slide"
+        slidesPerView="auto"
+        spaceBetween={10}
+        wrapperClass="swiper-wrapper"
+      >
+        <a
+          className="header-Nav_Link header-Nav_Link-active"
+          href="#"
+          key="1"
+          onClick={[Function]}
+        >
+          Ruby on Rails
+        </a>
+        <a
+          className="header-Nav_Link header-Nav_Link-active"
+          href="#"
+          key="2"
+          onClick={[Function]}
+        >
+          React.js
+        </a>
+      </ReactIdSwiper>
+    </div>
     <div>
       <i
         className="fa fa-angle-right header-Nav_Icon"
