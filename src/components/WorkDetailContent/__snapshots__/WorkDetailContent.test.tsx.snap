@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WorkDetailContent WorkDetailContent Class should render enhanced component 1`] = `
+<withHandlers(onlyUpdateForKeys(Component))
+  handleIntersection={[MockFunction]}
+  targetWork={
+    Object {
+      "component": "WorkOne",
+      "description": "
+      I’ve been a CMT for ten years now, and I have, literally and
+      figuratively, held the pulse of a steaming cross-section of
+      San Franciscans
+      ",
+      "id": 1,
+      "img": "http://sample.jpg",
+      "languages": Array [
+        1,
+        2,
+      ],
+      "title": "EC Website",
+    }
+  }
+  updateWorkContentImg={[MockFunction]}
+/>
+`;
+
+exports[`WorkDetailContent should render 1`] = `
+<div
+  className="markdown-body"
+>
+  <LoadableComponent
+    handleIntersection={[MockFunction]}
+  />
+</div>
+`;
+
+exports[`WorkDetailContent should return null when there is no target component 1`] = `""`;

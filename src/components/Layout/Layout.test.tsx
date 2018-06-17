@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { shallow } from 'enzyme'
 import * as Layout from '@/components/Layout/Layout'
-import * as Home from '@/components/Home/Home'
 
 const propsData: Layout.LayoutProps = {
   works: [
