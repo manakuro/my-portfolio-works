@@ -1,0 +1,121 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Home should render component 1`] = `
+<div
+  className="home"
+>
+  <Route
+    exact={true}
+    path="/works/:id"
+    render={[Function]}
+  />
+  <div
+    className="home-Works"
+  >
+    <div
+      className="home-Works_List"
+    >
+      <withHandlers(onlyUpdateForKeys(Component))
+        circleStyle={
+          Object {
+            "left": "calc(50% - 50px)",
+            "top": "calc(50% - 50px)",
+          }
+        }
+        fetchWork={[MockFunction]}
+        fetchWorks={[MockFunction]}
+        history={
+          Object {
+            "push": [MockFunction],
+          }
+        }
+        isExpandWorksContent={false}
+        isLoading={true}
+        isShowOverlay={false}
+        isShowWorksContent={false}
+        isShowWorksContentAnimation={false}
+        key="0"
+        languages={Array []}
+        location={
+          Object {
+            "search": Object {
+              "query": Object {
+                "languages": "1",
+              },
+            },
+          }
+        }
+        match={
+          Object {
+            "params": Object {
+              "id": 1,
+            },
+          }
+        }
+        searchQuery={
+          Object {
+            "languages": Array [
+              1,
+              2,
+            ],
+          }
+        }
+        targetWork={null}
+        toggleOverlay={[MockFunction]}
+        toggleWorksContent={[MockFunction]}
+        toggleWorksContentAnimation={[MockFunction]}
+        toggleWorksContentExpand={[MockFunction]}
+        updateCircle={[MockFunction]}
+        updateSearchQuery={
+          [MockFunction] {
+            "calls": Array [
+              Array [
+                Object {},
+              ],
+            ],
+          }
+        }
+        updateTargetWork={[MockFunction]}
+        updateWorkContentImg={[MockFunction]}
+        work={
+          Object {
+            "component": "WorkOne",
+            "description": "
+      I’ve been a CMT for ten years now, and I have, literally and
+      figuratively, held the pulse of a steaming cross-section of
+      San Franciscans
+      ",
+            "id": 1,
+            "img": "http://sample.jpg",
+            "languages": Array [
+              1,
+              2,
+            ],
+            "title": "EC Website",
+          }
+        }
+        workContentImg="http://sample.jpg"
+        works={
+          Array [
+            Object {
+              "component": "WorkOne",
+              "description": "
+      I’ve been a CMT for ten years now, and I have, literally and
+      figuratively, held the pulse of a steaming cross-section of
+      San Franciscans
+      ",
+              "id": 1,
+              "img": "http://sample.jpg",
+              "languages": Array [
+                1,
+                2,
+              ],
+              "title": "EC Website",
+            },
+          ]
+        }
+      />
+    </div>
+  </div>
+</div>
+`;
