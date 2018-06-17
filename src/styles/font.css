@@ -18,6 +18,76 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
 
+.icon-redux .path1:before {
+  content: "\e908";
+  color: blue; }
+
+.icon-redux .path2:before {
+  content: "\e909";
+  margin-left: -1.048828125em;
+  color: #764abc; }
+
+.icon-rxjs .path1:before {
+  content: "\e90a";
+  color: white; }
+
+.icon-rxjs .path2:before {
+  content: "\e90b";
+  margin-left: -1.0234375em;
+  color: #512c87; }
+
+.icon-rxjs .path3:before {
+  content: "\e90c";
+  margin-left: -1.0234375em;
+  color: #785ba1; }
+
+.icon-rxjs .path4:before {
+  content: "\e90d";
+  margin-left: -1.0234375em;
+  color: #ed168f; }
+
+.icon-rxjs .path5:before {
+  content: "\e90e";
+  margin-left: -1.0234375em;
+  color: #f36eb9; }
+
+.icon-reactjs:before {
+  content: "\e902";
+  color: #61dafb; }
+
+.icon-typescript .path1:before {
+  content: "\e90f";
+  color: white; }
+
+.icon-typescript .path2:before {
+  content: "\e910";
+  margin-left: -1em;
+  color: #007acc; }
+
+.icon-jest .path1:before {
+  content: "\e903";
+  color: white; }
+
+.icon-jest .path2:before {
+  content: "\e904";
+  margin-left: -1em;
+  color: #99425b; }
+
+.icon-jest .path3:before {
+  content: "\e905";
+  margin-left: -1em;
+  color: #ac6579; }
+
+.icon-jest .path4:before {
+  content: "\e906";
+  margin-left: -1em;
+  color: #cca0ad; }
+
+.icon-jest .path5:before {
+  content: "\e907";
+  margin-left: -1em;
+  color: #e5cfd6; }
+
 .icon-vuejs .path1:before {
   content: "\e900";
   color: #35495e; }

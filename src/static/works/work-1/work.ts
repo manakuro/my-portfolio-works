@@ -3,7 +3,7 @@ import { Work } from '@/modules/home/reducer'
 
 const work1: Work = {
   id: 1,
-  title: 'EC Website',
+  title: 'My Portfolio',
   description: `
       I’ve been a CMT for ten years now, and I have, literally and
       figuratively, held the pulse of a steaming cross-section of
@@ -11,7 +11,7 @@ const work1: Work = {
       `,
   img: sampleImg,
   component: 'WorkOne',
-  languages: [1, 2],
+  languages: [2, 6, 8, 13, 14],
 }
 
 export default work1

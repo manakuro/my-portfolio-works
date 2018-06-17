@@ -12,6 +12,7 @@ const LANGUAGES = [
   { id: 11, name: 'Elm', icon: 'elm' },
   { id: 12, name: 'Reason React', icon: 'reason-react' },
   { id: 13, name: 'RxJS', icon: 'rxjs' },
+  { id: 14, name: 'Redux', icon: 'redux' },
 ]
 
 export default LANGUAGES

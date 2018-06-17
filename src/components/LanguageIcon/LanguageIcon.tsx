@@ -15,14 +15,33 @@ export const COMPONENTS = {
       <span className="path2" />
     </span>
   ),
-  rails: () => (
-    <span className="icon-vuejs">
+  jest: () => (
+    <span className="icon-jest">
+      <span className="path1" />
+      <span className="path2" />
+      <span className="path3" />
+      <span className="path4" />
+      <span className="path5" />
+    </span>
+  ),
+  react: () => <span className="icon-reactjs" />,
+  rxjs: () => (
+    <span className="icon-rxjs">
+      <span className="path1" />
+      <span className="path2" />
+      <span className="path3" />
+      <span className="path4" />
+      <span className="path5" />
+    </span>
+  ),
+  redux: () => (
+    <span className="icon-redux">
       <span className="path1" />
       <span className="path2" />
     </span>
   ),
-  react: () => (
-    <span className="icon-vuejs">
+  typescript: () => (
+    <span className="icon-typescript">
       <span className="path1" />
       <span className="path2" />
     </span>
