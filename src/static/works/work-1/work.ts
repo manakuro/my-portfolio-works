@@ -1,4 +1,4 @@
-import sampleImg from '@/static/images/sample.jpeg'
+import titleImg from '@/static/works/work-1/images/manato.png'
 import { Work } from '@/modules/home/reducer'
 
 const work1: Work = {
@@ -9,7 +9,7 @@ const work1: Work = {
       figuratively, held the pulse of a steaming cross-section of
       San Franciscans
       `,
-  img: sampleImg,
+  img: titleImg,
   component: 'WorkOne',
   languages: [2, 6, 8, 13, 14],
 }
