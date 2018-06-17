@@ -178,7 +178,9 @@ export const WorkDetailComponent = (
                 animationOut="fadeOut"
                 isVisible={isShowWorksContentAnimation}
               >
-                <h2 className="work-detail-Content_Heading">EC Website</h2>
+                <h2 className="work-detail-Content_Heading">
+                  {targetWork && targetWork.title}
+                </h2>
               </Animated>
               <Animated
                 animationIn="fadeInDown"
