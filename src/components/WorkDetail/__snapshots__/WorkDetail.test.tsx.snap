@@ -22,6 +22,7 @@ exports[`WorkDetail WorkDetail class should render enhanced component 1`] = `
   history={
     Object {
       "goBack": [MockFunction],
+      "location": Object {},
       "push": [MockFunction],
     }
   }

@@ -41,6 +41,7 @@ const propsData: WorkDetailProps & WorkDetailWithHandlers = {
   history: {
     push: jest.fn(),
     goBack: jest.fn(),
+    location: {},
   } as any,
   match: {
     params: {
@@ -111,8 +112,19 @@ describe('WorkDetail', () => {
 
   describe('goBack', () => {
     it('should go back', () => {
+      props.history.location.state = {
+        fromWorkListItem: true,
+      }
+
       WorkDetail.goBack(props)
       expect(props.history.goBack).toHaveBeenCalled()
+    })
+
+    it('should go to top when user come from other url', () => {
+      props.history.location.state = null
+
+      WorkDetail.goBack(props)
+      expect(props.history.push).toHaveBeenCalledWith('/')
     })
   })
 

@@ -59,7 +59,10 @@ describe('WorkListItem', () => {
         left: '-40px',
         top: '-160px',
       })
-      expect(props.history.push).toHaveBeenCalledWith({ pathname: '/works/1' })
+      expect(props.history.push).toHaveBeenCalledWith({
+        pathname: '/works/1',
+        state: { fromWorkListItem: true },
+      })
     })
   })
 })
