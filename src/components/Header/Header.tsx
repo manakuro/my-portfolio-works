@@ -8,7 +8,7 @@ import compose from 'recompose/compose'
 import './Header.css'
 import { HomeState, SearchQuery } from '@/modules/home/reducer'
 import { History } from 'history'
-import { lifecycle, onlyUpdateForKeys, withHandlers } from 'recompose'
+import { onlyUpdateForKeys, withHandlers } from 'recompose'
 
 export interface HeaderProps {
   languages: HomeState['languages']
@@ -17,11 +17,13 @@ export interface HeaderProps {
   history: History
 }
 
-export interface WithHandlers {
+export interface HeaderWithHandlers {
   handleClick: (e: React.SyntheticEvent<EventTarget>, id: number) => any
 }
 
-export interface HeaderPropsWithCompose extends HeaderProps, WithHandlers {}
+export interface HeaderPropsWithCompose
+  extends HeaderProps,
+    HeaderWithHandlers {}
 
 const SWIPER_OPTIONS = {
   freeMode: true,
@@ -62,12 +64,6 @@ export const enhance = compose<HeaderPropsWithCompose, HeaderProps>(
       id: number,
     ) => handleClick(e, props, id),
   }),
-  lifecycle({
-    componentWillReceiveProps(nextProps: HeaderProps) {
-      if (this.props.searchQuery.languages !== nextProps.searchQuery.languages)
-        search(nextProps)
-    },
-  }),
   onlyUpdateForKeys([
     'languages',
     'searchQuery',
@@ -76,7 +72,7 @@ export const enhance = compose<HeaderPropsWithCompose, HeaderProps>(
   ]),
 )
 
-export const Header = (props: HeaderPropsWithCompose): JSX.Element => {
+export const HeaderComponent = (props: HeaderPropsWithCompose): JSX.Element => {
   let swiper: any
 
   const mapActiveLanguages = props.searchQuery.languages.reduce((acc, l) => {
@@ -139,4 +135,18 @@ export const Header = (props: HeaderPropsWithCompose): JSX.Element => {
   )
 }
 
-export default enhance(Header)
+export const HeaderComponentEnhanced = enhance(HeaderComponent)
+export default class Header extends React.Component<HeaderProps, {}> {
+  constructor(props: HeaderProps) {
+    super(props)
+  }
+
+  public componentWillReceiveProps(nextProps: HeaderProps) {
+    if (this.props.searchQuery.languages !== nextProps.searchQuery.languages)
+      search(nextProps)
+  }
+
+  public render() {
+    return <HeaderComponentEnhanced {...this.props} />
+  }
+}

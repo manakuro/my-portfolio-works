@@ -1,9 +1,8 @@
 import * as React from 'react'
 import { shallow } from 'enzyme'
-import * as Header from './Header'
-import { HeaderPropsWithCompose } from '@/components/Header/Header'
+import * as Header from '@/components/Header/Header'
 
-const props: HeaderPropsWithCompose = {
+const props: Header.HeaderPropsWithCompose = {
   languages: [
     { id: 1, name: 'Ruby on Rails', icon: 'rails' },
     { id: 2, name: 'React.js', icon: 'react' },
@@ -20,8 +19,24 @@ const props: HeaderPropsWithCompose = {
 
 describe('Header', () => {
   it('should render', () => {
-    const wrapper = shallow(<Header.Header {...props} />)
+    const wrapper = shallow(<Header.HeaderComponent {...props} />)
     expect(wrapper).toMatchSnapshot()
+  })
+
+  describe('Header Class', () => {
+    let wrapper
+    it('should render enhanced component', () => {
+      wrapper = shallow(<Header.default {...props} />)
+      expect(wrapper).toMatchSnapshot()
+    })
+
+    describe('componentWillReceiveProps', () => {
+      it('should call search when props change', () => {
+        // @todo figure out how to mock function inside module
+        wrapper = shallow(<Header.default {...props} />)
+        wrapper.setProps({ searchQuery: { languages: [1] } })
+      })
+    })
   })
 
   describe('search', () => {

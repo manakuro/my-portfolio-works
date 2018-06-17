@@ -1,5 +1,39 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Header Header Class should render enhanced component 1`] = `
+<withHandlers(onlyUpdateForKeys(Component))
+  handleClick={[MockFunction]}
+  history={
+    Object {
+      "push": [MockFunction],
+    }
+  }
+  languages={
+    Array [
+      Object {
+        "icon": "rails",
+        "id": 1,
+        "name": "Ruby on Rails",
+      },
+      Object {
+        "icon": "react",
+        "id": 2,
+        "name": "React.js",
+      },
+    ]
+  }
+  searchQuery={
+    Object {
+      "languages": Array [
+        1,
+        2,
+      ],
+    }
+  }
+  updateSearchQuery={[MockFunction]}
+/>
+`;
+
 exports[`Header should render 1`] = `
 <header
   className="header"
