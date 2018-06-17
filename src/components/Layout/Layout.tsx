@@ -12,7 +12,7 @@ import actions from '@/modules/home/actions'
 import { RouteComponentProps } from 'react-router'
 import { RootState } from '@/modules/reducers'
 
-interface LayoutProps
+export interface LayoutProps
   extends LayoutStateFromProps,
     LayoutDispatchFromProps,
     LayoutOwnProps {}
