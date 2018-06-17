@@ -79,6 +79,8 @@ describe('Home', () => {
     })
 
     it('should call', async () => {
+      props.fetchWorks = jest.fn()
+
       await component.componentWillMount()
 
       expect(props.fetchWorks).toHaveBeenCalled()
@@ -98,6 +100,7 @@ describe('Home', () => {
           languages: [1],
         },
       }
+      props.fetchWorks = jest.fn()
 
       component.props.searchQuery = {
         languages: [1, 2],
@@ -106,6 +109,21 @@ describe('Home', () => {
       await component.componentDidUpdate(prevProps)
 
       expect(props.fetchWorks).toHaveBeenCalled()
+    })
+
+    it('should NOT call fetchWorks when searchQuery is same as prevProps', async () => {
+      const prevProps = {
+        searchQuery: {
+          languages: [1],
+        },
+      }
+      props.fetchWorks = jest.fn()
+
+      component.props.searchQuery = prevProps.searchQuery
+
+      await component.componentDidUpdate(prevProps)
+
+      expect(props.fetchWorks).not.toHaveBeenCalled()
     })
   })
 
