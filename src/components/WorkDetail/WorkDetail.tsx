@@ -69,7 +69,13 @@ export function renderWorkContentImgAnimation(
 }
 
 export function goBack(props: WorkDetailProps): void {
-  props.history.goBack()
+  const { state } = props.history.location
+  if (state && state.fromWorkListItem) {
+    props.history.goBack()
+    return
+  }
+
+  props.history.push('/')
 }
 
 export function hideOverlay(props: WorkDetailProps): void {

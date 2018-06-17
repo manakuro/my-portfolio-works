@@ -48,6 +48,7 @@ export function handleClick(
 
   history.push({
     pathname: `/works/${work.id}`,
+    state: { fromWorkListItem: true },
   })
 }
 
