@@ -5,9 +5,8 @@ const work1: Work = {
   id: 1,
   title: 'My Portfolio',
   description: `
-      I’ve been a CMT for ten years now, and I have, literally and
-      figuratively, held the pulse of a steaming cross-section of
-      San Franciscans
+      My portfolio website built with mainly React.js and shows the list of works that 
+      I have done with the techs that I'm into. 
       `,
   img: titleImg,
   component: 'WorkOne',
