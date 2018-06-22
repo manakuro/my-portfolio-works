@@ -17,12 +17,23 @@ const WorkOne: React.ComponentType<WorkOneProps> = pure(
     return (
       <div className="markdown-body">
         <IntersectionObserver onChange={handleIntersection}>
-          <h2 data-src={sampleImg3}>EC Website</h2>
+          <h2 data-src={sampleImg3}>About Me</h2>
         </IntersectionObserver>
         <p>
-          This is a copy website of NIKE.com, which is developed by Vue.js, Ruby
-          on Rails and GraphQL.
+          I am Manato Kuroda based in Tokyo, Japan. I am a web developer and a
+          designer working as a freelancer. I want to introduce myself through
+          this website and to show my skillsets and my inspirations. I had
+          already made <a href="http://manato.ca">my portfolio</a> before while
+          I was in Canada but it's more focusing on my skills.
         </p>
+
+        <p>
+          I have a wide-ranging subset of the following skills, such as Angular,
+          Vue.js, React and Ruby on Rails so on, but more importantly I love to
+          constantly learn and experiment new techs as grow fast. So I hope you
+          find my works interesting and get some inspirations.
+        </p>
+
         <p>Changes are automatically rendered as you type.</p>
         <ul>
           <li>
