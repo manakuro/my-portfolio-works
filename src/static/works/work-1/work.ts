@@ -3,10 +3,10 @@ import { Work } from '@/modules/home/reducer'
 
 const work1: Work = {
   id: 1,
-  title: 'My Portfolio',
+  title: 'Manato Kuroda Portfolio',
   description: `
-      My portfolio website built with mainly React.js and shows the list of works that 
-      I have done with the techs that I'm into. 
+      My portfolio website built with mainly React.js. It shows the list of my works 
+      with the techs that I'm into. 
       `,
   img: titleImg,
   component: 'WorkOne',

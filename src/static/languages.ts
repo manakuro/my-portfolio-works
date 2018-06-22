@@ -1,6 +1,6 @@
 const LANGUAGES = [
   { id: 1, name: 'Ruby on Rails', icon: 'rails' },
-  { id: 2, name: 'React.js', icon: 'react' },
+  { id: 2, name: 'ReactJS', icon: 'react' },
   { id: 3, name: 'Angular', icon: 'angular' },
   { id: 4, name: 'Vue.js', icon: 'vuejs' },
   { id: 5, name: 'Fuel PHP', icon: 'fuel-php' },
