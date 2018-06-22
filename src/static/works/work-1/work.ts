@@ -1,4 +1,4 @@
-import titleImg from '@/static/works/work-1/images/manato.png'
+import titleImg from '@/static/works/work-1/images/manato.jpg'
 import { Work } from '@/modules/home/reducer'
 
 const work1: Work = {
