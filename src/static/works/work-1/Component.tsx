@@ -4,7 +4,8 @@ import pure from 'recompose/pure'
 
 import sampleImg from './images/sample.jpeg'
 import sampleImg2 from './images/sample2.jpeg'
-import aboutMeImg from './images/aboutMe.png'
+import aboutMeImg from './images/manato.jpg'
+import structureImg from './images/create-react-app-typescript.jpg'
 
 interface WorkOneProps {
   handleIntersection: (entry: IntersectionObserverEntry) => any
@@ -53,15 +54,90 @@ const WorkOne: React.ComponentType<WorkOneProps> = pure(
           can read it on full screen mode.
         </p>
 
-        <h2>Structure</h2>
-
-        <ul>
-          <li>React / Create react app</li>
-          <li>Typescript</li>
-          <li>Redux</li>
-          <li>Redux-observable</li>
-          <li>Recompose</li>
-        </ul>
+        <IntersectionObserver onChange={handleIntersection} threshold={1}>
+          <div data-src={structureImg}>
+            <h2>Structure</h2>
+            <ul>
+              <li>
+                <strong>
+                  <a
+                    href="https://github.com/wmonk/create-react-app-typescript"
+                    target="_blank"
+                  >
+                    React / Create react app typescript
+                  </a>
+                </strong>
+                - React is a very popular JavaScript Dom rendering framework
+                using a component-based architecture. Create React App
+                Typescript is a tool built by developers at Facebook to help you
+                build React applications with Typescript. You can simply run one
+                command and create react app typescript sets up the tool and you
+                start your React project soon.{' '}
+              </li>
+              <li>
+                <strong>
+                  <a href="https://www.typescriptlang.org/" target="_blank">
+                    TypeScript
+                  </a>
+                </strong>
+                - Typescript is a typed superset of JavaScript that compiles to
+                plain JavaScript. Nowadays it has been very popular among
+                Frontend developer. Angular 2 decided to adopt it.
+              </li>
+              <li>
+                <strong>
+                  <a href="https://redux.js.org/" target="_blank">
+                    Redux
+                  </a>
+                </strong>
+                - Redux is a state management tool for JavaScript. It helps you
+                manage the data you display and how you respond to users
+                actions. Redux was inspired by Flux and Elm. You can learn more
+                about Flux and some of the challenges Facebook{' '}
+                <a
+                  href="https://www.youtube.com/watch?v=nYkdrAPrdcw&feature=youtu.be&list=PLb0IAmt7-GS188xDYE-u1ShQmFFGbrk0v&t=621"
+                  target="_blank"
+                >
+                  in this video
+                </a>.
+              </li>
+              <li>
+                <strong>
+                  <a href="https://redux-observable.js.org/" target="_blank">
+                    Redux-observable
+                  </a>
+                </strong>
+                - Middleware is for Redux which can be used to handle
+                asynchronous logic. It is based on RxJS
+              </li>
+              <li>
+                <strong>
+                  <a
+                    href="https://github.com/acdlite/recompose"
+                    target="_blank"
+                  >
+                    Recompose
+                  </a>
+                </strong>
+                - A React utility for functional components and high-order
+                components. It allows you to separate your logic from your
+                components.
+              </li>
+              <li>
+                <strong>
+                  <a
+                    href="https://aws.amazon.com/serverless/?nc1=h_ls"
+                    target="_blank"
+                  >
+                    S3 + Route53 + CloudFront
+                  </a>
+                </strong>
+                - Amazon Web Service provides these service for server less
+                architecture.
+              </li>
+            </ul>
+          </div>
+        </IntersectionObserver>
 
         <p>
           This is mainly build with React and Typescript. Redux and
