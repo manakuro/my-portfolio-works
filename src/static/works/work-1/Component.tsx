@@ -2,14 +2,141 @@ import IntersectionObserver from '@researchgate/react-intersection-observer'
 import * as React from 'react'
 import pure from 'recompose/pure'
 
-import sampleImg from './images/sample.jpeg'
-import sampleImg2 from './images/sample2.jpeg'
 import aboutMeImg from './images/manato.jpg'
 import structureImg from './images/create-react-app-typescript.jpg'
 
 interface WorkOneProps {
   handleIntersection: (entry: IntersectionObserverEntry) => any
 }
+
+const code1 = `
+import React from 'react';
+
+const counter = (Component) => class extends React.Component {
+    constructor(props) {
+        super(props);
+            this.state = {
+            counter: 1,
+        }
+    }
+
+    increment = () => {
+        this.setState({ counter: this.state.counter + 1})
+    }
+
+    decrement = () => {
+        this.setState({ counter: this.state.counter - 1 })
+    }
+
+    render() {
+        return <Comopennt 
+                {...this.props} 
+                decrement={this.decrement} 
+                increment={this.increment} />
+    }
+}
+
+const CounterComponent = (props) => {
+    <div>
+        <h1>{props.counter}</h1>
+        <button onClick={() => { props.increment() }}>increment</button>
+        <button onClick={() => { props.decrement() }}>decrement</button>
+    </div>
+}
+
+const EnhancedComponent = counter(CounterComponent);
+export default () => (<EnhancedComponent />)
+`
+
+const code2 = `
+import React from 'react'
+import {compose, withState, withHandlers} from 'recompose'
+
+const CounterComponent = (props) => (
+    <div>
+        <h1>{props.counter}</h1>
+        <button onClick={() => { props.increment() }}>increment</button>
+        <button onClick={() => { props.decrement() }}>decrement</button>
+        <button onClick={() => { props.reset() }}>reset</button>
+    </div>
+);
+
+const enhancer = compose(
+    withState('counter', 'updateCounter', 5),
+    withHandlers({
+        increment: ({ updateCounter }) => () => updateCounter(counter => counter + 1),
+        decrement: ({ updateCounter }) => () =>  updateCounter(counter => counter - 1),
+        reset: ({ updateCounter }) => () => updateCounter(5)
+    })
+);
+
+const EnhancedComponent = enhancer(CounterComponent);
+
+export default () => (<EnhancedComponent />);
+`
+
+const code3 = `
+const Enhancer = compose(
+  withStateHandlers(
+    ({
+      name = 'hello',
+      age = 1,
+    }) => ({
+      name,
+      age,
+    }),
+    {
+      update: (state) => (value) => {
+        return { ...state, ...value };
+      },
+    },
+  ),
+  lifecycle({
+    componentDidMount() {
+      // you can use this context in lifecycle
+      console.log(this.props.name)
+      console.log(this.props.age)
+    },
+  }),
+);
+`
+
+const code4 = `
+const Enhancer = compose(
+  withStateHandlers(
+    ({
+      name = 'hello',
+      age = 1,
+    }) => ({
+      name,
+      age,
+    }),
+    {
+      update: (state) => (value) => {
+        return { ...state, ...value };
+      },
+    },
+  ),
+);
+
+const MyLifecycle = (Component) => class MyComponent extends React.Component {
+    //….
+    componentDidMount() {
+        console.log(this.props.name)
+        console.log(this.props.age)
+    }
+
+    render() {
+        return <Component {...this.props}  />
+    }
+}
+
+const Component = (props) => (
+    <div>props.name</div>
+)
+
+const Enhanced = Enhancer(MyLifecycle(Component))
+`
 
 const WorkOne: React.ComponentType<WorkOneProps> = pure(
   (props): JSX.Element => {
@@ -140,11 +267,8 @@ const WorkOne: React.ComponentType<WorkOneProps> = pure(
         </IntersectionObserver>
 
         <p>
-          This is mainly build with React and Typescript. Redux and
-          Redux-observable are used for state management. I introduce recompose
-          for most components because I personally prefer to Functional
-          Programming and want to make them as much stateless as possible for
-          easily maintainable and testable code.
+          This is a single page application with React and built as a serverless
+          application with AWS S3, Route53 and CloudFront.
         </p>
 
         <p>
@@ -155,8 +279,86 @@ const WorkOne: React.ComponentType<WorkOneProps> = pure(
           >
             react-redux-typescript-guide
           </a>{' '}
-          to develop it.
+          to develop it. Redux and Redux-observable are used for state
+          management. I introduce recompose for most components because I
+          personally prefer to Functional Programming and want to make them as
+          much stateless as possible for easily maintainable and testable code.
         </p>
+
+        <h3>recomposing</h3>
+
+        <p>
+          I created functional component with recompose instead of class based
+          component. Recompose is varied, simple and specific-purpose functions
+          and gives me more component reusability. I think it's great for
+          handling higher order components to enhance functional components.
+        </p>
+
+        <p>Let's take a look at an example for Hoc component.</p>
+
+        <p>Here's HoC with ES6</p>
+
+        <pre>
+          <code className="language-js">{code1}</code>
+        </pre>
+
+        <p>It's not bad actually but it could be improved.</p>
+
+        <p>Here's with recompose</p>
+
+        <pre>
+          <code className="language-js">{code2}</code>
+        </pre>
+
+        <p>
+          There is less code and looks simpler I guess. Recompose offers a
+          collection of functions that themselves or return higher order
+          components, so you can mix them or compose as you want. You can check
+          out a bunch of functions{' '}
+          <a href="https://github.com/acdlite/recompose/blob/master/docs/API.md">
+            here
+          </a>.
+        </p>
+
+        <h3>And how to deal with Lifecycle?</h3>
+
+        <p>
+          Recompose provides lifecycle() to access component lifecycle methods.
+          Any state changes made in a lifecycle method, by using setState, will
+          be propagated to the wrapped components as props.
+        </p>
+
+        <p>Examples:</p>
+
+        <pre>
+          <code className="language-js">{code3}</code>
+        </pre>
+
+        <p>
+          All you need to is just to include lifecycle and write the lifecycle
+          method inside. But{' '}
+          <a href="https://github.com/istarkov">Ivan Starkov</a>, who is
+          collaborator of recompose says{' '}
+          <a href="https://github.com/acdlite/recompose/issues/653#issuecomment-383645282">
+            here
+          </a>:
+        </p>
+
+        <p>
+          <em>
+            I wrote that lifecycle is somehow a recompose mistake, you don't
+            need it at all as it's easier to write ordinary class. Just write
+            your HOC if you need it, it's very simple
+          </em>
+        </p>
+
+        <p>
+          Which you can write lifecycle methods in your HoC class component.
+        </p>
+
+        <pre>
+          <code className="language-js">{code4}</code>
+        </pre>
 
         <h2>Testing</h2>
 
@@ -193,151 +395,6 @@ const WorkOne: React.ComponentType<WorkOneProps> = pure(
           the cuff design wise so I will be updating! I hope you find my works
           interesting and get some inspirations.
         </p>
-
-        <p>Changes are automatically rendered as you type.</p>
-        <ul>
-          <li>
-            Implements{' '}
-            <a href="https://github.github.com/gfm/">
-              GitHub Flavored Markdown
-            </a>
-          </li>
-          <li>Renders actual, "native" React DOM elements</li>
-          <li>
-            Allows you to escape or skip HTML (try toggling the checkboxes
-            above)
-          </li>
-          <li>
-            If you escape or skip the HTML, no{' '}
-            <code>dangerouslySetInnerHTML</code> is used! Yay!
-          </li>
-        </ul>
-        <h2>HTML block below</h2>
-        <div>
-          &ltblockquote&gt This blockquote will change based on the HTML
-          settings above. &lt/blockquote&gt
-        </div>
-        <h2>How about some code?</h2>
-        <pre>
-          <code className="language-js">
-            var React = require('react') var Markdown =
-            require('react-markdown') React.render( &ltMarkdown source="# Your
-            markdown here" /&gt, document.getElementById('content') )
-          </code>
-        </pre>
-        <p>Pretty neat, eh?</p>
-        <h2>Tables?</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Feature</th>
-              <th>Support</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>tables</td>
-              <td>✔</td>
-            </tr>
-            <tr>
-              <td>alignment</td>
-              <td>✔</td>
-            </tr>
-            <tr>
-              <td>wewt</td>
-              <td>✔</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <h2>More info?</h2>
-        <p>
-          Read usage information and more on{' '}
-          <a href="//github.com/rexxars/react-markdown">GitHub</a>
-        </p>
-        <hr />
-        <p>
-          A component by <a href="http://vaffel.ninja">VaffelNinja</a> / Espen
-          Hovlandsdal
-        </p>
-
-        <IntersectionObserver onChange={handleIntersection} threshold={1}>
-          <div data-src={sampleImg}>
-            <h2>EC Website</h2>
-            <p>
-              This is a copy website of NIKE.com, which is developed by Vue.js,
-              Ruby on Rails and GraphQL.
-            </p>
-            <p>Changes are automatically rendered as you type.</p>
-            <ul>
-              <li>
-                Implements{' '}
-                <a href="https://github.github.com/gfm/">
-                  GitHub Flavored Markdown
-                </a>
-              </li>
-              <li>Renders actual, "native" React DOM elements</li>
-              <li>
-                Allows you to escape or skip HTML (try toggling the checkboxes
-                above)
-              </li>
-              <li>
-                If you escape or skip the HTML, no{' '}
-                <code>dangerouslySetInnerHTML</code> is used! Yay!
-              </li>
-            </ul>
-          </div>
-        </IntersectionObserver>
-
-        <h2>HTML block below</h2>
-        <div>
-          &ltblockquote&gt This blockquote will change based on the HTML
-          settings above. &lt/blockquote&gt
-        </div>
-        <h2>How about some code?</h2>
-        <pre>
-          <code className="language-js">
-            var React = require('react') var Markdown =
-            require('react-markdown') React.render( &ltMarkdown source="# Your
-            markdown here" /&gt, document.getElementById('content') )
-          </code>
-        </pre>
-        <p>Pretty neat, eh?</p>
-        <h2>Tables?</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Feature</th>
-              <th>Support</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>tables</td>
-              <td>✔</td>
-            </tr>
-            <tr>
-              <td>alignment</td>
-              <td>✔</td>
-            </tr>
-            <tr>
-              <td>wewt</td>
-              <td>✔</td>
-            </tr>
-          </tbody>
-        </table>
-        <h2>More info?</h2>
-        <p>
-          Read usage information and more on{' '}
-          <a href="//github.com/rexxars/react-markdown">GitHub</a>
-        </p>
-        <hr />
-        <IntersectionObserver onChange={handleIntersection}>
-          <p data-src={sampleImg2}>
-            A component by <a href="http://vaffel.ninja">VaffelNinja</a> / Espen
-            Hovlandsdal
-          </p>
-        </IntersectionObserver>
       </div>
     )
   },
