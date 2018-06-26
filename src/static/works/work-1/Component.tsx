@@ -363,8 +363,26 @@ const WorkOne: React.ComponentType<WorkOneProps> = pure(
         <h2>Testing</h2>
 
         <ul>
-          <li>Jest</li>
-          <li>Enzyme</li>
+          <li>
+            <strong>
+              <a href="http://jestjs.io/" target="_blank">
+                Jest
+              </a>
+            </strong>
+            - Jest is used by Facebook to test all JavaScript code including
+            React applications.
+          </li>
+
+          <li>
+            <strong>
+              <a href="https://github.com/airbnb/enzyme" target="_blank">
+                Enzyme
+              </a>
+            </strong>
+            - Enzyme is a JavaScript Testing utility for React that makes it
+            easier to assert, manipulate, and traverse your React Components'
+            output.
+          </li>
         </ul>
 
         <p>
