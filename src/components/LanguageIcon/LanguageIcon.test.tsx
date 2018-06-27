@@ -4,7 +4,7 @@ import * as LanguageIcon from './LanguageIcon'
 import { LanguageIconProps } from '@/components/LanguageIcon/LanguageIcon'
 
 const props: LanguageIconProps = {
-  language: { id: 1, name: 'Ruby on Rails', icon: 'rails' },
+  language: { id: 4, name: 'Vue.js', icon: 'vuejs' },
 }
 
 describe('LanguageIcon', () => {

@@ -3,9 +3,9 @@
 exports[`LanguageIcon should render 1`] = `
 <div
   className="language-icon"
-  data-tip="Ruby on Rails"
+  data-tip="Vue.js"
 >
-  <rails />
+  <vuejs />
   <ReactTooltip
     effect="solid"
     insecure={true}
