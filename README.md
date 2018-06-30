@@ -2,7 +2,9 @@
 
 # Manato Kuroda portfolio works
 
-React app implementation using `create react app typescript`
+React app implementation using `create react app typescript`.
+
+https://manatoworks.me
 
 ## Usage
 
