@@ -20,4 +20,4 @@ jobs:
             - ~/.cache/yarn
       - run:
           name: Unit Test
-          command: yarn test
+          command: yarn test --maxWorkers=4
