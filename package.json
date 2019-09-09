@@ -89,7 +89,7 @@
     "@types/react-dom": "^16.0.5",
     "@types/react-redux": "^5.0.19",
     "@types/react-router-redux": "^5.0.13",
-    "@types/react-test-renderer": "^16.0.1",
+    "@types/react-test-renderer": "^16.9.0",
     "@types/react-tooltip": "^3.3.5",
     "@types/react-transition-group": "^2.0.9",
     "@types/recompose": "^0.26.1",
