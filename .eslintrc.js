@@ -1,17 +1,24 @@
 module.exports = {
-  extends: ['eslint:recommended', 'standard', 'prettier'],
-  parser: 'babel-eslint',
-  plugins: ['import', 'prettier', 'standard'],
-  parserOptions: {
-    sourceType: 'module',
-  },
-  env: {
-    browser: true,
-  },
+  extends: [
+    'react-app',
+    'eslint:recommended',
+    'plugin:prettier/recommended',
+    'prettier/react',
+  ],
+  plugins: ['babel'],
   rules: {
     quotes: ['error', 'single'],
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
     'no-console': process.env.NODE_ENV === 'production' ? 2 : 0,
-    semi: false,
+    'prettier/prettier': [
+      'error',
+      {
+        singleQuote: true,
+        semi: false,
+        trailingComma: 'all',
+      },
+    ],
+    '@typescript-eslint/no-angle-bracket-type-assertion': 'off',
+    '@typescript-eslint/consistent-type-assertions': 'warn',
   },
-};
+}

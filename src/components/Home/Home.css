@@ -1,9 +1,0 @@
-.home {
-  min-height: 100vh; }
-  .home-Works {
-    margin-top: 130px;
-    margin-bottom: 50px; }
-    .home-Works_List {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      grid-gap: 15px; }
